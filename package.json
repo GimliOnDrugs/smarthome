@@ -9,6 +9,7 @@
         "engine.io": "^3.1.5",
         "express": "^4.15.2",
         "mongoose": "^5.0.7",
+        "password-hash-and-salt": "^0.1.4",
         "socket.io": "^2.0.4"
     },
     "scripts": {
