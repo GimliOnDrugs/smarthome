@@ -1,11 +1,16 @@
-var socket=io()
+var socket = io()
 
 
 var email = $('#email_input')
 var password = $('form').find("input:last")
 
-socket.on('user loggedin',function(data){
+socket.on('user loggedin', function (data) {
     console.log('identity confirmed')
+    sessionStorage.setItem('currentuser', JSON.stringify({
+        username: data.username,
+        email: data.email
+    }))
+    location.replace('/landingpage.html')
 })
 
 function logIn() {
@@ -16,5 +21,5 @@ function logIn() {
         'password': password.val()
     }
     socket.emit('sign in', user)
-    console.log('user signed in '+user.password+" "+user.email)
+    console.log('user signed in ' + user.password + " " + user.email)
 }
