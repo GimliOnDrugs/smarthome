@@ -4,69 +4,47 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Socket.IO chat</title>
+    <title>SmartHome</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link href="/css/signupstylesheet.css" rel="stylesheet" type="text/css"/>
 
-        body {
-            font: 13px Helvetica, Arial;
-        }
-
-        form {
-            background: #000;
-            padding: 3px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        form input {
-            border: 0;
-            padding: 10px;
-            width: 90%;
-            margin-right: .5%;
-        }
-
-        form button {
-            width: 9%;
-            background: rgb(130, 224, 255);
-            border: none;
-            padding: 10px;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages li {
-            padding: 5px 10px;
-        }
-
-        #messages li:nth-child(odd) {
-            background: #eee;
-        }
-
-        #messages {
-            margin-bottom: 40px
-        }
-    </style>
 </head>
 
 <body>
-    <button class="btn btn-primary">Prova Bottone</button>
-    <ul id="messages"></ul>
 
-    <form action="">
-        <input id="m" autocomplete="off" />
-        <button onclick="sendMessage()">Send</button>
-    </form>
+        <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-lg">
+
+
+               
+    
+                <button id="button_toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_start" aria-controls="menu_start"
+                        aria-expanded="false" aria-label="Toggle navigation" onclick="onCollapseMenuClick()">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="menu_start">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
+    
+    
+                    </ul>
+                    <ul class="navbar-nav navbar-right" id="login_signup_navbar">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/signup.html">Sign up</a>
+                        </li>
+                        <li class="vl"></li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/login.html">Log in</a>
+                        </li>
+                    </ul>
+    
+                </div>
+            </nav>
+    
+         
+    
+    
+        </body>
+  
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
@@ -74,39 +52,7 @@
     <script src="/js/bootstrap.js"></script>
   
 
-    <script>
 
-        $(function () {
-            var socket = io();
-            socket.on('chat message', function (msg) {
-                console.log('message ' + msg)
-                $('#messages').append($('<li>').text(msg));
-            });
-
-            function sendMessage() {
-
-
-            }
-            $('form').submit(function (e) {
-                e.preventDefault()
-                socket.emit('chat message', $('#m').val());
-                // $('#messages').append($('<li>').text($('#m').val()));
-                $('#m').val('');
-            })
-        })
-        function sendMessage() { }
-        // $(function () {
-        //     var socket = io();
-        //     $('form').submit(function () {
-        //         socket.emit('chat message', $('#m').val());
-        //         $('#m').val('');
-        //         return false;
-        //     });
-        //     socket.on('chat message', function (msg) {
-        //         $('#messages').append($('<li>').text(msg));
-        //     });
-        // });
-    </script>
 
 </body>
 

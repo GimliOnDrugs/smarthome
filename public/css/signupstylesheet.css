@@ -1,0 +1,25 @@
+#login_image{
+    max-width: 300px;
+    max-height:200px;
+    min-height: 150px;
+    min-width: 250px;
+}
+
+form{
+    max-width: 400px;
+    margin-top: 50px;
+}
+.submit-loader{
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #007bff;
+    width: 40px;
+    height: 40px;
+    display: block;
+    animation: spin 1s linear infinite;
+    margin-top: 15px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
