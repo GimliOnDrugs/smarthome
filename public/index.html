@@ -1,8 +1,11 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Socket.IO chat</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style>
         * {
             margin: 0;
@@ -57,6 +60,7 @@
 </head>
 
 <body>
+    <button class="btn btn-primary">Prova Bottone</button>
     <ul id="messages"></ul>
 
     <form action="">
@@ -65,6 +69,10 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.js"></script>
+  
 
     <script>
 
@@ -82,11 +90,11 @@
             $('form').submit(function (e) {
                 e.preventDefault()
                 socket.emit('chat message', $('#m').val());
-               // $('#messages').append($('<li>').text($('#m').val()));
+                // $('#messages').append($('<li>').text($('#m').val()));
                 $('#m').val('');
             })
         })
-            function sendMessage() {}
+        function sendMessage() { }
         // $(function () {
         //     var socket = io();
         //     $('form').submit(function () {

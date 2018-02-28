@@ -81,19 +81,26 @@ var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server,{ wsEngine: 'ws' });
 
-
 var port = process.env.PORT || 3000;
+var options={
+  extensions: ['htm', 'html','css','js'],
 
+}
 app.use(express.static(path.join(__dirname, 'public')));
+/* app.use('/css',express.static(path.join(__dirname,'public/css')))
+app.use('/js',express.static(path.join(__dirname,'public/js'))) */
 
 io.on('connection', function (socket) {
-  
   socket.on('chat message', function (msg) {
     console.log(msg)
+    
   io.emit('chat message', msg);
   });
 });
-
-server.listen(port, function () {
+server.listen(port,function(){
   console.log('listening on *:' + port);
-});
+
+})
+/* server.listen(port, function () {
+  console.log('listening on *:' + port);
+}); */
