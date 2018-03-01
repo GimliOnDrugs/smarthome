@@ -9,8 +9,7 @@ var userauth = require('./dbhandlermodules/userauthentication')
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-var user
-
+var userIo
 
 io.on('connection', function (socket) {
   socket.on('sign up', function (data) {
@@ -22,21 +21,22 @@ io.on('connection', function (socket) {
 
     userauth.userLogIn(data.email, data.password, socket)
   })
-socket.on('create namespace',(data)=>{
-  var userIo=io.of('/'+data.username)
-  var users=0
-  userIo.on('connection',function(socket){
-    users++
+  socket.on('create namespace', (data) => {
+    userIo = io.of('/' + data.username)
 
-  socket.emit('handshake',data.username+" connected users: "+users) 
   })
-})
 
   socket.on('my event', function (data) {
     console.log(data.message + " sent to user: " + user.username)
   })
 });
 
+var users = 0
+userIo.on('connection', function (socket) {
+  users++
+
+  socket.emit('handshake', data.username + " connected users: " + users)
+})
 server.listen(port, function () {
   console.log('listening on *:' + port);
 
