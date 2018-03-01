@@ -24,9 +24,11 @@ io.on('connection', function (socket) {
   })
 socket.on('create namespace',(data)=>{
   var userIo=io.of('/'+data.username)
+  var users=0
   userIo.on('connection',function(socket){
-    
-  socket.emit('handshake',data.username) 
+    users++
+
+  socket.emit('handshake',data.username+" connected users: "+users) 
   })
 })
 
