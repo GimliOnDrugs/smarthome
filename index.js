@@ -23,11 +23,11 @@ io.on('connection', function (socket) {
     userauth.userLogIn(data.email, data.password, socket)
   })
 socket.on('create namespace',(data)=>{
-  var userIo=io.of('/'+data.username)
+ /*  var userIo=io.of('/'+data.username)
   userIo.on('connection',function(socket){
     console.log('user connected to namespace '+data.username)
   socket.emit('handshake',userIo.sockets)
-  })
+  }) */
 })
 
   socket.on('my event', function (data) {
