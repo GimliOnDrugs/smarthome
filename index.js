@@ -26,7 +26,7 @@ socket.on('create namespace',(data)=>{
   var userIo=io.of('/'+data.username)
   userIo.on('connection',function(socket){
     
-  socket.broadcast.emit('handshake',data.username) 
+  socket.emit('handshake',data.username) 
   })
 })
 
