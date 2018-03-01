@@ -4,7 +4,7 @@ $(document).ready(function () {
     console.log(user.username + " " + user.email)
     $('#userdisplayname').text("Welcome " + user.username)
     var user=0
-    socket.on('update connected clients', function () {
+    socket.on('handshake', function () {
         user++
         console.log(user)
     })
