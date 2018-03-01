@@ -6,8 +6,13 @@ var username=$('form').find("input:first")
 socket.on('signing up', function () {
     $('<div class="loader submit-loader d-block mx-auto"></div>').insertAfter('#button_container')
 })
-socket.on('user saved', function () {
+socket.on('user saved', function (user) {
     $('.loader').remove()
+    sessionStorage.setItem('currentuser',JSON.stringify({
+        username: user.username,
+        email: user.email
+    }))
+    location.replace('/landingpage.html')
 })
 socket.on('error save', function (errorcode) {
 

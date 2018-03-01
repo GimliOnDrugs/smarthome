@@ -38,7 +38,7 @@ exports.userSignUp = function (userName, userEmail, userPassword, socket) {
                     socket.emit('error save', err.code)
                 } else {
                     console.log('correctly saved user ' + user)
-                    socket.emit('user saved')
+                    socket.emit('user saved',user)
                 }
             })
         }
@@ -57,7 +57,9 @@ exports.userLogIn = function (userEmail, userPassword, socket) {
                }
                 if (same) {
                     console.log('user correct')
+                    console.log(socket.id)
                     socket.emit('user loggedin', result)
+                    
                 }
                 else {
                     
