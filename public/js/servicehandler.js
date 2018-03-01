@@ -4,9 +4,7 @@ $(document).ready(function () {
     console.log(user.username + " " + user.email)
     $('#userdisplayname').text("Welcome " + user.username)
     
-    socket.on('handshake',function(data){
-        console.log(data)
-    })
+   
 
 })
 
