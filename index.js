@@ -25,9 +25,8 @@ io.on('connection', function (socket) {
 socket.on('create namespace',(data)=>{
   var userIo=io.of('/'+data.username)
   userIo.on('connection',function(socket){
-    socket.emit('update connected clients')
-    console.log('user connected to namespace '+data.username)
-  socket.emit('handshake',data.username) 
+    
+  socket.broadcast.emit('handshake',data.username) 
   })
 })
 
