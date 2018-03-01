@@ -7,5 +7,10 @@ $(document).ready(function () {
    
 
 })
-
+var socket=io('/'+user.username)
+var user
+socket.on('update connected clients', function(){
+    user++
+    console.log(user)
+})
 
