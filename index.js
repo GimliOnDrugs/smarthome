@@ -9,7 +9,6 @@ var userauth = require('./dbhandlermodules/userauthentication')
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-var userIo
 
 io.on('connection', function (socket) {
   socket.on('sign up', function (data) {
@@ -23,6 +22,12 @@ io.on('connection', function (socket) {
   })
   socket.on('create namespace', (data) => {
     userIo = io.of('/' + data.username)
+    var users = 0
+    userIo.on('connection', function (socket) {
+      users++
+
+      socket.emit('handshake', data.username + " connected users: " + users)
+    })
 
   })
 
@@ -31,12 +36,7 @@ io.on('connection', function (socket) {
   })
 });
 
-var users = 0
-userIo.on('connection', function (socket) {
-  users++
 
-  socket.emit('handshake', data.username + " connected users: " + users)
-})
 server.listen(port, function () {
   console.log('listening on *:' + port);
 
