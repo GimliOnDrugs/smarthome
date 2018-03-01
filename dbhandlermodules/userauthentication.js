@@ -57,8 +57,9 @@ exports.userLogIn = function (userEmail, userPassword, socket) {
                }
                 if (same) {
                     console.log('user correct')
-                    
+                    console.log(socket.id)
                     socket.emit('user loggedin', result)
+                    
                 }
                 else {
                     
