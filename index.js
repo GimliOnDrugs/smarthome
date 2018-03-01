@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var io = require('socket.io')(server, { wsEngine: 'ws' });
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 
@@ -26,6 +26,7 @@ socket.on('create namespace',(data)=>{
   var userIo=io.of('/'+data.username)
   userIo.on('connection',function(socket){
     console.log('user connected to namespace '+data.username)
+  socket.emit('handshake',data.username) 
   })
 })
 
