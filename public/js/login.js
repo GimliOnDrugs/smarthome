@@ -11,7 +11,6 @@ socket.on('user loggedin', function (data) {
         username: data.username,
         email: data.email
     }))
-    socket.emit('create namespace',data)
     location.replace('/landingpage.html')
 })
 

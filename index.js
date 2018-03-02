@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 io.on('connection', function (socket) {
+  console.log('user connected ' + socket.id)
   socket.on('sign up', function (data) {
     user = data
     userauth.userSignUp(data.username, data.email, data.password, socket)
@@ -20,19 +21,34 @@ io.on('connection', function (socket) {
 
     userauth.userLogIn(data.email, data.password, socket)
   })
-  socket.on('create namespace', (data) => {
-    userIo = io.of('/' + data.username)
-    var users = 0
-    userIo.on('connection', function (socket) {
-      users++
 
+  socket.on('room', (data) => {
+    /* userIo = io.of('/' + data.username)
+    userIo.on('connection', function (socket) {
+      console.log('connected to nsp james' + socket.id)
       socket.emit('handshake', data.username + " connected users: " + users)
+
+      socket.on('disconnect', function (socket) {
+        console.log('socket disconnected: ' + socket.id)
+      })
     })
+ */
+
+
+    console.log(data + " is joining a room")
+
+    socket.join(data)
+    io.in(data).clients(function (error, clients) {
+      if (error) throw error
+      console.log(clients)
+    })
+    io.to(data).emit('room joined', { message: 'ciao!' })
 
   })
 
-  socket.on('my event', function (data) {
-    console.log(data.message + " sent to user: " + user.username)
+
+  socket.on('disconnect', function () {
+    console.log('user disconnected ')
   })
 });
 

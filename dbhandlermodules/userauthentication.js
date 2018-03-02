@@ -26,7 +26,7 @@ exports.userSignUp = function (userName, userEmail, userPassword, socket) {
     socket.emit('signing up')
     password(userPassword).hash(function (err, hash) {
         if (err) {
-            console.log('errore sign up '+err)
+            console.log('errore sign up ' + err)
         }
         else {
             var user = new User({ username: userName, email: userEmail, password: hash })
@@ -38,7 +38,7 @@ exports.userSignUp = function (userName, userEmail, userPassword, socket) {
                     socket.emit('error save', err.code)
                 } else {
                     console.log('correctly saved user ' + user)
-                    socket.emit('user saved',user)
+                    socket.emit('user saved', user)
                 }
             })
         }
@@ -52,17 +52,17 @@ exports.userLogIn = function (userEmail, userPassword, socket) {
         if (error) return new Error('errore query')
         else {
             password(userPassword).verifyAgainst(result.password, function (error, same) {
-               if(error){
-                   console.log(error)
-               }
+                if (error) {
+                    console.log(error)
+                }
                 if (same) {
                     console.log('user correct')
-                    console.log(socket.id)
+
                     socket.emit('user loggedin', result)
-                    
+
                 }
                 else {
-                    
+
                     throw new Error('errore identità')
                 }
             })

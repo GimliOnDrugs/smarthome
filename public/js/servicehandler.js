@@ -1,14 +1,16 @@
 
 $(document).ready(function () {
     var user = JSON.parse(sessionStorage.getItem('currentuser'))
-    var socket = io('/' + user.username)
+    var socket = io()
+    socket.on('ciao',function(data){
+        console.log(data)
+    })
     console.log(user.username + " " + user.email)
     $('#userdisplayname').text("Welcome " + user.username)
-    var user=0
-
-    socket.on('handshake', function () {
-        user++
-        console.log(user+" socket id: "+socket.id)
+    console.log(user.username)
+    socket.emit('room',user.username)
+    socket.on('room joined',function(data){
+        console.log('room joined '+data.message+" socket id "+socket.id)
     })
 
 
