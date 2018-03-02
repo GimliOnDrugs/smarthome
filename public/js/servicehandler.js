@@ -9,7 +9,7 @@ $(document).ready(function () {
     console.log(user.username)
     socket.emit('room', user.username)
     socket.on('room joined', function (data) {
-        console.log('room joined ' + data.message + " by " + data.id)
+        console.log('room joined ' + data.roomjoined + " by " + data.id)
 
     })
 
