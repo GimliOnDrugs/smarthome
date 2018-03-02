@@ -17,7 +17,6 @@ socket.on('user loggedin', function (data) {
 
 
 function logIn() {
-    console.log(email)
 
     var user = {
         'email': email.val(),

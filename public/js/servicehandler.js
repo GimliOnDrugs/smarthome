@@ -17,7 +17,12 @@ $(document).ready(function () {
 
 })
 function onRegisterClick() {
-    console.log('click')
+    var firstInput=$('#first').val()
+    var secondInput=$('#second').val()
+    var thirdInput=$('#third').val()
+    var fourthInput=$('#fourth').val()
+    var ipAddressToSend=firstInput+'.'+secondInput+'.'+thirdInput+'.'+fourthInput
+    console.log(ipAddressToSend)
     socket.emit('connect rpi', { ipaddress: '192.168.1.185', name: user.username })
 }
 /* var socket=io('/'+user.username)
