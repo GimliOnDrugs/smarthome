@@ -10,7 +10,6 @@ var userauth = require('./dbhandlermodules/userauthentication')
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 io.on('connection', function (socket) {
   console.log('user connected ' + socket.id)
   socket.on('sign up', function (data) {
@@ -36,7 +35,10 @@ io.on('connection', function (socket) {
     socket.broadcast.to(data).emit('room joined', {roomjoined:data, id: socket.id })
   })
 
-
+/*   socket.on('message',function(data){
+    console.log(data)
+    socket.broadcast.to(data.room).emit('message',{socketidsender:socket.id,room:data.room,message:data.message})
+  }) */
 
   socket.on('connect rpi', (data) => {
 
