@@ -27,7 +27,7 @@ io.on('connection', function (socket) {
 
     console.log(socket.id + " is joining room "+data)
 
-    socket.join(data)
+    socket.join(data)//socket joins room with id of username
     io.in(data).clients(function (error, clients) {
       if (error) throw error
       console.log(clients)
@@ -35,12 +35,11 @@ io.on('connection', function (socket) {
     socket.broadcast.to(data).emit('room joined', {roomjoined:data, id: socket.id })
   })
 
-/*   socket.on('message',function(data){
-    console.log(data)
-    socket.broadcast.to(data.room).emit('message',{socketidsender:socket.id,room:data.room,message:data.message})
-  }) */
+socket.on('toggle light',function(data){
+  socket.broadcast.to(data.room).emit('turn on/off light',data)
+})
 
-  socket.on('connect rpi', (data) => {
+  socket.on('connect rpi', (data) => { //before joining room, rpi needs to be found
 
     console.log(data)
 

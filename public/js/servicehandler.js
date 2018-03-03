@@ -6,7 +6,7 @@ var user = JSON.parse(sessionStorage.getItem('currentuser'))
     socket.emit('message', { socketidsender: socket.id, message: 'hi im client!', room: JSON.parse(sessionStorage.getItem('currentroom')) })
 })
  */
-
+var lighton=false
 $(document).ready(function () {
 
     console.log(user.username + " " + user.email)
@@ -36,8 +36,11 @@ function onRegisterClick() {
 /* var socket=io('/'+user.username)
  */
 
-/*  function onStartChatClick(){
-    socket.emit('message', { socketidsender: socket.id, message: 'hi im client!', room: JSON.parse(sessionStorage.getItem('currentroom')) })
+ function onToogleLight(){
+    lighton=!lighton
+    socket.emit('toggle light',{light:lighton,room: JSON.parse(sessionStorage.getItem('currentroom')) })
+    $('#light').text(lighton===true?'on':'off')
 
- } */
+
+ }
 
