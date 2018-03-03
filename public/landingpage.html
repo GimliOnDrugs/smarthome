@@ -47,41 +47,93 @@
 
         <h1 class="display-2 text-center" id="userdisplayname" style="margin-top: 90px"></h1>
 
-        <a class="fab" tooltip="Google+" onclick="onRegisterClick()"></a>
+        <!-- <a class="fab" tooltip="Google+" onclick="onRegisterClick()"></a> -->
 
     </div>
     <div class="container">
+        <div class="list-group" id="device_list">
+            
+                    <div class="d-flex w-100 justify-content-center">
+                        <div class="row justify-content-between" style="max-width: 900px;">
+                            <div class="col-auto d-block my-auto">
+                                <p class="text-center display-4">Aggiungi un device</p>
+                            </div>
+                            <div class="col d-block my-auto">
+                                <img class="icon fab" src="/css/assets/plus.svg" onclick="onDeviceAddClick()">
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="row">
-            <div class="col">
-                <input class="form-control" type="text" id="first">
-            </div>
-            <div class="col">
-                <input class="form-control" type="text" id="second">
-            </div>
-            <div class="col">
-                <input class="form-control" type="text" id="third">
-
-            </div>
-            <div class="col">
-                    <input class="form-control" type="text" id="fourth">
-    
-                </div>
+                    <!-- <div class=" row justify-content-center" style=" max-width: 1100px; margin-top: 20px;">
+                        <div class="row">
+                            <div class="col-auto col-center  ">
+                                <p class="text-center d-block my-auto">I.P. Address</p>
+                            </div>
+                            <div class="col-4 col-center">
+                                <input class=" text-left d-block mx-auto my-auto form-control" id="ip_address" type="text" placeholder="192.168.1.345">
+                            </div>
+                        </div>
+                        <div class="col-auto col-center  ">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Action</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <p class="dropdown-item">Light</p>
+                                    <p class="dropdown-item">Video</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between" style="margin-top:50px;">
+                        <div class="col"></div>
+                        <div class="col-auto col-center">
+                            <img class="fab" src="/css/assets/checked.svg" onclick="onOkClick()">
+                        </div>
+                        <div class="col-auto col-center">
+                            <img class="fab" src="/css/assets/cancel.svg" onclick="onCancelClick()">
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </div> -->
         </div>
+            <!--  
+            
+              
+            </li>
+        </div> -->
 
 
-    </div>
-    <a class="fab" tooltip="Google+" onclick="onToogleLight()"></a>
-    <h1 id="light">off</h1>
+       
+
+        <!--         <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" id="first">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" id="second">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" id="third">
+
+                </div>
+                <div class="col">
+                        <input class="form-control" type="text" id="fourth">
+        
+                    </div>
+            </div> -->
 
 
+        <!-- <a class="fab" tooltip="Google+" onclick="onToogleLight()"></a>
+        <h1 id="light">light off</h1>
+    -->
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-        crossorigin="anonymous"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/servicehandler.js"></script>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+        <script src="/js/bootstrap.js"></script>
+        <script src="/js/servicehandler.js"></script>
 
 
 

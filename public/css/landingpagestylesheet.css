@@ -5,7 +5,6 @@
     display: block;
     width: 56px;
     height: 56px;
-    margin: 20px auto 0;
     position: relative;
     -webkit-transition: all .1s ease-out;
     transition: all .1s ease-out;
@@ -15,6 +14,24 @@
 .fab:active, .fab:focus, .fab:hover {
     box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
 }
-body{
-    background-color: lightblue
+.dropdown-menu{
+    padding:0 !important;
+    margin: 0 !important
+}
+.dropdown-item{
+    margin-bottom: 0 !important;
+}
+.dropdown-item:hover{
+    cursor: pointer;
+    background-color: lightblue;
+}
+.icon{
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 40px;
+    min-height: 40px;
+}
+.col-center{
+    display: flex;
+    align-items: center;
 }

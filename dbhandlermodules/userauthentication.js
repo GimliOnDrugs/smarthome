@@ -13,8 +13,10 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },
-    password: String
+    password: String,
+    devices:[{ipaddress:String,action:String,status:Boolean}]
 })
+
 
 
 
