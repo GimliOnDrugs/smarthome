@@ -1,4 +1,4 @@
-var socket = io()
+var socket = io({transports: ['websocket']});
 var email = $('#email_input')
 var password = $('form').find("input:last")
 var username=$('form').find("input:first")

@@ -8,7 +8,6 @@
     position: relative;
     -webkit-transition: all .1s ease-out;
     transition: all .1s ease-out;
-    background-color: grey
 }
 
 .fab:active, .fab:focus, .fab:hover {

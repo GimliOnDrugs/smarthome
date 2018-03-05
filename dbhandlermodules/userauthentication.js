@@ -14,7 +14,7 @@ var UserSchema = new Schema({
         unique: true
     },
     password: String,
-    devices:[{ipaddress:String,action:String,status:Boolean}]
+    devices:[{name:String,ipaddress:String,action:String,status:Boolean,position:String,actionstatus:Boolean}]
 })
 
 
@@ -22,7 +22,7 @@ var UserSchema = new Schema({
 
 var User = mongoose.model('User', UserSchema)
 
-
+exports.getUser=User
 
 exports.userSignUp = function (userName, userEmail, userPassword, socket) {
     socket.emit('signing up')
