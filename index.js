@@ -59,8 +59,8 @@ io.on('connection', function (socket) {
     var domid = data.id
     var devicename = data.name
     deviceAuth.saveDevice(data.username, { name: devicename, ipaddress: ipAddress, action: actionDevice, status: statusDevice, position: 'random', actionstatus: false }, domid, io, socket.id)
-    socket.broadcast.emit('rpi devicename', { ipaddress: ipAddress, devicename: data.name })
-  })
+/*     socket.broadcast.emit('rpi devicename', { ipaddress: ipAddress, devicename: data.name })
+ */  })
 
 
 
@@ -91,6 +91,7 @@ io.on('connection', function (socket) {
 
   socket.on('rpi leave room', function (data) { //event sent from rpi that needs to leave room
     socket.leave(data.username)
+    socket.to(data.username).emit('rpi leave room',data)
   })
 
 

@@ -59,7 +59,7 @@ exports.findDeviceWhenLeave = function (devicename, username, socket) {
         })
         result.save(function (error, result) {
             result.devices.forEach(element => {
-                if (element.name === devicename) {
+                if (element.name === devicename) { //questo evento è mandato a tutti i device tranne il client web (socket è innfatti il client)
                     socket.to(username).emit('leave room', { devicename: devicename, username: username, ipaddress: element.ipaddress })
                 }
             })
