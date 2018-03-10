@@ -53,13 +53,13 @@ socket.emit('leave room',{devicename:deviceName,username:user})
 
 socket.on('reconnect',function(){
 console.log('reconnected' )
-
+socekt.emit('room',{username:user})
 })
 
 socket.on('rpi',function(data){
 console.log('my data: '+data.ipaddress)
 if(ipAddress===data.ipaddress){
-user=data.username
+	user=data.username
 deviceName=data.devicename
 console.log('i was found!')
 socket.emit('room',data)
