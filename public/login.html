@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartHome</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/signupstylesheet.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-lg">
+
+
+
+
+        <button id="button_toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_start" aria-controls="menu_start"
+            aria-expanded="false" aria-label="Toggle navigation" onclick="onCollapseMenuClick()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu_start">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
+
+
+            </ul>
+            <ul class="navbar-nav navbar-right" id="login_signup_navbar">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/signup.html">Sign up</a>
+                </li>
+                <li class="vl"></li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/login.html">Log in</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container justify-content-center" style="margin-top: 120px; height: 100vh;">
+        <img src="/css/assets/boy.svg" class="rounded mx-auto d-block w3-container w3-center w3-animate-zoom" id="login_image">
+
+        <form class="d-block mx-auto">
+            <div class="form-group">
+                <label for="email_input">E-mail address</label>
+                <input type="email" class="form-control" id="email_input" aria-describedby="email_help" placeholder="mymailaddress@emailprovider.com"
+                    data-container="body" data-toggle="popover" data-placement="right">
+                <small id="email_help" class="form-text text-muted">Enter your e-mail</small>
+                <div class="invalid-feedback"></div>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="form-group">
+
+                <label for="password_input">Password</label>
+                <input type="password" class="form-control" id="password_input" aria-describedby="password_help" placeholder="*************">
+                <small id="password_help" class="form-text text-muted">Enter your password</small>
+                <div class="invalid-feedback">Wrong-password</div>
+            </div>
+            <div id='button_container'>
+                <button type="button" class="btn btn-primary btn-block d-block mx-auto" onclick="logIn()">Log in</button>
+
+            </div>
+
+        </form>
+
+
+
+    </div>
+    <div class="container-fluid" style=" margin-top: 30px; margin-bottom: 0px; background-color:#424949;" align="middle">
+        <p>&nbsp;</p>
+        <div class="col" align="middle" style="margin-top:30px;">
+            <img height="80" width="200" src=logo.png>
+            <h6 style="color:white; font-weight:100;">2018 - All rights reserved &copy;</h6>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+
+
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/login.js"></script>
+
+
+
+
+</body>
+
+</html>
