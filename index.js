@@ -30,14 +30,14 @@ io.on('connection', function (socket) {
   socket.on('room', (data) => {
 
 
-    console.log(socket.id + " is joining room " + data.username)
+    console.log(socket.id + " is joining room " + data.username+' from address '+socket.handshake.address)
     var roomName = data.username
     socket.join(roomName)//socket joins room with id of username
     io.in(roomName).clients(function (error, clients) {
       if (error) throw error
       console.log(clients)
     })
-    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id, domid: data.id })
+    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id})
   })
 
 

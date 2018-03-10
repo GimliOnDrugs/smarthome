@@ -48,6 +48,7 @@ exports.findDeviceWhenConnect = function (devicename, username, socket) {
     })
 }
 exports.findDeviceWhenLeave = function (devicename, username, socket) {
+    console.log('device name '+devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
         result.devices.forEach(element => {
