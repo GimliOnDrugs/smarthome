@@ -10,11 +10,8 @@
         "express": "^4.15.2",
         "ip": "^1.1.5",
         "mongoose": "^5.0.7",
-<<<<<<< HEAD
         "npm": "^5.7.1",
-=======
         "onoff": "^2.0.0",
->>>>>>> 969826d890d6c8d9f2b952a9dd81f4527c45aed3
         "password-hash-and-salt": "^0.1.4",
         "socket.io": "^2.0.4"
     },

@@ -1,3 +1,4 @@
+import { userInfo } from 'os';
 
 var express = require('express');
 var app = express();
@@ -7,7 +8,6 @@ var io = require('socket.io')(server, { wsEngine: 'ws' });
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.set('transports', ['websocket']);
@@ -17,12 +17,12 @@ io.on('connection', function (socket) {
   socket.on('sign up', function (data) {
     user = data
     userauth.userSignUp(data.username, data.email, data.password, socket)
+    
   })
   socket.on('sign in', function (data) {
     user = data
 
     userauth.userLogIn(data.email, data.password, socket)
-
   })
 
 
@@ -38,7 +38,9 @@ io.on('connection', function (socket) {
       console.log(clients)
     })
     io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id})
+    
   })
+  
 
 
 

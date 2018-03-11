@@ -3,11 +3,14 @@
 var socket = io({ transports: ['websocket'] });
 var user = JSON.parse(sessionStorage.getItem('currentuser')) //properties: username
 var listHead = $('.list-group')
+
 socket.on('connect', function () {
+    
     console.log("I'm connecting "+socket.id)
     sessionStorage.setItem('currentroom', JSON.stringify(user.username))
     socket.emit('room', { username: user.username })
 })
+
 
 socket.on('rpi connected', function (data) {
 
