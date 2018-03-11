@@ -53,6 +53,7 @@ socket.on('devices fetched', function (data) {
             var uniqueID = $(this).closest('li').attr('id')
             console.log(uniqueID)
             var deviceName = $('#' + uniqueID + ' #ipaddress').text()
+            console.log(deviceName)
             var action = JSON.parse(sessionStorage.getItem(deviceName)).action
             console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
             if (this.checked) {

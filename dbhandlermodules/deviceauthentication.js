@@ -70,6 +70,7 @@ exports.findDeviceWhenLeave = function (devicename, username, socket) {
     })
 }
 exports.saveActionStatus = function (devicename, username, actionstatus, socket) {
+    console.log('device name '+devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
         result.devices.forEach(element => {
