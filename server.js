@@ -59,6 +59,7 @@ socket.on('reconnect', function () {
 })
 
 socket.on('rpi', function (data) {
+    on=!on
     console.log('my data: ' + data.ipaddress)
     if (ipAddress === data.ipaddress) {
         user = data.username
