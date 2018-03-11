@@ -26,7 +26,7 @@ socket.on('connect', function () {
         if (data.ipaddress === ipAddress) {
            // socket.emit('rpi leave room', data)
             console.log('Im leaving the room :(')
-            on=!on
+            on=false
 
             socket.emit('save status on db', { ipaddress: ipAddress, status: false, username: data.username })
         }
@@ -59,7 +59,7 @@ socket.on('reconnect', function () {
 })
 
 socket.on('rpi', function (data) {
-    on=!on
+    on=true
     console.log('my data: ' + data.ipaddress)
     if (ipAddress === data.ipaddress) {
         user = data.username
