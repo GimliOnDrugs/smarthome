@@ -88,7 +88,6 @@ socket.on('turn on/off light', function (data) {
         console.log('turning off light')
 
     }
-    console.log(LED.readSync())
 })
 
 
