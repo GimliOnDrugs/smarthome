@@ -38,7 +38,7 @@ exports.findDeviceWhenConnect = function (devicename, username, socket) {
         if (error) console.log(error)
         result.devices.forEach(element => {
             if (element.name === devicename) {
-                element.status=true
+                element.status = true
 
                 socket.broadcast.emit('rpi', { devicename: devicename, username: username, ipaddress: element.ipaddress })
 
@@ -48,13 +48,13 @@ exports.findDeviceWhenConnect = function (devicename, username, socket) {
     })
 }
 exports.findDeviceWhenLeave = function (devicename, username, socket) {
-    console.log('device name '+devicename)
+    console.log('device name ' + devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
         result.devices.forEach(element => {
             if (element.name === devicename) {
                 element.actionstatus = false
-                element.status=false
+                element.status = false
 
             }
         })
@@ -80,7 +80,7 @@ exports.saveActionStatus = function (devicename, username, actionstatus, socket)
         })
         result.save(function (error, result) {
             if (error) console.log(error)
-            socket.to(username).emit('turn on/off light', { light: actionstatus })
+            socket.to(username).emit('turn on/off light', { light: actionstatus, devicename: devicename })
 
 
 
