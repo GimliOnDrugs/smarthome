@@ -53,7 +53,7 @@ socket.on('disconnect', function () {
 
 socket.on('reconnect', function () {
     console.log('reconnected')
-    socekt.emit('room', { username: user })
+    socket.emit('room', { username: user })
 })
 
 socket.on('rpi', function (data) {
