@@ -35,7 +35,7 @@ io.on('connection', function (socket) {
       if (error) throw error
       console.log(clients)
     })
-    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id, devicename: devicename })
+    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id})
 
   })
 

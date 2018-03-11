@@ -17,7 +17,7 @@ socket.on('connect', function () {
     console.log('connected')
     console.log(socket.id)
 
-    socket.emit('room', {username:user})
+    socket.emit('room', { username: user })
 
     socket.on('leave room', function (data) {
 
@@ -79,7 +79,7 @@ socket.on('turn on/off light', function (data) {
         LED.writeSync(1); //set pin state to 1 (turn LED on)
         console.log('turnin on light')
     }
-    else {
+    else if (deviceName === data.devicename) {
 
         LED.writeSync(0)
         console.log('turning off light')
