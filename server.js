@@ -6,7 +6,7 @@ var app = require('express')();
 var io = require('socket.io-client')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl="https://smartsecurityhome.herokuapp.com"
-var user
+var user = 'Gimli'
 var deviceName
 var socket = io(stringUrl, { transports: ['websocket'] })
 
@@ -17,7 +17,7 @@ socket.on('connect', function () {
     console.log('connected')
     console.log(socket.id)
 
-
+    socket.emit('room', user)
 
     socket.on('leave room', function (data) {
 
@@ -73,7 +73,7 @@ socket.on('rpi', function (data) {
 
 
 socket.on('turn on/off light', function (data) {
-   
+
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)
         LED.writeSync(1); //set pin state to 1 (turn LED on)
