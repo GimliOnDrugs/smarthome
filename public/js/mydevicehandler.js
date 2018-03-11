@@ -6,9 +6,9 @@ var listHead = $('.list-group')
 
 socket.on('connect', function () {
     
-    console.log("I'm connecting "+socket.id)
+    console.log("I'm connecting "+socket.id+" to room "+user.username)
     sessionStorage.setItem('currentroom', JSON.stringify(user.username))
-    socket.emit('room', user.username )
+    socket.emit('room', { username: user.username })
 })
 
 

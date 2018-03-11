@@ -1,5 +1,3 @@
-import { userInfo } from 'os';
-
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -17,7 +15,7 @@ io.on('connection', function (socket) {
   socket.on('sign up', function (data) {
     user = data
     userauth.userSignUp(data.username, data.email, data.password, socket)
-    
+
   })
   socket.on('sign in', function (data) {
     user = data
@@ -30,17 +28,17 @@ io.on('connection', function (socket) {
   socket.on('room', (data) => {
 
 
-    console.log(socket.id + " is joining room " + data.username+' from address '+socket.handshake.address)
+    console.log(socket.id + " is joining room " + data.username + ' from address ' + socket.handshake.address)
     var roomName = data.username
     socket.join(roomName)//socket joins room with id of username
     io.in(roomName).clients(function (error, clients) {
       if (error) throw error
       console.log(clients)
     })
-    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id})
-    
+    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id, devicename: devicename })
+
   })
-  
+
 
 
 
@@ -74,7 +72,7 @@ io.on('connection', function (socket) {
 
   socket.on('toggle light', function (data) {
     console.log(socket.id)
-    deviceAuth.saveActionStatus(data.devicename,data.username,data.light,socket)
+    deviceAuth.saveActionStatus(data.devicename, data.username, data.light, socket)
   })
 
   socket.on('connect rpi', (data) => { //before joining room, rpi needs to be found
@@ -88,12 +86,12 @@ io.on('connection', function (socket) {
       if (error) throw error
       console.log(clients)
     })   // socket.to(data.username).emit('leave room', data) //web socket send leave room to all rpi clients in room expect itself
-    deviceAuth.findDeviceWhenLeave(data.devicename,data.username,socket)
+    deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
   socket.on('rpi leave room', function (data) { //event sent from rpi that needs to leave room
     socket.leave(data.username)
-    socket.to(data.username).emit('rpi leave room',data)
+    socket.to(data.username).emit('rpi leave room', data)
   })
 
 
