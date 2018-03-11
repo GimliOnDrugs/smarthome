@@ -9,6 +9,7 @@ var stringUrl = "http://192.168.1.242:3000"
 var user = 'Gimli'
 var deviceName
 var socket = io(stringUrl, { transports: ['websocket'] })
+var on=true
 
 
 var ipAddress = ip.address()
@@ -23,8 +24,9 @@ socket.on('connect', function () {
 
 
         if (data.ipaddress === ipAddress) {
-            socket.emit('rpi leave room', data)
+           // socket.emit('rpi leave room', data)
             console.log('Im leaving the room :(')
+            on=!on
 
             socket.emit('save status on db', { ipaddress: ipAddress, status: false, username: data.username })
         }
@@ -33,7 +35,7 @@ socket.on('connect', function () {
 
 })
 
-socket.on('ask for light status', function (data) {
+/* socket.on('ask for light status', function (data) {
     console.log('Im being asked about light status')
 
     var isLedOn = LED.readSync() === 1 ? true : false
@@ -41,7 +43,7 @@ socket.on('ask for light status', function (data) {
 
 
 
-})
+}) */
 
 socket.on('disconnect', function () {
     console.log('disconnected ' + socket.id)
@@ -74,12 +76,12 @@ socket.on('rpi', function (data) {
 
 socket.on('turn on/off light', function (data) {
 
-    if (LED.readSync() === 0 && data.light && deviceName === data.devicename) { //check the pin state, if the state is 0 (or off)
+    if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)
         LED.writeSync(1); //set pin state to 1 (turn LED on)
         console.log('turnin on light')
     }
-    else if (deviceName === data.devicename) {
+    else if (deviceName === data.devicename && on) {
 
         LED.writeSync(0)
         console.log('turning off light')

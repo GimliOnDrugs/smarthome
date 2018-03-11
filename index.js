@@ -89,10 +89,10 @@ io.on('connection', function (socket) {
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
-  socket.on('rpi leave room', function (data) { //event sent from rpi that needs to leave room
+ /*  socket.on('rpi leave room', function (data) { //event sent from rpi that needs to leave room
     socket.leave(data.username)
     socket.to(data.username).emit('rpi leave room', data)
-  })
+  }) */
 
 
   socket.on('disconnect', function () {
