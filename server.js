@@ -4,8 +4,8 @@ var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
-var stringUrl = "http://192.168.1.242:3000"
-//var stringUrl="https://smartsecurityhome.herokuapp.com"
+//var stringUrl = "http://192.168.1.242:3000"
+var stringUrl="https://smartsecurityhome.herokuapp.com"
 var user = 'Gimli'
 var deviceName
 var socket = io(stringUrl, { transports: ['websocket'] })
