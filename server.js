@@ -17,7 +17,7 @@ socket.on('connect', function () {
     console.log('connected')
     console.log(socket.id)
 
-    socket.emit('room', user)
+    socket.emit('room', {username:user})
 
     socket.on('leave room', function (data) {
 

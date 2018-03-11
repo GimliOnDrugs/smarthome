@@ -40,7 +40,7 @@ exports.findDeviceWhenConnect = function (devicename, username, socket) {
             if (element.name === devicename) {
                 element.status = true
 
-                socket.broadcast.emit('rpi', { devicename: devicename, username: username, ipaddress: element.ipaddress })
+                socket.to(username).emit('rpi', { devicename: devicename, username: username, ipaddress: element.ipaddress })
 
             }
         })

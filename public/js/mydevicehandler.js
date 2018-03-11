@@ -8,7 +8,7 @@ socket.on('connect', function () {
     
     console.log("I'm connecting "+socket.id)
     sessionStorage.setItem('currentroom', JSON.stringify(user.username))
-    socket.emit('room', { username: user.username })
+    socket.emit('room', user.username )
 })
 
 
