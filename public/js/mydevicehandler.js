@@ -1,13 +1,12 @@
 
 
 var socket = io({ transports: ['websocket'] });
-var user = JSON.parse(sessionStorage.getItem('currentuser')) //properties: username
+var user = JSON.parse(localStorage.getItem('currentuser')) //properties: username
 var listHead = $('.list-group')
 
 socket.on('connect', function () {
     
     console.log("I'm connecting "+socket.id+" to room "+user.username)
-    sessionStorage.setItem('currentroom', JSON.stringify(user.username))
     socket.emit('room', { username: user.username })
 })
 
@@ -21,6 +20,7 @@ socket.on('rpi connected', function (data) {
 
 
 })
+
 
 socket.on('rpi leave room', function (data) {
     var uniqueid = JSON.parse(sessionStorage.getItem(data.username))
@@ -66,7 +66,7 @@ socket.on('devices fetched', function (data) {
 
             }
             else {
-                socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username })
+                action === 'Light' ? socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username }) : socket.emit('toggle video', { devicename: deviceName, video: false, username: user.username })
 
             }
         })

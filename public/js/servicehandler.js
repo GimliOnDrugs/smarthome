@@ -1,5 +1,5 @@
 var socket = io({transports: ['websocket']});
-var user = JSON.parse(sessionStorage.getItem('currentuser'))
+var user = JSON.parse(localStorage.getItem('currentuser'))
 
 
 

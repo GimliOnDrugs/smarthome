@@ -7,7 +7,7 @@ var password = $('form').find("input:last")
 socket.on('user loggedin', function (data) {
     console.log('identity confirmed')
     console.log(socket.id)
-    sessionStorage.setItem('currentuser', JSON.stringify({
+    localStorage.setItem('currentuser', JSON.stringify({
         username: data.username,
         email: data.email
     }))

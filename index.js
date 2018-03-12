@@ -13,12 +13,10 @@ io.set('transports', ['websocket']);
 io.on('connection', function (socket) {
   console.log('user connected ' + socket.id)
   socket.on('sign up', function (data) {
-    user = data
     userauth.userSignUp(data.username, data.email, data.password, socket)
 
   })
   socket.on('sign in', function (data) {
-    user = data
 
     userauth.userLogIn(data.email, data.password, socket)
   })
@@ -84,15 +82,11 @@ io.on('connection', function (socket) {
   socket.on('leave room', function (data) {
     io.in(data.username).clients(function (error, clients) {
       if (error) throw error
+      console.log(socket.id +' is leaving the room '+data.username)
       console.log(clients)
-    })   // socket.to(data.username).emit('leave room', data) //web socket send leave room to all rpi clients in room expect itself
+    })  
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
-
- /*  socket.on('rpi leave room', function (data) { //event sent from rpi that needs to leave room
-    socket.leave(data.username)
-    socket.to(data.username).emit('rpi leave room', data)
-  }) */
 
 
   socket.on('disconnect', function () {

@@ -9,7 +9,7 @@ var stringUrl = "http://192.168.1.242:3000"
 var user = 'Gimli'
 var deviceName
 var socket = io(stringUrl, { transports: ['websocket'] })
-var on=true
+var on = true
 
 
 var ipAddress = ip.address()
@@ -24,9 +24,8 @@ socket.on('connect', function () {
 
 
         if (data.ipaddress === ipAddress) {
-           // socket.emit('rpi leave room', data)
             console.log('Im leaving the room :(')
-            on=false
+            on = false
 
             socket.emit('save status on db', { ipaddress: ipAddress, status: false, username: data.username })
         }
@@ -35,15 +34,7 @@ socket.on('connect', function () {
 
 })
 
-/* socket.on('ask for light status', function (data) {
-    console.log('Im being asked about light status')
 
-    var isLedOn = LED.readSync() === 1 ? true : false
-    socket.emit('light status', { ipaddress: ipAddress, username: user, domid: data, light: isLedOn })
-
-
-
-}) */
 
 socket.on('disconnect', function () {
     console.log('disconnected ' + socket.id)
@@ -59,7 +50,7 @@ socket.on('reconnect', function () {
 })
 
 socket.on('rpi', function (data) {
-    on=true
+    on = true
     console.log('my data: ' + data.ipaddress)
     if (ipAddress === data.ipaddress) {
         user = data.username
