@@ -6,6 +6,23 @@ var io = require('socket.io')(server, { wsEngine: 'ws' });
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
+
+
+/* const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question('What do you think of Node.js? ', (answer) => {
+  // TODO: Log the answer in a database
+  console.log(`Thank you for your valuable feedback: ${answer}`);
+
+  rl.close();
+});
+ */
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.set('transports', ['websocket']);
@@ -33,7 +50,7 @@ io.on('connection', function (socket) {
       if (error) throw error
       console.log(clients)
     })
-    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id})
+    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id })
 
   })
 
@@ -82,9 +99,9 @@ io.on('connection', function (socket) {
   socket.on('leave room', function (data) {
     io.in(data.username).clients(function (error, clients) {
       if (error) throw error
-      console.log(socket.id +' is leaving the room '+data.username)
+      console.log(socket.id + ' is leaving the room ' + data.username)
       console.log(clients)
-    })  
+    })
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
