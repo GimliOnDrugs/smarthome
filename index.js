@@ -9,7 +9,7 @@ var deviceAuth = require('./dbhandlermodules/deviceauthentication')
 
 
 /* const readline = require('readline');
-
+  
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -34,9 +34,11 @@ io.on('connection', function (socket) {
 
   })
   socket.on('sign in', function (data) {
-
+    console.log('signing in ',socket.id)
     userauth.userLogIn(data.email, data.password, socket)
   })
+
+
 
 
 

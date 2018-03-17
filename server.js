@@ -1,16 +1,16 @@
 
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+/*  var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output */
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
 var stringUrl = "http://192.168.1.242:3000"
-//var stringUrl="https://smartsecurityhome.herokuapp.com"
-var user = 'Gimli'
+//var stringUrl = "https://smartsecurityhome.herokuapp.com"
+var user
 var deviceName
 var socket = io(stringUrl, { transports: ['websocket'] })
 var on = true
-
+var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 
 var ipAddress = ip.address()
 
@@ -18,7 +18,17 @@ socket.on('connect', function () {
     console.log('connected')
     console.log(socket.id)
 
-    socket.emit('room', { username: user })
+    rpiInquirer.startRPIAuth(socket)
+
+
+    socket.on('user loggedin', function (data) {
+        console.log('logging in '+data.username)
+        user = data.username
+        console.log('username registered! ', user)
+        socket.emit('room',{username:user})
+    })
+
+
 
     socket.on('leave room', function (data) {
 
