@@ -6,6 +6,7 @@ from time import sleep
 """ from picamera import PiCamera """
 
 message = sys.stdin.readline()
+
 print('hi bietch')
 """ if message == 'take pic':
 camera = PiCamera()
