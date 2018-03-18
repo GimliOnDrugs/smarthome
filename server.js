@@ -1,6 +1,6 @@
 
-/*  var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output */
+var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
@@ -22,10 +22,10 @@ socket.on('connect', function () {
 
 
     socket.on('user loggedin', function (data) {
-        console.log('logging in '+data.username)
+        console.log('logging in ' + data.username)
         user = data.username
         console.log('username registered! ', user)
-        socket.emit('room',{username:user})
+        socket.emit('room', { username: user })
     })
 
 
