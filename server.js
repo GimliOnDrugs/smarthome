@@ -1,6 +1,6 @@
 
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+/* var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output */
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
@@ -12,8 +12,12 @@ var stringUrl = "http://192.168.1.242:3000"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
 //var shell = new PythonShell('camerascript.py')
-
-
+var options = {
+    mode: 'text',
+    pythonOptions: ['-u'],
+    pythonPath: '/usr/bin/python3'
+}
+var shell=new PythonShell('camerascript.py',options)
 var user
 var deviceName
 var on = false
