@@ -6,7 +6,7 @@ from picamera import PiCamera
 
 message = sys.stdin.readline()
 
-if message == "take pic":
+if message == "take pic\n":
     """ print(message == 'take pic', ' ', message) """
 
     camera = PiCamera()
