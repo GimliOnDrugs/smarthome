@@ -1,6 +1,6 @@
 
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+/*var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output*/
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
@@ -18,8 +18,14 @@ socket.on('connect', function () {
     console.log('connected')
     console.log(socket.id)
 
-    rpiInquirer.startRPIAuth(socket)
+    if (typeof user === "undefined") {
+        rpiInquirer.startRPIAuth(socket)
+    }
+    socket.on('error login', function (data) {
+        console.log('The identity provided is wrong, please insert correct values')
+        rpiInquirer.startRPIAuth(socket)
 
+    })
 
     socket.on('user loggedin', function (data) {
         console.log('logging in ' + data.username)
@@ -56,7 +62,8 @@ socket.on('disconnect', function () {
 
 socket.on('reconnect', function () {
     console.log('reconnected')
-    socket.emit('room', { username: user })
+    if (typeof user !== 'undefined')
+        socket.emit('room', { username: user })
 })
 
 socket.on('rpi', function (data) {

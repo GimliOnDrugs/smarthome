@@ -21,12 +21,14 @@ exports.fetchDevices = function (userName, socketid, io) {
 exports.saveStatus = function (username, status, ipaddress, socketid, io) {
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
-        result.devices.forEach(element => {
-            if (element.ipaddress === ipaddress) {
-                element.status = status
-            }
+        else {
+            result.devices.forEach(element => {
+                if (element.ipaddress === ipaddress) {
+                    element.status = status
+                }
 
-        });
+            });
+        }
         result.save(function (error, result) {
         })
 
@@ -36,14 +38,16 @@ exports.saveStatus = function (username, status, ipaddress, socketid, io) {
 exports.findDeviceWhenConnect = function (devicename, username, socket) {
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
-        result.devices.forEach(element => {
-            if (element.name === devicename) {
-                element.status = true
+        else {
+            result.devices.forEach(element => {
+                if (element.name === devicename) {
+                    element.status = true
 
-                socket.to(username).emit('rpi', { devicename: devicename, username: username, ipaddress: element.ipaddress })
+                    socket.to(username).emit('rpi', { devicename: devicename, username: username, ipaddress: element.ipaddress })
 
-            }
-        })
+                }
+            })
+        }
         result.save()
     })
 }
@@ -51,13 +55,15 @@ exports.findDeviceWhenLeave = function (devicename, username, socket) {
     console.log('device name ' + devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
-        result.devices.forEach(element => {
-            if (element.name === devicename) {
-                element.actionstatus = false
-                element.status = false
+        else {
+            result.devices.forEach(element => {
+                if (element.name === devicename) {
+                    element.actionstatus = false
+                    element.status = false
 
-            }
-        })
+                }
+            })
+        }
         result.save(function (error, result) {
             result.devices.forEach(element => {
                 if (element.name === devicename) { //questo evento è mandato a tutti i device tranne il client web (socket è innfatti il client)
@@ -70,7 +76,7 @@ exports.findDeviceWhenLeave = function (devicename, username, socket) {
     })
 }
 exports.saveActionStatus = function (devicename, username, actionstatus, socket) {
-    console.log('device name '+devicename)
+    console.log('device name ' + devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
         result.devices.forEach(element => {

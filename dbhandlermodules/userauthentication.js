@@ -14,7 +14,7 @@ var UserSchema = new Schema({
         unique: true
     },
     password: String,
-    devices:[{name:String,ipaddress:String,action:String,status:Boolean,position:String,actionstatus:Boolean}]
+    devices: [{ name: String, ipaddress: String, action: String, status: Boolean, position: String, actionstatus: Boolean }]
 })
 
 
@@ -22,7 +22,7 @@ var UserSchema = new Schema({
 
 var User = mongoose.model('User', UserSchema)
 
-exports.getUser=User
+exports.getUser = User
 
 exports.userSignUp = function (userName, userEmail, userPassword, socket) {
     socket.emit('signing up')
@@ -50,12 +50,26 @@ exports.userSignUp = function (userName, userEmail, userPassword, socket) {
 
 }
 exports.userLogIn = function (userEmail, userPassword, socket) {
+    console.log('in auth')
     User.findOne({ 'email': userEmail }, function (error, result) {
-        if (error) return new Error('errore query')
+        console.log('result ', result === null)
+        if (error) {
+            console.log('email ' + error)
+            socket.emit('error login', 'error')
+            //  return new Error('errore query')
+
+        }
+        if (result === null) {
+            console.log('Im emitting')
+            socket.emit('error login', 'error')
+
+        }
         else {
             password(userPassword).verifyAgainst(result.password, function (error, same) {
                 if (error) {
-                    console.log(error)
+
+                    socket.emit('error log in', result)
+
                 }
                 if (same) {
                     console.log('user correct')
@@ -65,7 +79,7 @@ exports.userLogIn = function (userEmail, userPassword, socket) {
                 }
                 else {
 
-                    throw new Error('errore identità')
+                    socket.emit('error login', 'error')
                 }
             })
         }

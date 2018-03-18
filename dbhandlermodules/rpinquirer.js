@@ -3,15 +3,7 @@ var userAuth = require('./userauthentication')
 
 
 var questions = [
-    {
-        type: 'input',
-        name: 'username',
-        message: 'Hi, please authenticate to your device!\nUsername: ',
-        validate: (answer) => {
-
-            return answer !== ''
-        }
-    },
+    
     {
         type: 'input',
         name: 'email',
