@@ -75,7 +75,7 @@ exports.findDeviceWhenLeave = function (devicename, username, socket) {
         })
     })
 }
-exports.saveActionStatus = function (devicename, username, actionstatus, socket) {
+exports.saveActionStatusLight = function (devicename, username, actionstatus, socket) {
     console.log('device name ' + devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
@@ -88,6 +88,26 @@ exports.saveActionStatus = function (devicename, username, actionstatus, socket)
         result.save(function (error, result) {
             if (error) console.log(error)
             socket.to(username).emit('turn on/off light', { light: actionstatus, devicename: devicename })
+
+
+
+
+        })
+    })
+}
+exports.saveActionStatusVideo = function (devicename, username, actionstatus, socket) {
+    console.log('device name ' + devicename)
+    userAuth.getUser.findOne({ 'username': username }, function (error, result) {
+        if (error) console.log(error)
+        result.devices.forEach(element => {
+            if (element.name === devicename && element.status) {
+                element.actionstatus = actionstatus
+
+            }
+        })
+        result.save(function (error, result) {
+            if (error) console.log(error)
+            socket.to(username).emit('turn on/off video', { video: actionstatus, devicename: devicename })
 
 
 

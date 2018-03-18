@@ -98,4 +98,17 @@ socket.on('turn on/off light', function (data) {
     }
 })
 
+socket.on('turn on/off video',function(data){//properties video:bool, devicename:string
+
+  if (data.video && deviceName === data.devicename && on) { //check if device is on before working
+        console.log('data arrived: ' + data.video)
+        console.log('turning on video')
+    }
+    else if (deviceName === data.devicename) {
+
+        console.log('turning off light')
+
+    }
+})
+
 

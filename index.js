@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
 
   })
   socket.on('sign in', function (data) {
-    console.log('signing in ',socket.id)
+    console.log('signing in ', socket.id)
     userauth.userLogIn(data.email, data.password, socket)
   })
 
@@ -75,7 +75,12 @@ io.on('connection', function (socket) {
 
   socket.on('toggle light', function (data) {
     console.log(socket.id)
-    deviceAuth.saveActionStatus(data.devicename, data.username, data.light, socket)
+    deviceAuth.saveActionStatusLight(data.devicename, data.username, data.light, socket)
+  })
+  socket.on('toggle video', function (data) {//properties: devicename,video,username
+    console.log(socket.id)
+    deviceAuth.saveActionStatusLight(data.devicename, data.username, data.video, socket)
+
   })
 
   socket.on('connect rpi', (data) => { //before joining room, rpi needs to be found
@@ -98,6 +103,7 @@ io.on('connection', function (socket) {
     console.log('user disconnected ' + socket.id)
 
   })
+
 
 
 });
