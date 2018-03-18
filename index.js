@@ -106,6 +106,10 @@ io.on('connection', function (socket) {
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
+  socket.on('send video',function(data){
+    console.log('image arrived to server')
+    socket.emit('video sent',data)
+  })
 
   socket.on('disconnect', function () {
     console.log('user disconnected ' + socket.id)

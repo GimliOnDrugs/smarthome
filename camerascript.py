@@ -15,6 +15,7 @@ if message == "take pic\n":
 # Camera warm-up time
     sleep(2)
     camera.capture('foo.jpg')
+    print('pic taken')
 else:
     f = open("guru99.txt", "w+")
     f.write(message)

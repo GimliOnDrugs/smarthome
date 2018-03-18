@@ -4,9 +4,11 @@ var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
+var path = require('path');
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
+var fs = require('fs')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
@@ -117,7 +119,12 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         shell.send('take pic')
         shell.on('message', function (message) {
             // received a message sent from the Python script (a simple "print" statement)
-            console.log('server received ' + message);
+            if (message === 'pic taken') {
+                fs.readFile(__dirname + 'foo.jpg', function (err, buf) {
+                    socket.emit('send video',buf)
+                    console.log('sending image')
+                })
+            }
         });
     }
     else if (deviceName === data.devicename && on) {

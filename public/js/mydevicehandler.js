@@ -20,6 +20,10 @@ socket.on('rpi connected', function (data) {
 
 
 })
+socket.on('video sent', function(data){
+    console.log('image arrived to bw')
+    
+})
 
 
 socket.on('rpi leave room', function (data) {
