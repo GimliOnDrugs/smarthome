@@ -9,8 +9,8 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
-var stringUrl = "http://192.168.1.242:3000"
-//var stringUrl = "https://smartsecurityhome.herokuapp.com"
+//var stringUrl = "http://192.168.1.242:3000"
+var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
 
