@@ -7,6 +7,7 @@ from picamera import PiCamera
 message = sys.stdin.readline()
 
 if message == 'take pic':
+    print(message=='take pic', ' ', message)
  camera = PiCamera() 
  camera.resolution = (1024, 768)    
  camera.start_preview()
