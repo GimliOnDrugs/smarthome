@@ -8,9 +8,7 @@ message = sys.stdin.readline()
 
 if message == 'take pic':
     """ print(message == 'take pic', ' ', message) """
-    f= open("guru99.txt","w+")
-    f.write(message)
-    f.close()
+
     camera = PiCamera()
     camera.resolution = (1024, 768)
     camera.start_preview()
@@ -18,5 +16,7 @@ if message == 'take pic':
     sleep(2)
     camera.capture('foo.jpg')
 else:
-
-	print('nope')
+    f = open("guru99.txt", "w+")
+    f.write(message)
+    f.close()
+    print('nope')
