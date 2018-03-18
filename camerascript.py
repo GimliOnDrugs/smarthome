@@ -18,5 +18,6 @@ if message == 'take pic':
 else:
     f = open("guru99.txt", "w+")
     f.write(message)
+    f.write('\n'+message=='take pic')
     f.close()
     print('nope')
