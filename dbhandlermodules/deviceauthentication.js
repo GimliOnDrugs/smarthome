@@ -26,6 +26,7 @@ exports.saveStatus = function (username, status, ipaddress, socketid, io) {
                 if (element.ipaddress === ipaddress) {
                     element.status = status
                 }
+               
 
             });
         }

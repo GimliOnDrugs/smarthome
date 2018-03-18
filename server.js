@@ -120,7 +120,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
     }
     else if (deviceName === data.devicename) {
 
-        console.log('turning off light')
+        console.log('turning off video')
 
     }
 })

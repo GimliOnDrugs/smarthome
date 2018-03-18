@@ -6,7 +6,7 @@ var io = require('socket.io')(server, { wsEngine: 'ws' });
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
-var PythonShell=require('python-shell')
+var PythonShell = require('python-shell')
 
 
 
@@ -51,6 +51,15 @@ io.on('connection', function (socket) {
     var ipAddress = data.ipaddress
     var username = data.username
     var statusDevice = data.status
+    if (!statusDevice) {
+      socket.leave(username)
+      io.in(roomName).clients(function (error, clients) {
+        if (error) throw error
+        console.log(clients)
+      })
+
+    }
+    console.log('save on db ', username)
     deviceAuth.saveStatus(username, statusDevice, ipAddress, socket.id)
   })
   socket.on('save device on database', function (data) {
@@ -75,12 +84,12 @@ io.on('connection', function (socket) {
   })
 
   socket.on('toggle light', function (data) {
-    console.log(socket.id)
+    console.log('light toggled ' + socket.id)
     deviceAuth.saveActionStatusLight(data.devicename, data.username, data.light, socket)
   })
   socket.on('toggle video', function (data) {//properties: devicename,video,username
     console.log(socket.id)
-    deviceAuth.saveActionStatusLight(data.devicename, data.username, data.video, socket)
+    deviceAuth.saveActionStatusVideo(data.devicename, data.username, data.video, socket)
 
   })
 
