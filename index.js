@@ -51,14 +51,12 @@ io.on('connection', function (socket) {
     var ipAddress = data.ipaddress
     var username = data.username
     var statusDevice = data.status
-    if (!statusDevice) {
-      socket.leave(username)
       io.in(username).clients(function (error, clients) {
         if (error) throw error
         console.log('remaining clients '+clients)
       })
 
-    }
+    
     console.log('save on db ', socket.handshake.address)
     deviceAuth.saveStatus(username, statusDevice, ipAddress, socket.id)
   })
@@ -102,6 +100,7 @@ io.on('connection', function (socket) {
   socket.on('leave room', function (data) {
     io.in(data.username).clients(function (error, clients) {
       if (error) throw error
+
       console.log(clients)
     })
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
