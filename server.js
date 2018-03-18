@@ -17,7 +17,7 @@ var options = {
     pythonOptions: ['-u'],
     pythonPath: '/usr/bin/python3'
 }
-var shell=new PythonShell('camerascript.py',options)
+var shell = new PythonShell('camerascript.py', options)
 var user
 var deviceName
 var on = false
@@ -112,6 +112,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
     if (data.video && deviceName === data.devicename && on) { //check if device is on before working
         console.log('data arrived: ' + data.video)
         console.log('turning on video')
+        shell = new PythonShell('camerascript.py', options)
+
         shell.send('take pic')
         shell.on('message', function (message) {
             // received a message sent from the Python script (a simple "print" statement)
