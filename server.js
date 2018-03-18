@@ -112,7 +112,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
     if (data.video && deviceName === data.devicename && on) { //check if device is on before working
         console.log('data arrived: ' + data.video)
         console.log('turning on video')
-        shell.send('hello how are ya')
+        shell.send('take pic')
         shell.on('message', function (message) {
             // received a message sent from the Python script (a simple "print" statement)
             console.log('server received ' + message);
