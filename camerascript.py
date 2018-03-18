@@ -1,21 +1,17 @@
 import io
 import random
-import picamera
+import sys
 
-def motion_detected():
-    # Randomly return True (like a fake motion detection routine)
-    return random.randint(0, 10) == 0
+from time import sleep
+""" from picamera import PiCamera """
 
-camera = picamera.PiCamera()
-stream = picamera.PiCameraCircularIO(camera, seconds=20)
-camera.start_recording(stream, format='h264')
-try:
-    while True:
-        camera.wait_recording(1)
-        if motion_detected():
-            # Keep recording for 10 seconds and only then write the
-            # stream to disk
-            camera.wait_recording(10)
-            stream.copy_to('motion.h264')
-finally:
-    camera.stop_recording()
+message = sys.stdin.readline()
+print('hi bietch')
+""" if message == 'take pic':
+camera = PiCamera()
+camera.resolution = (1024, 768)
+camera.start_preview()
+# Camera warm-up time
+sleep(2)
+camera.capture('foo.jpg')
+ """

@@ -1,18 +1,23 @@
 
-var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+/* var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
+var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output */
 var ip = require('ip')
 var app = require('express')();
 var io = require('socket.io-client')
-//var stringUrl = "http://192.168.1.242:3000"
-var stringUrl = "https://smartsecurityhome.herokuapp.com"
+var rpiInquirer = require('./dbhandlermodules/rpinquirer')
+var PythonShell = require('python-shell')
+var rpiInquirer = require('./dbhandlermodules/rpinquirer')
+var stringUrl = "http://192.168.1.242:3000"
+//var stringUrl = "https://smartsecurityhome.herokuapp.com"
+var socket = io(stringUrl, { transports: ['websocket'] })
+var ipAddress = ip.address()
+var shell = new PythonShell('camerascript.py')
+
+
 var user
 var deviceName
-var socket = io(stringUrl, { transports: ['websocket'] })
 var on = false
-var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 
-var ipAddress = ip.address()
 
 socket.on('connect', function () {
     console.log('connected')
@@ -98,11 +103,16 @@ socket.on('turn on/off light', function (data) {
     }
 })
 
-socket.on('turn on/off video',function(data){//properties video:bool, devicename:string
+socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
 
-  if (data.video && deviceName === data.devicename && on) { //check if device is on before working
+    if (data.video && deviceName === data.devicename && on) { //check if device is on before working
         console.log('data arrived: ' + data.video)
         console.log('turning on video')
+        shell.send('hello how are ya')
+        shell.on('message', function (message) {
+            // received a message sent from the Python script (a simple "print" statement)
+            console.log('server received ' + message);
+        });
     }
     else if (deviceName === data.devicename) {
 
