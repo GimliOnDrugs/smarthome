@@ -11,7 +11,7 @@ var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
-//var shell = new PythonShell('camerascript.py')
+
 var options = {
     mode: 'text',
     pythonOptions: ['-u'],
