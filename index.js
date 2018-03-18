@@ -53,13 +53,13 @@ io.on('connection', function (socket) {
     var statusDevice = data.status
     if (!statusDevice) {
       socket.leave(username)
-      io.in(roomName).clients(function (error, clients) {
+      io.in(username).clients(function (error, clients) {
         if (error) throw error
-        console.log(clients)
+        console.log('remaining clients '+clients)
       })
 
     }
-    console.log('save on db ', username)
+    console.log('save on db ', socket.handshake.address)
     deviceAuth.saveStatus(username, statusDevice, ipAddress, socket.id)
   })
   socket.on('save device on database', function (data) {
@@ -102,7 +102,6 @@ io.on('connection', function (socket) {
   socket.on('leave room', function (data) {
     io.in(data.username).clients(function (error, clients) {
       if (error) throw error
-      console.log(socket.id + ' is leaving the room ' + data.username)
       console.log(clients)
     })
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
