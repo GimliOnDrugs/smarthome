@@ -9,7 +9,7 @@ var stringUrl = "http://192.168.1.242:3000"
 var user
 var deviceName
 var socket = io(stringUrl, { transports: ['websocket'] })
-var on = true
+var on = false
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 
 var ipAddress = ip.address()
