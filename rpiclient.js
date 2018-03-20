@@ -122,7 +122,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 //socket stream
                 
                 var postFileRequest=request.post(stringUrl+'/')
-                fs.createReadStream('/foo.jpg').pipe(postFileRequest)
+                fs.createReadStream('foo.jpg').pipe(postFileRequest)
             }
             else if (deviceName === data.devicename && on) {
 
