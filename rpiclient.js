@@ -108,6 +108,8 @@ socket.on('turn on/off light', function (data) {
     }
 })
 
+
+
 socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
 
     if (data.video && deviceName === data.devicename && on) { //check if device is on before working
@@ -147,6 +149,4 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
     }
 })
 
-    }
-})
 
