@@ -14,6 +14,6 @@ if message == "take pic\n":
 
     camera.wait_recording(60)
     camera.stop_recording()
-        print('frocio')
+    print('frocio')
 else:
     print('ghey')
