@@ -2,14 +2,12 @@
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
 var ip = require('ip')
-var app = require('express')();
 var io = require('socket.io-client')
-var path = require('path');
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
-var http = require('http')
+var request=require('request')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
@@ -123,48 +121,20 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             if (message === 'pic taken') {
                 //socket stream
                 console.log('python working message')
-                var postData = JSON.stringify({
-                    msg: 'hello world'
-                });
-
-                var options = {
-                    host:'"http://192.168.1.242',
-                    port:3000,
-                    method: 'POST',
-                    path: '/videostream',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Content-Length': postData.length
-                    }
-                };
-
-                var req = http.request(options, function (res) {
-                    console.log('STATUS:', res.statusCode);
-                    console.log('HEADERS:', JSON.stringify(res.headers));
-
-                    res.setEncoding('utf8');
-
-                    res.on('data', function (chunk) {
-                        console.log('BODY:', chunk);
-                    });
-
-                    res.on('end', function () {
-                        console.log('No more data in response.');
-                    });
-                });
-
-                req.on('error', function (e) {
-                    console.log('Problem with request:', e.message);
-                });
-                //socketstream(socket).emit('sending pic', stream, {})
+                var fileStream=fs.createWriteStream('/bigfile.txt')
+                for(let i=0;i<1e6;i++){
+                    fileStream.write('this is a fake paragraph')
+                }
+                var postFileRequest=request.post(stringUrl+'/')
+                fs.createReadStream('/bigfile.txt').pipe(postFileRequest)
             }
-        });
-    }
-    else if (deviceName === data.devicename && on) {
+            else if (deviceName === data.devicename && on) {
 
-        console.log('turning off video')
+                console.log('turning off video')
+
+            }
+        })
 
     }
 })
-
 

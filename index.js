@@ -15,12 +15,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //streaming section
 
-app.get('/videostream',function(req,res){
-console.log('got a request '+req.ip)
-  res.send({message:'ghey'})
-})
-
-
+app.post('/', function (req, res, next) {
+  req.pipe(fs.createWriteStream('./uploadFile'));
+  req.on('end', next);
+});
 
 io.set('transports', ['websocket']);
 
