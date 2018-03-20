@@ -17,9 +17,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/', function (req, res, next) {
   console.log('streaming received')
+  console.log('this is the badi '+req.body)
   req.pipe(fs.createWriteStream('./uploadFile'));
   req.on('end', next);
 });
+
+app.get('')
 
 io.set('transports', ['websocket']);
 
