@@ -10,16 +10,16 @@ def motion_detected():
     return random.randint(0, 10) == 0
 
 if message == "take pic\n":
-       try:
+        try:
            while True:
             camera.wait_recording(1)
-               if motion_detected():
+            if motion_detected():
             # Keep recording for 10 seconds and only then write the
             # stream to disk
                   camera.wait_recording(10)
                   stream.copy_to('motion.h264')
         finally:
-          camera.stop_recording()
+            camera.stop_recording()
     
 else:
     print('ghey')
