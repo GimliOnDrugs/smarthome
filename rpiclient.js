@@ -126,7 +126,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     headers: { username: user }
                 }
                 var postFileRequest = request.post(optionPost)
-                fs.createReadStream('motion.h264').pipe(postFileRequest)
+                fs.createReadStream('my_video.h264').pipe(postFileRequest)
         })
 
        /*  shell.on('message', function (message) {
