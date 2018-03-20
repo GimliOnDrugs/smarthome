@@ -121,7 +121,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
         shell.on('message', function (message) {
             console.log(message)
-            if (message === 'pic taken') {
+            if (message === 'recording started') {
                 console.log('streaming starting')
                 var optionPost = {
                     uri: stringUrl + '/',
