@@ -122,9 +122,40 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             // received a message sent from the Python script (a simple "print" statement)
             if (message === 'pic taken') {
                 //socket stream
-               console.log('python working message')
+                console.log('python working message')
+                var postData = querystring.stringify({
+                    msg: 'hello world'
+                });
 
+                var options = {
+                    hostname: stringUrl,
+                    port: 3000,
+                    method: 'POST',
+                    path: '/videostream',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Length': postData.length
+                    }
+                };
 
+                var req = http.request(options, function (res) {
+                    console.log('STATUS:', res.statusCode);
+                    console.log('HEADERS:', JSON.stringify(res.headers));
+
+                    res.setEncoding('utf8');
+
+                    res.on('data', function (chunk) {
+                        console.log('BODY:', chunk);
+                    });
+
+                    res.on('end', function () {
+                        console.log('No more data in response.');
+                    });
+                });
+
+                req.on('error', function (e) {
+                    console.log('Problem with request:', e.message);
+                });
                 //socketstream(socket).emit('sending pic', stream, {})
             }
         });
