@@ -21,9 +21,8 @@ if message == "take pic\n":
     camera.resolution = (640, 480)
     print('message')
     camera.start_recording('motion.h264')
-    camera.wait_recording(20)
-    print('camera stops recording')
-    camera.stop_recording()
+   """  print('camera stops recording')
+    camera.stop_recording() """
 
     """ try:
         while True:
