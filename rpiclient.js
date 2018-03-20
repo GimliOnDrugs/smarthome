@@ -128,7 +128,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 });
 
                 var options = {
-                    hostname: '192.168.1.242' ,
+                    host:'"http://192.168.1.242',
+                    port:3000,
                     method: 'POST',
                     path: '/videostream',
                     headers: {
