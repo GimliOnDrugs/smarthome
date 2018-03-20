@@ -12,6 +12,16 @@ var fs = require('fs')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+//streaming section
+
+app.get('/videostream',function(req,res){
+
+  res.send({message:'ghey'})
+})
+
+
+
 io.set('transports', ['websocket']);
 
 io.on('connection', function (socket) {
