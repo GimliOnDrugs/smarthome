@@ -17,12 +17,17 @@ stream = picamera.PiCameraCircularIO(camera, seconds=20)
 camera.start_recording(stream, format='h264')
 
 if message == "take pic\n":
+    camera = picamera.PiCamera()
+    camera.resolution = (640, 480)
+    print('message')
+    camera.start_recording('my_video.h264')
+    camera.wait_recording(20)
+    print('camera stops recording')
+    camera.stop_recording()
 
-    try:
+    """ try:
         while True:
             camera.wait_recording(1)
-            print('message')
-            print('test')
             if motion_detected():
                 # Keep recording for 10 seconds and only then write the
                 # stream to disk
@@ -31,7 +36,7 @@ if message == "take pic\n":
 
     finally:
         print('camera stops recording')
-        camera.stop_recording()
+        camera.stop_recording() """
 
 else:
     print('ghey')
