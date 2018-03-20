@@ -9,12 +9,13 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
-var socketstream = require('socket.io-stream')
-var stringUrl = "http://192.168.1.242:3000"
+var http = require('http')
+//var socketstream = require('socket.io-stream')
+var stringUrl = "http://192.168.1.242:6379"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
-var stream = socketstream.createStream()
+//var stream = socketstream.createStream()
 
 var options = {
     mode: 'text',
@@ -66,7 +67,7 @@ socket.on('connect', function () {
 
 
 socket.on('disconnect', function () {
-    console.log('disconnected ' + socket.id)
+    console.log('\ndisconnected ')
     socket.emit('leave room', { devicename: deviceName, username: user })
     //socket.emit('save status on db',{ipaddress:ipAddress,status:false,username:user})
 
@@ -123,15 +124,11 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             // received a message sent from the Python script (a simple "print" statement)
             if (message === 'pic taken') {
                 //socket stream
-                 var file = fs.createWriteStream('/bigfile.txt')
-                
-                 socketstream(socket).emit('sending file',stream,{message:'New Lorem Ipsum Dolor Sit Amet paragraph!'})
-                 stream.pipe(file)
-                for (let i = 0; i <= 1e6; i++) {
-                    file.write('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n');
+                var httpOptions={
+                    hostname:stringUrl,
+                    path:'/upload/:id'
                 }
-                file.end()
-              
+
                 //socketstream(socket).emit('sending pic', stream, {})
             }
         });
