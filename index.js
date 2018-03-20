@@ -7,7 +7,8 @@ var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
 var PythonShell = require('python-shell')
-
+var socketstream=require('socket.io-stream')
+var fs=require('fs')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -116,7 +117,11 @@ io.on('connection', function (socket) {
 
   })
 
-
+socketstream(socket).on('sending file',function(stream,data){
+  console.log('\n'+data+'\n')
+ stream.pipe(fs.createWriteStream('/bigfile.txt'))
+ 
+})
 
 });
 
