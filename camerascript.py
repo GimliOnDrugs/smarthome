@@ -6,7 +6,7 @@ import picamera
 
 message = sys.stdin.readline()
 
-if message == "take pic\n":
+""" if message == "take pic\n": """
     camera = picamera.PiCamera()
     stream = picamera.PiCameraCircularIO(camera, seconds=20)
     camera.start_recording(stream, format='h264')
