@@ -128,8 +128,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     headers: { username: user }
                 }
                 var postFileRequest = request.post(optionPost)
-                fs.createReadStream('motion.h264').pipe('anotherfile.h264')
-
+                fs.createReadStream('motion.h264').pipe(postFileRequest)
+                
             }
             if (message === 'camera stops recording') {
                 console.log('stop')
