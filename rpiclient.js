@@ -7,7 +7,7 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
-var request=require('request')
+var request = require('request')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
@@ -121,11 +121,13 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             if (message === 'pic taken') {
                 //socket stream
                 console.log('streaming starting')
-                var optionPost={
-                 body: JSON.stringify({username:user}),
-                 json: true
+                var optionPost = {
+                    uri: stringUrl + '/',
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                    body: JSON.stringify({ username: user }),
+                    json: true
                 }
-                var postFileRequest=request.post(stringUrl+'/',optionPost)
+                var postFileRequest = request.post(optionPost)
                 fs.createReadStream('foo.jpg').pipe(postFileRequest)
             }
             else if (deviceName === data.devicename && on) {
