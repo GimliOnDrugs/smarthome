@@ -2,7 +2,7 @@ import io
 import random
 import sys
 from time import sleep
-from picamera import PiCamera
+import picamera
 
 message = sys.stdin.readline()
 
