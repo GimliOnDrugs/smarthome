@@ -123,9 +123,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 console.log('streaming starting')
                 var optionPost = {
                     uri: stringUrl + '/',
-                    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                   /*  headers: { 'content-type': 'application/x-www-form-urlencoded' },
                     body: JSON.stringify({ username: user }),
-                    json: true
+                    json: true */
                 }
                 var postFileRequest = request.post(optionPost)
                 fs.createReadStream('foo.jpg').pipe(postFileRequest)
