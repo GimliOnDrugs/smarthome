@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/', function (req, res, next) {
   console.log('streaming received')
+  console.log(JSON.parse(req.body).username)
   req.pipe(fs.createWriteStream('./uploadedFile.jpg'));
   req.on('data',function(chunk){
     console.log('\n'+chunk)
@@ -24,7 +25,7 @@ app.post('/', function (req, res, next) {
   req.on('end', next);
 });
 
-app.get('')
+app.get('/')
 
 io.set('transports', ['websocket']);
 
