@@ -20,7 +20,7 @@ if message == "take pic\n":
     camera = picamera.PiCamera()
     camera.resolution = (640, 480)
     print('message')
-    camera.start_recording('my_video.h264')
+    camera.start_recording('motion.h264')
     camera.wait_recording(20)
     print('camera stops recording')
     camera.stop_recording()
