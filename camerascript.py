@@ -10,7 +10,7 @@ if message == "take pic\n":
     camera = picamera.PiCamera()
     stream = picamera.PiCameraCircularIO(camera, seconds=20)
     camera.start_recording(stream, format='h264')
-    print('recording started')
+    """ print('recording started') """
 
     try:
        while True:
