@@ -120,13 +120,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             // received a message sent from the Python script (a simple "print" statement)
             if (message === 'pic taken') {
                 //socket stream
-                console.log('python working message')
-                var fileStream=fs.createWriteStream('/bigfile.txt')
-                for(let i=0;i<1e6;i++){
-                    fileStream.write('this is a fake paragraph')
-                }
+                
                 var postFileRequest=request.post(stringUrl+'/')
-                fs.createReadStream('/bigfile.txt').pipe(postFileRequest)
+                fs.createReadStream('/foo.jpg').pipe(postFileRequest)
             }
             else if (deviceName === data.devicename && on) {
 
