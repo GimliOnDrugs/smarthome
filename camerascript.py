@@ -7,9 +7,11 @@ import picamera
 message = sys.stdin.readline()
 
 if message == "take pic\n":
-   camera = picamera.PiCamera()
-   stream = picamera.PiCameraCircularIO(camera, seconds=20)
-   camera.start_recording(stream, format='h264')
+    camera = picamera.PiCamera()
+    stream = picamera.PiCameraCircularIO(camera, seconds=20)
+    camera.start_recording(stream, format='h264')
+    print('stream started')
+
 try:
     while True:
 
@@ -17,4 +19,3 @@ try:
 finally:
     camera.stop_recording()
     print('pic taken')
-

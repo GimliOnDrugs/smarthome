@@ -116,10 +116,10 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         shell = new PythonShell('camerascript.py', options)
 
         shell.send('take pic')
+
         shell.on('message', function (message) {
-            // received a message sent from the Python script (a simple "print" statement)
-            if (message === 'pic taken') {
-                //socket stream
+            console.log(message)
+            if (message === 'stream started') {
                 console.log('streaming starting')
                 var optionPost = {
                     uri: stringUrl + '/',
@@ -128,12 +128,24 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 var postFileRequest = request.post(optionPost)
                 fs.createReadStream('motion.h264').pipe(postFileRequest)
             }
-            else if (deviceName === data.devicename && on) {
-
-                console.log('turning off video')
-
-            }
+            // received a message sent from the Python script (a simple "print" statement)
+            //if (message === 'pic taken') {
+            //socket stream
+            /*  console.log('streaming starting')
+             var optionPost = {
+                 uri: stringUrl + '/',
+                 headers: { username: user }
+             }
+             var postFileRequest = request.post(optionPost)
+             fs.createReadStream('motion.h264').pipe(postFileRequest) */
         })
+    }
+    else if (deviceName === data.devicename && on) {
+
+        console.log('turning off video')
+
+    }
+})
 
     }
 })
