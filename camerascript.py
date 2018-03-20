@@ -17,9 +17,4 @@ try:
 finally:
     camera.stop_recording()
     print('pic taken')
-else:
-    f = open("guru99.txt", "w+")
-    f.write(message)
-    f.write('\n'+str(message == 'take pic'))
-    f.close()
-    print('nope')
+
