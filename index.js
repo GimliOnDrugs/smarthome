@@ -13,7 +13,7 @@ var fs = require('fs')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-io.adapter(redis({host: 'localhost', port: 6379 }))
+io.adapter(redis({host: 'localhost', port: 6379,key:'socket.io' }))
 io.set('transports', ['websocket']);
 
 io.on('connection', function (socket) {
