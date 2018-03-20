@@ -123,7 +123,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             if (message === 'pic taken') {
                 //socket stream
                 console.log('python working message')
-                var postData = querystring.stringify({
+                var postData = JSON.stringify({
                     msg: 'hello world'
                 });
 
