@@ -20,9 +20,7 @@ app.post('/', function (req, res, next) {
   console.log(req.header('username'))
  // console.log(JSON.parse(req.body).username)
   req.pipe(fs.createWriteStream('./uploadedFile.jpg'));
-  req.on('data',function(chunk){
-    console.log('\n'+chunk)
-  })
+ 
   req.on('end', next);
 });
 
