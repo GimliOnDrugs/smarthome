@@ -20,8 +20,10 @@ app.post('/', function (req, res, next) {
   var user = req.header('username')
   // console.log(JSON.parse(req.body).username)
 
-  req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/uploadedFile.jpg')));
-
+  req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/motion.h264')));
+  req.on('data', function (chunk) {
+    console.log(chunk)
+  })
   req.on('end', next);
 });
 
