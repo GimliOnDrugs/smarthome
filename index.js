@@ -17,10 +17,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/', function (req, res, next) {
   console.log('streaming received')
-  var user=req.header('username')
- // console.log(JSON.parse(req.body).username)
-  req.pipe(fs.createWriteStream('./'+user+'/uploadedFile.jpg'));
- 
+  var user = req.header('username')
+  // console.log(JSON.parse(req.body).username)
+
+  req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/uploadedFile.jpg')));
+
   req.on('end', next);
 });
 
@@ -44,7 +45,12 @@ io.on('connection', function (socket) {
 
 
   socket.on('room', (data) => {
-
+    var pathUser = path.join(__dirname, 'public/' + data.username + '/')
+    fs.exists(pathUser, function (exists) {
+      if (!exists) {
+        fs.mkdir(pathUser)
+      }
+    })
 
     console.log(socket.id + " is joining room " + data.username + ' from address ' + socket.handshake.address)
     var roomName = data.username
