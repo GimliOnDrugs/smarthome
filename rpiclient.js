@@ -118,23 +118,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         shell = new PythonShell('camerascript.py', options)
 
         shell.send('take pic')
-        shell.on('message',function(message){
-            console.log('hi!')
-            console.log('streaming starting')
-                var optionPost = {
-                    uri: stringUrl + '/',
-                    headers: { username: user }
-                }
-                var postFileRequest = request.post(optionPost)
-                fs.createReadStream('motion.h264').pipe(postFileRequest)
-                if(message==='camera stops recording'){
-                    console.log('stop')
-                }
-        })
-
-       /*  shell.on('message', function (message) {
-            console.log(message)
-            if (message === 'recording started') {
+        shell.on('message', function (message) {
+            if (message === 'message') {
+                console.log('hi!')
                 console.log('streaming starting')
                 var optionPost = {
                     uri: stringUrl + '/',
@@ -142,18 +128,34 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 var postFileRequest = request.post(optionPost)
                 fs.createReadStream('motion.h264').pipe(postFileRequest)
-            } */
-            // received a message sent from the Python script (a simple "print" statement)
-            //if (message === 'pic taken') {
-            //socket stream
-            /*  console.log('streaming starting')
-             var optionPost = {
-                 uri: stringUrl + '/',
-                 headers: { username: user }
-             }
-             var postFileRequest = request.post(optionPost)
-             fs.createReadStream('motion.h264').pipe(postFileRequest) */
-      //  })
+            }
+            if (message === 'camera stops recording') {
+                console.log('stop')
+            }
+        })
+
+        /*  shell.on('message', function (message) {
+             console.log(message)
+             if (message === 'recording started') {
+                 console.log('streaming starting')
+                 var optionPost = {
+                     uri: stringUrl + '/',
+                     headers: { username: user }
+                 }
+                 var postFileRequest = request.post(optionPost)
+                 fs.createReadStream('motion.h264').pipe(postFileRequest)
+             } */
+        // received a message sent from the Python script (a simple "print" statement)
+        //if (message === 'pic taken') {
+        //socket stream
+        /*  console.log('streaming starting')
+         var optionPost = {
+             uri: stringUrl + '/',
+             headers: { username: user }
+         }
+         var postFileRequest = request.post(optionPost)
+         fs.createReadStream('motion.h264').pipe(postFileRequest) */
+        //  })
     }
     else if (deviceName === data.devicename && on) {
 
