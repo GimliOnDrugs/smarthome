@@ -21,11 +21,13 @@ if message == "take pic\n":
     try:
             while True:
                 camera.wait_recording(1)
+                print('test')
                 if motion_detected():
                     # Keep recording for 10 seconds and only then write the
                     # stream to disk
                     camera.wait_recording(10)
                     stream.copy_to('motion.h264')
+
     finally:
             print('camera stops recording')
             camera.stop_recording()

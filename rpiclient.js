@@ -119,6 +119,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
         shell.send('take pic')
         shell.on('message', function (message) {
+            console.log(message)
             if (message === 'message') {
                 console.log('hi!')
                 console.log('streaming starting')
