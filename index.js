@@ -7,8 +7,8 @@ var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
 var PythonShell = require('python-shell')
-var socketstream=require('socket.io-stream')
-var fs=require('fs')
+var socketstream = require('socket.io-stream')
+var fs = require('fs')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -52,12 +52,12 @@ io.on('connection', function (socket) {
     var ipAddress = data.ipaddress
     var username = data.username
     var statusDevice = data.status
-      io.in(username).clients(function (error, clients) {
-        if (error) throw error
-        console.log('remaining clients '+clients)
-      })
+    io.in(username).clients(function (error, clients) {
+      if (error) throw error
+      console.log('remaining clients ' + clients)
+    })
 
-    
+
     console.log('save on db ', socket.handshake.address)
     deviceAuth.saveStatus(username, statusDevice, ipAddress, socket.id)
   })
@@ -107,9 +107,9 @@ io.on('connection', function (socket) {
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
-  socket.on('send video',function(data){
+  socket.on('send video', function (data) {
     console.log('image arrived to server')
-    socket.emit('video sent',data)
+    socket.emit('video sent', data)
   })
 
   socket.on('disconnect', function () {
@@ -117,11 +117,11 @@ io.on('connection', function (socket) {
 
   })
 
-socketstream(socket).on('sending file',function(stream,data){
-  console.log('\n'+data+'\n')
- stream.pipe(fs.createWriteStream('/bigfile.txt'))
- 
-})
+  socketstream(socket).on('sending file', function (stream, data) {
+    console.log('receiving stream ' + stream)
+    console.log('\n' + data + '\n')
+    fs.createReadStream('/bigfile.txt').pipe(stream)
+  })
 
 });
 
