@@ -2,18 +2,16 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
+
 var io = require('socket.io')(server, { wsEngine: 'ws' });
-var redis=require('socket.io-redis')
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
-var PythonShell = require('python-shell')
 
 var fs = require('fs')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-io.adapter(redis({host: 'localhost', port: 6379,key:'socket.io' }))
 io.set('transports', ['websocket']);
 
 io.on('connection', function (socket) {
@@ -128,4 +126,4 @@ io.on('connection', function (socket) {
 server.listen(port, function () {
   console.log('listening on *:' + port);
 
-})
+}) 
