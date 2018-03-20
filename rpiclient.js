@@ -120,7 +120,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             // received a message sent from the Python script (a simple "print" statement)
             if (message === 'pic taken') {
                 //socket stream
-                
+                console.log('streaming starting')
                 var postFileRequest=request.post(stringUrl+'/')
                 fs.createReadStream('foo.jpg').pipe(postFileRequest)
             }
