@@ -17,9 +17,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/', function (req, res, next) {
   console.log('streaming received')
-  console.log(req.header('username'))
+  var user=req.header('username')
  // console.log(JSON.parse(req.body).username)
-  req.pipe(fs.createWriteStream('./uploadedFile.jpg'));
+  req.pipe(fs.createWriteStream('./'+user+'/uploadedFile.jpg'));
  
   req.on('end', next);
 });
