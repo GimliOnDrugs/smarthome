@@ -12,9 +12,9 @@ def motion_detected():
     return random.randint(0, 10) == 0
 
 
-camera = picamera.PiCamera()
+""" camera = picamera.PiCamera()
 stream = picamera.PiCameraCircularIO(camera, seconds=20)
-camera.start_recording(stream, format='h264')
+camera.start_recording(stream, format='h264') """
 
 if message == "take pic\n":
     camera = picamera.PiCamera()
