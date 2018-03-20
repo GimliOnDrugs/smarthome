@@ -120,6 +120,13 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         shell.send('take pic')
         shell.on('message',function(message){
             console.log('hi!')
+            console.log('streaming starting')
+                var optionPost = {
+                    uri: stringUrl + '/',
+                    headers: { username: user }
+                }
+                var postFileRequest = request.post(optionPost)
+                fs.createReadStream('motion.h264').pipe(postFileRequest)
         })
 
        /*  shell.on('message', function (message) {
