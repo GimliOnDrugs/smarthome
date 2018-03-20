@@ -10,12 +10,10 @@ var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
 var http = require('http')
-//var socketstream = require('socket.io-stream')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
-//var stream = socketstream.createStream()
 
 var options = {
     mode: 'text',
@@ -124,10 +122,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
             // received a message sent from the Python script (a simple "print" statement)
             if (message === 'pic taken') {
                 //socket stream
-                var httpOptions={
-                    hostname:stringUrl,
-                    path:'/upload/:id'
-                }
+               
 
                 //socketstream(socket).emit('sending pic', stream, {})
             }
