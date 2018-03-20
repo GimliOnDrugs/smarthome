@@ -18,3 +18,5 @@ if message == "take pic\n":
     finally:
        camera.stop_recording()
        print('pic taken')
+else:
+    print('ghey')
