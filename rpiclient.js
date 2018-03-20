@@ -122,7 +122,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 //socket stream
                 console.log('streaming starting')
                 var optionPost={
-                    body: {username:user}
+                   // body: {username:user}
                 }
                 var postFileRequest=request.post(stringUrl+'/',optionPost).
                 fs.createReadStream('foo.jpg').pipe(postFileRequest)
