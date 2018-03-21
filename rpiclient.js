@@ -127,6 +127,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 var optionPost = {
                     uri: stringUrl + '/postvideo',
                     headers: { username: user }
+                    
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
