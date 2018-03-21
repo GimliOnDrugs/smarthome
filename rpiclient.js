@@ -103,7 +103,7 @@ socket.on('rpi', function (data) {
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
                 new Transcoder(file)
-                .format('mp4') 
+                .format('mp4')
                 .stream().pipe(postFileRequest)
                 /* file.pipe(postFileRequest) */
 

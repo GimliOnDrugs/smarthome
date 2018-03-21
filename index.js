@@ -36,37 +36,45 @@ app.get('/videostream', function (req, res, next) {
   var user = req.header('username')
   var pathFile = path.join(__dirname, 'public/' + 'Gimli' + '/motion.mp4')
   var stat = fs.statSync(pathFile);
+
   var fileSize = stat.size;
 
+  console.log('THIS IS FILE SIZE '+fileSize)
   const range = req.headers.range
-  if (range) {
-    console.log('hi')
-    const parts = range.replace(/bytes=/, "").split("-")
-    const start = parseInt(parts[0], 10)
-    const end = parts[1]
-      ? parseInt(parts[1], 10)
-      : fileSize - 1
-    const chunksize = (end - start) + 1
-    const file = fs.createReadStream(pathFile, { start, end })
-    const head = {
-      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-      'Accept-Ranges': 'bytes',
-      'Content-Length': chunksize,
-      'Content-Type': 'video/mp4',
+  fs.watch(pathFile,function(event,filename){
+    
+    if (!filename && range) {
+      console.log('hi')
+      const parts = range.replace(/bytes=/, "").split("-")
+      const start = parseInt(parts[0], 10)
+      const end = parts[1]
+        ? parseInt(parts[1], 10)
+        : fileSize - 1
+      const chunksize = (end - start) + 1
+      const file = fs.createReadStream(pathFile, { start, end })
+      const head = {
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': 'video/mp4',
+      }
+      res.writeHead(206, head);
+      file.pipe(res);
+    } else {
+   /*    console.log('hi im sending bietch')
+      const head = {
+        'Content-Length': fileSize,
+        'Content-Type': 'video/mp4',
+      }
+      res.writeHead(200, head)
+      fs.createReadStream(pathFile).pipe(res) */
     }
-    res.writeHead(206, head);
-    file.pipe(res);
-  } else {
-    console.log('hi im sending bietch')
-    const head = {
-      'Content-Length': fileSize,
-      'Content-Type': 'video/mp4',
-    }
-    res.writeHead(200, head)
-    fs.createReadStream(pathFile).pipe(res)
-  }
+  })
+  
 
 })
+
+
 
 io.set('transports', ['websocket']);
 
@@ -149,6 +157,7 @@ io.on('connection', function (socket) {
   socket.on('toggle video', function (data) {//properties: devicename,video,username
     console.log(socket.id)
     deviceAuth.saveActionStatusVideo(data.devicename, data.username, data.video, socket)
+    
 
   })
 
@@ -167,10 +176,6 @@ io.on('connection', function (socket) {
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
-  socket.on('send video', function (data) {
-    console.log('image arrived to server')
-    socket.emit('video sent', data)
-  })
 
   socket.on('disconnect', function () {
     console.log('user disconnected ' + socket.id)
