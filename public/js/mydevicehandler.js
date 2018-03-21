@@ -17,7 +17,7 @@ socket.on('rpi connected', function (data) {
     var uniqueid = JSON.parse(sessionStorage.getItem(data.username))
     console.log(uniqueid)
     $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceon.svg')
-
+   
 
 })
 socket.on('video sent', function (data) {
@@ -30,6 +30,7 @@ socket.on('rpi leave room', function (data) {
     var uniqueid = JSON.parse(sessionStorage.getItem(data.username))
 
     $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceoff.svg')
+   
 
 })
 
@@ -69,6 +70,8 @@ socket.on('devices fetched', function (data) {
                 }
                 else {
                     socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
+                    $('body').append('<video src="http://localhost:3000/videostream" autoplay="autoplay"></video>')
+
                  /*    options={
                         url:'http://localhost:3000/videostream',
                         type: 'GET',
