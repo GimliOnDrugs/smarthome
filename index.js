@@ -19,7 +19,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   var user = req.header('username')
   // console.log(JSON.parse(req.body).username)
 
-  req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/motion.h264')));
+  req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/motion.mp4')));
   req.on('data', function (chunk) {
     console.log(chunk)
   })

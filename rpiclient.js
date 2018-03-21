@@ -127,11 +127,11 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 var optionPost = {
                     uri: stringUrl + '/postvideo',
                     headers: { username: user }
-                    
+
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
-                var file2=fs.createReadStream('./public/Gimli/motion.mp4')
+                var file2=growingFile.open('./public/Gimli/motion.mp4')
                 file2.pipe(postFileRequest)
               
             }
