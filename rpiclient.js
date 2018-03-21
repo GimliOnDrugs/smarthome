@@ -87,36 +87,6 @@ socket.on('rpi', function (data) {
         console.log('i was found!')
         socket.emit('room', data)
         socket.emit('save status on db', { ipaddress: ipAddress, status: true, username: data.username })
-    }
-    else {
-        console.log('sorry its not me')
-    }
-})
-
-
-
-socket.on('turn on/off light', function (data) {
-
-    if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
-        console.log('data arrived: ' + data.light)
-        LED.writeSync(1); //set pin state to 1 (turn LED on)
-        console.log('turning on light')
-    }
-    else if (deviceName === data.devicename && on) {
-
-        LED.writeSync(0)
-        console.log('turning off light')
-
-    }
-})
-
-
-
-socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
-
-    if (data.video && deviceName === data.devicename && on) { //check if device is on before working
-        console.log('data arrived: ' + data.video)
-        console.log('turning on video')
         shell = new PythonShell('camerascript.py', options)
 
         shell.send('take pic')
@@ -148,6 +118,37 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
             }
         })
+    }
+    else {
+        console.log('sorry its not me')
+    }
+})
+
+
+
+socket.on('turn on/off light', function (data) {
+
+    if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
+        console.log('data arrived: ' + data.light)
+        LED.writeSync(1); //set pin state to 1 (turn LED on)
+        console.log('turning on light')
+    }
+    else if (deviceName === data.devicename && on) {
+
+        LED.writeSync(0)
+        console.log('turning off light')
+
+    }
+})
+
+
+
+socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
+
+    if (data.video && deviceName === data.devicename && on) { //check if device is on before working
+        console.log('data arrived: ' + data.video)
+        console.log('turning on video')
+        
     }
     else if (deviceName === data.devicename) {
         fs.unlink('motion.h264')
