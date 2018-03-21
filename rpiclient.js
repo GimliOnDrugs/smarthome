@@ -9,8 +9,7 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
 var growingFile = require('growing-file')
 var request = require('request')
-var ffmpeg = require('fluent-ffmpeg')
-var command=ffmpeg()
+var Transcoder=require('stream-transcoder')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
@@ -133,7 +132,10 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
-                file2.pipe(postFileRequest)
+                new Transcoder(file)
+                .format('mp4') 
+                .stream().pipe(postFileRequest)
+                /* file.pipe(postFileRequest) */
 
             }
             if (message === 'camera stops recording') {
