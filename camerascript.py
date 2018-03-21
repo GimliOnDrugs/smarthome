@@ -19,7 +19,7 @@ camera.start_recording(stream, format='h264') """
 if message == "take pic\n":
     camera = picamera.PiCamera()
     camera.resolution = (640, 480)
-    camera.start_recording('motion.h264')
+    camera.start_recording('motion.mp4')
     print('message')
 
     camera.wait_recording(20)

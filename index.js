@@ -26,12 +26,46 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   req.on('end', next);
 });
 
-app.get('/videostream',function(req,res,next){
+app.get('/videostream', function (req, res, next) {
+  /* console.log('Hi im making a request!!')
+  var user = req.header('username')
+  var file = growingFile.open(pathFile.join(__dirname, 'public/' + user + '/motion.h264'))
+  res.setHeader('Content-type', 'video/h264')
+  file.pipe(res) */
 
   var user = req.header('username')
-  var file = growingFile.open(path.join(__dirname, 'public/' + user + '/motion.h264'))
-  
-  file.pipe(res)
+  var pathFile = path.join(__dirname, 'public/' + 'Gimli' + '/motion.mp4')
+  var stat = fs.statSync(pathFile);
+  var fileSize = stat.size;
+
+  const range = req.headers.range
+  if (range) {
+    console.log('hi')
+    const parts = range.replace(/bytes=/, "").split("-")
+    const start = parseInt(parts[0], 10)
+    const end = parts[1]
+      ? parseInt(parts[1], 10)
+      : fileSize - 1
+    const chunksize = (end - start) + 1
+    const file = fs.createReadStream(pathFile, { start, end })
+    const head = {
+      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunksize,
+      'Content-Type': 'video/mp4',
+    }
+    res.writeHead(206, head);
+    file.pipe(res);
+  } else {
+    console.log('hi im sending bietch')
+    const head = {
+      'Content-Length': fileSize,
+      'Content-Type': 'video/mp4',
+    }
+    res.writeHead(200, head)
+    fs.createReadStream(pathFile).pipe(res)
+  }
+
 })
 
 io.set('transports', ['websocket']);

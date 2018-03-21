@@ -69,10 +69,17 @@ socket.on('devices fetched', function (data) {
                 }
                 else {
                     socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
-                    $.get('http://192.168.1.242:3000/videostream',function(data,status){
-                        console.log('this is data '+data)
-                        console.log('this is status')
-                    })
+                 /*    options={
+                        url:'http://localhost:3000/videostream',
+                        type: 'GET',
+                        headers:{username:user.username},
+                        success: function(result,status,xhr){
+
+                            console.log('This is result '+result+'this is status '+status)
+                        }
+
+                    }
+                $.ajax(options) */
                 }
 
 
