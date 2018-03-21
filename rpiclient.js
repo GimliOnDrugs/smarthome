@@ -9,6 +9,8 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
 var growingFile = require('growing-file')
 var request = require('request')
+var ffmpeg = require('fluent-ffmpeg')
+var command=ffmpeg()
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
@@ -131,9 +133,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
-                var file2=growingFile.open('./public/Gimli/motion.mp4')
                 file2.pipe(postFileRequest)
-              
+
             }
             if (message === 'camera stops recording') {
                 var optionPost = {
@@ -142,7 +143,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 console.log('stop')
 
-                
+
             }
         })
     }
