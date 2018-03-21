@@ -130,7 +130,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
-                file.pipe(postFileRequest)
+                var file2=fs.createReadStream('./public/Gimli/motion.mp4')
+                file2.pipe(postFileRequest)
               
             }
             if (message === 'camera stops recording') {

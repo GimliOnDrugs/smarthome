@@ -34,7 +34,7 @@ app.get('/videostream', function (req, res, next) {
   file.pipe(res) */
 
   var user = req.header('username')
-  var pathFile = path.join(__dirname, 'public/' + 'Gimli' + '/motion.h264')
+  var pathFile = path.join(__dirname, 'public/' + 'Gimli' + '/motion.mp4')
   var stat = fs.statSync(pathFile);
   var fileSize = stat.size;
 
@@ -52,7 +52,7 @@ app.get('/videostream', function (req, res, next) {
       'Content-Range': `bytes ${start}-${end}/${fileSize}`,
       'Accept-Ranges': 'bytes',
       'Content-Length': chunksize,
-      'Content-Type': 'video/h264',
+      'Content-Type': 'video/mp4',
     }
     res.writeHead(206, head);
     file.pipe(res);
@@ -60,7 +60,7 @@ app.get('/videostream', function (req, res, next) {
     console.log('hi im sending bietch')
     const head = {
       'Content-Length': fileSize,
-      'Content-Type': 'video/H264',
+      'Content-Type': 'video/mp4',
     }
     res.writeHead(200, head)
     fs.createReadStream(pathFile).pipe(res)
