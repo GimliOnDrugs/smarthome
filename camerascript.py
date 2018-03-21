@@ -25,6 +25,7 @@ if message == "take pic\n":
                     stream.copy_to('motion.h264')
                     print('message')
                     camera.stop_recording()
+                    break
     finally:
             camera.stop_recording()
             
