@@ -5,8 +5,8 @@ var user = JSON.parse(localStorage.getItem('currentuser')) //properties: usernam
 var listHead = $('.list-group')
 
 socket.on('connect', function () {
-    
-    console.log("I'm connecting "+socket.id+" to room "+user.username)
+
+    console.log("I'm connecting " + socket.id + " to room " + user.username)
     socket.emit('room', { username: user.username })
 })
 
@@ -20,9 +20,9 @@ socket.on('rpi connected', function (data) {
 
 
 })
-socket.on('video sent', function(data){
+socket.on('video sent', function (data) {
     console.log('image arrived to bw')
-    
+
 })
 
 
@@ -64,8 +64,17 @@ socket.on('devices fetched', function (data) {
             var action = JSON.parse(sessionStorage.getItem(deviceName)).action
             console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
             if (this.checked) {
+                if (action === 'Light') {
+                    socket.emit('toggle light', { devicename: deviceName, light: true, username: user.username })
+                }
+                else {
+                    socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
+                    $.get('http://192.168.1.242:3000/videostream',function(data,status){
+                        console.log('this is data '+data)
+                        console.log('this is status')
+                    })
+                }
 
-                action === 'Light' ? socket.emit('toggle light', { devicename: deviceName, light: true, username: user.username }) : socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
 
 
             }
@@ -92,7 +101,7 @@ $(document).ready(function () {
 function onOnOffDeviceClick(uniqueid) {
     console.log(uniqueid)
     var deviceName = $('#' + uniqueid + ' #ipaddress').text()
-    console.log('device name when switching on and off '+deviceName)
+    console.log('device name when switching on and off ' + deviceName)
     var buttontoggle = $('#' + uniqueid + ' input')
     if ($('#' + uniqueid + ' .on-off').attr('src') === '/css/assets/deviceon.svg') {
         socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username })

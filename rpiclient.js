@@ -125,14 +125,13 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 console.log('hi!')
                 console.log('streaming starting')
                 var optionPost = {
-                    uri: stringUrl + '/',
+                    uri: stringUrl + '/postvideo',
                     headers: { username: user }
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
                 file.pipe(postFileRequest)
-                /* var postFileRequest = request.post(optionPost)
-                fs.createReadStream('motion.h264').pipe(postFileRequest) */
+              
             }
             if (message === 'camera stops recording') {
                 var optionPost = {
@@ -141,33 +140,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 console.log('stop')
 
-                /* var postFileRequest = request.post(optionPost)
-                fs.createReadStream('motion.h264').pipe(postFileRequest) */
+                
             }
         })
-
-        /*  shell.on('message', function (message) {
-             console.log(message)
-             if (message === 'recording started') {
-                 console.log('streaming starting')
-                 var optionPost = {
-                     uri: stringUrl + '/',
-                     headers: { username: user }
-                 }
-                 var postFileRequest = request.post(optionPost)
-                 fs.createReadStream('motion.h264').pipe(postFileRequest)
-             } */
-        // received a message sent from the Python script (a simple "print" statement)
-        //if (message === 'pic taken') {
-        //socket stream
-        /*  console.log('streaming starting')
-         var optionPost = {
-             uri: stringUrl + '/',
-             headers: { username: user }
-         }
-         var postFileRequest = request.post(optionPost)
-         fs.createReadStream('motion.h264').pipe(postFileRequest) */
-        //  })
     }
     else if (deviceName === data.devicename) {
         fs.unlink('motion.h264')

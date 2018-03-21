@@ -2,12 +2,11 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
-
 var io = require('socket.io')(server, { wsEngine: 'ws' });
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
-
+var growingFile = require('growing-file')
 var fs = require('fs')
 
 
@@ -15,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //streaming section
 
-app.post('/', function (req, res, next) {
+app.post('/postvideo', function (req, res, next) {//post method from rpi
   console.log('streaming received')
   var user = req.header('username')
   // console.log(JSON.parse(req.body).username)
@@ -27,7 +26,13 @@ app.post('/', function (req, res, next) {
   req.on('end', next);
 });
 
-app.get('/')
+app.get('/videostream',function(req,res,next){
+
+  var user = req.header('username')
+  var file = growingFile.open(path.join(__dirname, 'public/' + user + '/motion.h264'))
+  
+  file.pipe(res)
+})
 
 io.set('transports', ['websocket']);
 
