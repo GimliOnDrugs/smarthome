@@ -150,7 +150,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         })
     }
     else if (deviceName === data.devicename) {
-        fs.unlink('motion.h264')
+        fs.unlink('motion.mp4')
         console.log('turning off video')
 
     }
