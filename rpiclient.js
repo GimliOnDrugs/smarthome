@@ -7,7 +7,7 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
-var growingFile=require('growing-file')
+var growingFile = require('growing-file')
 var request = require('request')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
@@ -129,7 +129,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     headers: { username: user }
                 }
                 var postFileRequest = request.post(optionPost)
-                var file=growingFile.open('motion.h264')
+                var file = growingFile.open('motion.h264')
                 file.pipe(postFileRequest)
                 /* var postFileRequest = request.post(optionPost)
                 fs.createReadStream('motion.h264').pipe(postFileRequest) */
@@ -140,7 +140,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     headers: { username: user }
                 }
                 console.log('stop')
-               
+
                 /* var postFileRequest = request.post(optionPost)
                 fs.createReadStream('motion.h264').pipe(postFileRequest) */
             }
@@ -169,8 +169,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
          fs.createReadStream('motion.h264').pipe(postFileRequest) */
         //  })
     }
-    else if (deviceName === data.devicename && on) {
-
+    else if (deviceName === data.devicename) {
+        fs.unlink('motion.h264')
         console.log('turning off video')
 
     }
