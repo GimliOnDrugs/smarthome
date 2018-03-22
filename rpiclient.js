@@ -99,7 +99,7 @@ socket.on('rpi', function (data) {
                 var stat=fs.statSync('motion.h264')
                 var stream=progress({
                     length:stat.size,
-                    time:100
+                    time:10
                 })
                 stream.on('progress',function(progress){
                     console.log('eta: '+progress.eta+' percentage: '+progress.percentage)
