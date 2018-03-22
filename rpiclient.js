@@ -9,8 +9,8 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
 var growingFile = require('growing-file')
 var request = require('request')
-var progress=require('progress-stream')
-var Transcoder=require('stream-transcoder')
+var progress = require('progress-stream')
+var Transcoder = require('stream-transcoder')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
@@ -96,14 +96,17 @@ socket.on('rpi', function (data) {
             if (message === 'message') {
                 console.log('hi!')
                 console.log('streaming starting')
-                var stat=fs.statSync('motion.h264')
-                var stream=progress({
-                    length:stat.size,
-                    time:10
+                var stat = fs.statSync('motion.h264')
+                var stream = progress({
+                    length: stat.size,
+                    time: 10
                 })
-                stream.on('progress',function(progress){
-                    console.log('eta: '+progress.eta+' percentage: '+progress.percentage)
-                    
+                stream.on('progress', function (progress) {
+                    console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
+                    if (progress.eta > 50) {
+                        //send event to server
+                    }
+
                 })
                 var optionPost = {
                     uri: stringUrl + '/postvideo',
@@ -113,12 +116,14 @@ socket.on('rpi', function (data) {
                 var postFileRequest = request.post(optionPost)
                 var file = growingFile.open('motion.h264')
                 new Transcoder(file)
-                .format('mp4')
-                .stream().pipe(stream).pipe(postFileRequest)
-                /* file.pipe(postFileRequest) */
+                    .format('mp4')
+                    .stream()
+                    .pipe(stream)
+                    .pipe(postFileRequest)
+
 
             }
-            
+
         })
     }
     else {
@@ -150,10 +155,13 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
     if (data.video && deviceName === data.devicename && on) { //check if device is on before working
         console.log('data arrived: ' + data.video)
         console.log('turning on video')
-        
+
     }
     else if (deviceName === data.devicename) {
-        fs.unlink('motion.h264')
+        fs.unlink('motion.h264', function (err) {
+            if (err)
+                console.log(err)
+        })
         console.log('turning off video')
 
     }
