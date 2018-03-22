@@ -9,6 +9,7 @@ var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
 var growingFile = require('growing-file')
 var request = require('request')
+var progress=require('progress-stream')
 var Transcoder=require('stream-transcoder')
 var stringUrl = "http://192.168.1.242:3000"
 //var stringUrl = "https://smartsecurityhome.herokuapp.com"
@@ -95,6 +96,14 @@ socket.on('rpi', function (data) {
             if (message === 'message') {
                 console.log('hi!')
                 console.log('streaming starting')
+                var stat=fs.statSync('motion.h264')
+                var stream=progress({
+                    length:stat.size,
+                    time:100
+                })
+                stream.on('progress',function(progress){
+                    console.log('eta: '+progress.eta+' percentage: '+progress.percentage)
+                })
                 var optionPost = {
                     uri: stringUrl + '/postvideo',
                     headers: { username: user }
@@ -104,19 +113,11 @@ socket.on('rpi', function (data) {
                 var file = growingFile.open('motion.h264')
                 new Transcoder(file)
                 .format('mp4')
-                .stream().pipe(postFileRequest)
+                .stream().pipe(stream).pipe(postFileRequest)
                 /* file.pipe(postFileRequest) */
 
             }
-            if (message === 'camera stops recording') {
-                var optionPost = {
-                    uri: stringUrl + '/',
-                    headers: { username: user }
-                }
-                console.log('stop')
-
-
-            }
+            
         })
     }
     else {

@@ -70,7 +70,7 @@ socket.on('devices fetched', function (data) {
                 }
                 else {
                     socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
-                    $('body').append('<video src="http://localhost:3000/videostream" autoplay="autoplay"></video>')
+                    $('body').append('<video src="http://localhost:3000/videostream" controls   ></video>')
 
                  /*    options={
                         url:'http://localhost:3000/videostream',
