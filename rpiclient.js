@@ -103,6 +103,7 @@ socket.on('rpi', function (data) {
                 })
                 stream.on('progress',function(progress){
                     console.log('eta: '+progress.eta+' percentage: '+progress.percentage)
+                    
                 })
                 var optionPost = {
                     uri: stringUrl + '/postvideo',
