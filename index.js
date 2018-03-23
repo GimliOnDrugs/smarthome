@@ -32,14 +32,14 @@ app.get('/videostream', function (req, res, next) {
   var file = growingFile.open(pathFile.join(__dirname, 'public/' + user + '/motion.h264'))
   res.setHeader('Content-type', 'video/h264')
   file.pipe(res) */
-
+  console.log('just need to query parameters')
   var user = req.header('username')
   var pathFile = path.join(__dirname, 'public/' + 'Gimli' + '/motion.mp4')
   var stat = fs.statSync(pathFile);
 
   var fileSize = stat.size;
 
-  console.log('THIS IS FILE SIZE '+fileSize)
+  console.log('THIS IS FILE SIZE ' + fileSize)
   const range = req.headers.range
 
   if (range) {
@@ -60,13 +60,13 @@ app.get('/videostream', function (req, res, next) {
     res.writeHead(206, head);
     file.pipe(res);
   } else {
- /*    console.log('hi im sending bietch')
-    const head = {
-      'Content-Length': fileSize,
-      'Content-Type': 'video/mp4',
-    }
-    res.writeHead(200, head)
-    fs.createReadStream(pathFile).pipe(res) */
+    /*    console.log('hi im sending bietch')
+       const head = {
+         'Content-Length': fileSize,
+         'Content-Type': 'video/mp4',
+       }
+       res.writeHead(200, head)
+       fs.createReadStream(pathFile).pipe(res) */
   }
 
 })
@@ -154,7 +154,7 @@ io.on('connection', function (socket) {
   socket.on('toggle video', function (data) {//properties: devicename,video,username
     console.log(socket.id)
     deviceAuth.saveActionStatusVideo(data.devicename, data.username, data.video, socket)
-    
+
 
   })
 
@@ -179,7 +179,7 @@ io.on('connection', function (socket) {
 
   })
 
-  socket.on('video uploaded',()=>{
+  socket.on('video uploaded', () => {
     socket.emit('new video uploaded')
   })
 
