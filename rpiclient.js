@@ -120,7 +120,9 @@ socket.on('rpi', function (data) {
                     .fps(25)
                     .format('mp4')
                     .stream()
-                    .pipe(stream)
+                    .on('progress',function(progress){
+                        console.log('progress percentage: '+progress.progress)
+                    })
                     .pipe(postFileRequest)
 
 
