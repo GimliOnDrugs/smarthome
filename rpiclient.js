@@ -121,8 +121,9 @@ socket.on('rpi', function (data) {
                     .fps(25)
                     .format('mp4')
                     .stream()
-                    .pipe(postFileRequest)
                     .pipe(stream)
+                    .pipe(postFileRequest)
+                    
 
             }
 
