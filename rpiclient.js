@@ -128,38 +128,38 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         shell.on('message', function (message) {
             console.log(message)
             if (message === 'video recorded') {
-                shell.end(function () {
-                    console.log('streaming starting')
-                    var stat = fs.statSync('motion.h264')
-                    var stream = progress({
-                        length: stat.size,
-                        time: 10
-                    })
-                    stream.on('progress', function (progress) {
-                        console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
-                        if (progress.percentage > 50) {
-                            console.log('uploaded!!!')
-                            socket.emit('video uploaded')
 
-                        }
-
-                    })
-                    var optionPost = {
-                        uri: stringUrl + '/postvideo?devicename=\'' + deviceName + '\'',
-                        headers: { username: user }
+                console.log('streaming starting')
+                var stat = fs.statSync('motion.h264')
+                var stream = progress({
+                    length: stat.size,
+                    time: 10
+                })
+                stream.on('progress', function (progress) {
+                    console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
+                    if (progress.percentage > 50) {
+                        console.log('uploaded!!!')
+                        socket.emit('video uploaded')
 
                     }
-                    var postFileRequest = request.post(optionPost)
-                    var file = fs.createReadStream('motion.h264')
-                    new Transcoder(file)
-                        .videoCodec('h264')
-                        .fps(25)
-                        .format('mp4')
-                        .stream()
-                        .pipe(stream)
-                        .pipe(postFileRequest)
 
                 })
+                var optionPost = {
+                    uri: stringUrl + '/postvideo?devicename=\'' + deviceName + '\'',
+                    headers: { username: user }
+
+                }
+                var postFileRequest = request.post(optionPost)
+                var file = fs.createReadStream('motion.h264')
+                new Transcoder(file)
+                    .videoCodec('h264')
+                    .fps(25)
+                    .format('mp4')
+                    .stream()
+                    .pipe(stream)
+                    .pipe(postFileRequest)
+
+
             }
 
         })
