@@ -67,7 +67,9 @@ socket.on('connect', function () {
 
 socket.on('disconnect', function () {
     console.log('\ndisconnected ')
-    socket.emit('leave room', { devicename: deviceName, username: user })
+    if (typeof user !== 'undefined')
+
+        socket.emit('leave room', { devicename: deviceName, username: user })
     //socket.emit('save status on db',{ipaddress:ipAddress,status:false,username:user})
 
 
@@ -123,7 +125,7 @@ socket.on('rpi', function (data) {
                     .stream()
                     .pipe(stream)
                     .pipe(postFileRequest)
-                    
+
 
             }
 
