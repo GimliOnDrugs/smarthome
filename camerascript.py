@@ -10,7 +10,7 @@ message = sys.stdin.readline()
 def motion_detected():
     # Randomly return True (like a fake motion detection routine)
     return random.randint(0, 10) == 0
-
+print(message)
 
 if message == "take pic\n":
     camera = picamera.PiCamera()
@@ -18,7 +18,7 @@ if message == "take pic\n":
     camera.start_recording(stream, format='h264')
     try:
 
-        while not sys.stdin.readable():
+        while True:
             camera.wait_recording(1)
             if motion_detected():
 
