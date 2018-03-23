@@ -104,6 +104,7 @@ socket.on('rpi', function (data) {
                 stream.on('progress', function (progress) {
                     console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
                     if (progress.eta > 50) {
+                        console.log('uploaded!!!')
                         //send event to server
                     }
 
@@ -120,11 +121,8 @@ socket.on('rpi', function (data) {
                     .fps(25)
                     .format('mp4')
                     .stream()
-                    .on('progress',function(progress){
-                        console.log('progress percentage: '+progress.progress)
-                    })
                     .pipe(postFileRequest)
-
+                    .pipe(stream)
 
             }
 
