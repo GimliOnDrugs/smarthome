@@ -179,6 +179,9 @@ io.on('connection', function (socket) {
 
   })
 
+  socket.on('video uploaded',()=>{
+    socket.emit('new video uploaded')
+  })
 
 
 

@@ -90,46 +90,7 @@ socket.on('rpi', function (data) {
         console.log('i was found!')
         socket.emit('room', data)
         socket.emit('save status on db', { ipaddress: ipAddress, status: true, username: data.username })
-        shell = new PythonShell('camerascript.py', options)
-
-        shell.send('take pic')
-        shell.on('message', function (message) {
-            console.log(message)
-            if (message === 'message') {
-                console.log('hi!')
-                console.log('streaming starting')
-                var stat = fs.statSync('motion.h264')
-                var stream = progress({
-                    length: stat.size,
-                    time: 10
-                })
-                stream.on('progress', function (progress) {
-                    console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
-                    if (progress.eta > 50) {
-                        console.log('uploaded!!!')
-                        //send event to server
-                    }
-
-                })
-                var optionPost = {
-                    uri: stringUrl + '/postvideo',
-                    headers: { username: user }
-
-                }
-                var postFileRequest = request.post(optionPost)
-                var file = fs.createReadStream('motion.h264')
-                new Transcoder(file)
-                    .videoCodec('h264')
-                    .fps(25)
-                    .format('mp4')
-                    .stream()
-                    .pipe(stream)
-                    .pipe(postFileRequest)
-
-
-            }
-
-        })
+        
     }
     else {
         console.log('sorry its not me')
@@ -156,13 +117,56 @@ socket.on('turn on/off light', function (data) {
 
 
 socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
+    shell = new PythonShell('camerascript.py', options)
+
 
     if (data.video && deviceName === data.devicename && on) { //check if device is on before working
         console.log('data arrived: ' + data.video)
         console.log('turning on video')
+     
+        shell.send('take pic')
+        shell.on('message', function (message) {
+            console.log(message)
+            if (message === 'message') {
+                console.log('hi!')
+                console.log('streaming starting')
+                var stat = fs.statSync('motion.h264')
+                var stream = progress({
+                    length: stat.size,
+                    time: 10
+                })
+                stream.on('progress', function (progress) {
+                    console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
+                    if (progress.percentage > 50) {
+                        console.log('uploaded!!!')
+                        socket.emit('video uploaded')
+                        
+                    }
+
+                })
+                var optionPost = {
+                    uri: stringUrl + '/postvideo',
+                    headers: { username: user }
+
+                }
+                var postFileRequest = request.post(optionPost)
+                var file = fs.createReadStream('motion.h264')
+                new Transcoder(file)
+                    .videoCodec('h264')
+                    .fps(25)
+                    .format('mp4')
+                    .stream()
+                    .pipe(stream)
+                    .pipe(postFileRequest)
+
+
+            }
+
+        })
 
     }
     else if (deviceName === data.devicename) {
+        shell.send('stop camera')
         fs.unlink('motion.h264', function (err) {
             if (err)
                 console.log(err)

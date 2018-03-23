@@ -17,7 +17,7 @@ socket.on('rpi connected', function (data) {
     var uniqueid = JSON.parse(sessionStorage.getItem(data.username))
     console.log(uniqueid)
     $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceon.svg')
-   
+
 
 })
 socket.on('video sent', function (data) {
@@ -30,7 +30,7 @@ socket.on('rpi leave room', function (data) {
     var uniqueid = JSON.parse(sessionStorage.getItem(data.username))
 
     $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceoff.svg')
-   
+
 
 })
 
@@ -51,54 +51,69 @@ socket.on('devices fetched', function (data) {
         var actiontype = action === "Light" ? 'light' : 'video'
         var uniqueID = getUniqueID()
         console.log(uniqueID + ' before')
-        //var stringUrl='http://localhost:3000/videostream' //this is for debug
-        var stringUrl='https://smartsecurityhome.herokuapp.com/videostream' //this is for debug
-        var domToAdd = '<li class="list-group-item " id="' + uniqueID + '"><div><div class=" row justify-content-center" style=" max-width: 1100px; margin-top: 20px;"><div class="col-auto col-center  "><img class="fab on-off" src="' + deviceOnOffImageUrl + '" onclick="onOnOffDeviceClick(\'' + uniqueID + '\')"><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="ipaddress" type="text">' + deviceName + '</p></div></div><div class="col-auto col-center  "><img class="fab" src="' + actionImageUrl + '" id="' + actiontype + '"></div><div class="col-auto col-center"><span class="checkbox"><input type="checkbox" ><label data-on="ON" data-off="OFF"></label></span></div><div class="col-auto col-center  "><img class="fab" src="/css/assets/house.svg"></div><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="position" type="text">' + position + '</p></div></div></li>'
+
+        var domToAdd = '<li class="list-group-item " id="' + uniqueID + '"><div><div class=" row justify-content-center" style=" max-width: 1100px; margin-top: 20px;"><div class="col-auto col-center  "><img class="fab on-off" src="' + deviceOnOffImageUrl + '" onclick="onOnOffDeviceClick(\'' + uniqueID + '\')"><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="ipaddress" type="text">' + deviceName + '</p></div></div><div class="col-auto col-center  "><img class="fab" src="' + actionImageUrl + '" id="' + actiontype + '"></div><div class="col-auto col-center"><span class="checkbox"><input type="checkbox"  data-toggle="collapse" href="video_' + uniqueID + '" aria-expanded="true" aria-controls="video_' + uniqueID + '"><label data-on="ON" data-off="OFF"></label></span></div><div class="col-auto col-center  "><img class="fab" src="/css/assets/house.svg"></div><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="position" type="text">' + position + '</p></div></div></li>'
+        var collapseToAdd = '<div class="collapse" id="video_' + uniqueID + '">'
 
         listHead.append(domToAdd)
+        if (actiontype === 'video') {
+            $('#' + uniqueID).append(collapseToAdd)
+        }
         var toggle = $('#' + uniqueID + ' input')
         var deviceName = $('#' + uniqueID + ' #ipaddress').text()
         actionstatus ? toggle.prop('checked', true) : toggle.prop('checked', false)
-        $('#' + uniqueID + ' input').change(function () {
-            var uniqueID = $(this).closest('li').attr('id')
-            console.log(uniqueID)
-            var deviceName = $('#' + uniqueID + ' #ipaddress').text()
-            console.log(deviceName)
-            var action = JSON.parse(sessionStorage.getItem(deviceName)).action
-            console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
-            if (this.checked) {
-                if (action === 'Light') {
+        if (actiontype == 'light') {
+            $('#' + uniqueID + ' input').change(function () {
+                var uniqueID = $(this).closest('li').attr('id')
+                console.log(uniqueID)
+                var deviceName = $('#' + uniqueID + ' #ipaddress').text()
+                console.log(deviceName)
+                var action = JSON.parse(sessionStorage.getItem(deviceName)).action
+                console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
+                if (this.checked) {
+
                     socket.emit('toggle light', { devicename: deviceName, light: true, username: user.username })
                 }
                 else {
-                    socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
-                    $('body').append('<video src="'+stringUrl+'" controls   ></video>')
+                    socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username })
 
-                 /*    options={
-                        url:'http://localhost:3000/videostream',
-                        type: 'GET',
-                        headers:{username:user.username},
-                        success: function(result,status,xhr){
-
-                            console.log('This is result '+result+'this is status '+status)
-                        }
-
-                    }
-                $.ajax(options) */
                 }
+            })
+        }
+        else {
+            $('#' + uniqueID + ' input').change(function () {
+                var uniqueID = $(this).closest('li').attr('id')
+                console.log(uniqueID)
+                var deviceName = $('#' + uniqueID + ' #ipaddress').text()
+                console.log(deviceName)
+                var action = JSON.parse(sessionStorage.getItem(deviceName)).action
+                console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
+                if (this.checked) {
+                    var stringUrl='http://localhost:3000/videostream?id=\'' + user.username + '\'' //this is for debug
+                    //var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id=\'' + user.username + '\'' //this is for debug
+                    $('#video_' + uniqueID).toggle()
+                    var video = '<video src="' + stringUrl + '" controls   ></video></div>'
+                    $('#video_' + uniqueID).append(video)
+                }
+                else {
+                    $('#video_' + uniqueID).empty()
 
+                    $('#video_' + uniqueID).toggle()
+                   
 
+                }
+            })
+        }
 
-            }
-            else {
-                action === 'Light' ? socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username }) : socket.emit('toggle video', { devicename: deviceName, video: false, username: user.username })
-
-            }
-        })
-        sessionStorage.setItem(deviceName, JSON.stringify({ uniqueid: uniqueID, action: action }))
+        sessionStorage.setItem(deviceName, JSON.stringify({ uniqueid: uniqueID, action: actiontype }))
     }
     console.log(sessionStorage.length)
 
+})
+
+socket.on('new video uploaded', () => {
+    //update badge
+    console.log('video uploaded!!!')
 })
 
 
@@ -115,8 +130,10 @@ function onOnOffDeviceClick(uniqueid) {
     var deviceName = $('#' + uniqueid + ' #ipaddress').text()
     console.log('device name when switching on and off ' + deviceName)
     var buttontoggle = $('#' + uniqueid + ' input')
+    var action = JSON.parse(sessionStorage.getItem(deviceName)).action
     if ($('#' + uniqueid + ' .on-off').attr('src') === '/css/assets/deviceon.svg') {
-        socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username })
+
+        action === 'light' ? socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username }) : socket.emit('toggle video', { devicename: deviceName, video: false, username: user.username })
 
         socket.emit('leave room', { devicename: deviceName, username: user.username, id: uniqueid })
         $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceoff.svg')
@@ -124,7 +141,7 @@ function onOnOffDeviceClick(uniqueid) {
     }
     else {
         socket.emit('connect rpi', { devicename: deviceName, username: user.username, id: uniqueid })
-
+        socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
         $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceon.svg')
 
     }

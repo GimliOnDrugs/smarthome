@@ -17,7 +17,7 @@ if message == "take pic\n":
     stream = picamera.PiCameraCircularIO(camera, seconds=20)
     camera.start_recording(stream, format='h264')
     try:
-            while True:
+            while sys.stdin.readline()!='stop camera\n':
                 camera.wait_recording(1)
                 if motion_detected():
            
