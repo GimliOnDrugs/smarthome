@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/postvideo', function (req, res, next) {//post method from rpi
   console.log('streaming received')
   var user = req.header('username')
-  // console.log(JSON.parse(req.body).username)
+  console.log('post: '+req.params.devicename)
 
   req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/motion.mp4')));
   req.on('data', function (chunk) {
@@ -27,14 +27,9 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
 });
 
 app.get('/videostream', function (req, res, next) {
-  /* console.log('Hi im making a request!!')
-  var user = req.header('username')
-  var file = growingFile.open(pathFile.join(__dirname, 'public/' + user + '/motion.h264'))
-  res.setHeader('Content-type', 'video/h264')
-  file.pipe(res) */
-  console.log('just need to query parameters')
-  var user = req.header('username')
-  var pathFile = path.join(__dirname, 'public/' + 'Gimli' + '/motion.mp4')
+
+  console.log('just need to query parameters '+req.params.id)
+  var pathFile = path.join(__dirname, 'public/' + req.params.id + '/motion.mp4')
   var stat = fs.statSync(pathFile);
 
   var fileSize = stat.size;

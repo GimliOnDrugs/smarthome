@@ -2,7 +2,6 @@ import io
 import random
 import sys
 import picamera
-import random
 
 message = sys.stdin.readline()
 
@@ -10,9 +9,8 @@ message = sys.stdin.readline()
 def motion_detected():
     # Randomly return True (like a fake motion detection routine)
     return random.randint(0, 10) == 0
-print(message)
 
-if message == "take pic\n":
+if message == "start recording\n":
     camera = picamera.PiCamera()
     stream = picamera.PiCameraCircularIO(camera, seconds=20)
     camera.start_recording(stream, format='h264')
@@ -24,7 +22,7 @@ if message == "take pic\n":
 
                 camera.wait_recording(10)
                 stream.copy_to('motion.h264')
-                print('message')
+                print('video recorded')
 
                 
     finally:
