@@ -51,6 +51,8 @@ socket.on('devices fetched', function (data) {
         var actiontype = action === "Light" ? 'light' : 'video'
         var uniqueID = getUniqueID()
         console.log(uniqueID + ' before')
+        //var stringUrl='http://localhost:3000/videostream' //this is for debug
+        var stringUrl='https://smartsecurityhome.herokuapp.com/videostream' //this is for debug
         var domToAdd = '<li class="list-group-item " id="' + uniqueID + '"><div><div class=" row justify-content-center" style=" max-width: 1100px; margin-top: 20px;"><div class="col-auto col-center  "><img class="fab on-off" src="' + deviceOnOffImageUrl + '" onclick="onOnOffDeviceClick(\'' + uniqueID + '\')"><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="ipaddress" type="text">' + deviceName + '</p></div></div><div class="col-auto col-center  "><img class="fab" src="' + actionImageUrl + '" id="' + actiontype + '"></div><div class="col-auto col-center"><span class="checkbox"><input type="checkbox" ><label data-on="ON" data-off="OFF"></label></span></div><div class="col-auto col-center  "><img class="fab" src="/css/assets/house.svg"></div><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="position" type="text">' + position + '</p></div></div></li>'
 
         listHead.append(domToAdd)
@@ -70,7 +72,7 @@ socket.on('devices fetched', function (data) {
                 }
                 else {
                     socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
-                    $('body').append('<video src="http://localhost:3000/videostream" controls   ></video>')
+                    $('body').append('<video src="'+stringUrl+'" controls   ></video>')
 
                  /*    options={
                         url:'http://localhost:3000/videostream',
