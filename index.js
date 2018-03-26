@@ -28,7 +28,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
 
 app.get('/videostream', function (req, res, next) {
 
-  console.log('just need to query parameters '+req.query.id)
+console.log('just need to query parameters '+req.query.id)
   var pathFile = path.join(__dirname, 'public/' + req.query.id + '/motion.mp4')
   var stat = fs.statSync(pathFile);
 

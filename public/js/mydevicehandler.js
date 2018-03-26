@@ -89,8 +89,8 @@ socket.on('devices fetched', function (data) {
                 var action = JSON.parse(sessionStorage.getItem(deviceName)).action
                 console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
                 if (this.checked) {
-                    var stringUrl='http://localhost:3000/videostream?id=\'' + user.username + '\'' //this is for debug
-                    //var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id=\'' + user.username + '\'' //this is for debug
+                    var stringUrl='http://localhost:3000/videostream?id='+user.username+'' //this is for debug
+                    //var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id='+user.username+'' //this is for debug
                     $('#video_' + uniqueID).toggle()
                     var video = '<video src="' + stringUrl + '" controls   ></video></div>'
                     $('#video_' + uniqueID).append(video)
