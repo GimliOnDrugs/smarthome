@@ -175,6 +175,7 @@ io.on('connection', function (socket) {
   })
 
   socket.on('video uploaded', () => {
+    console.log('rpi uploaded video')
     socket.emit('new video uploaded')
   })
 
