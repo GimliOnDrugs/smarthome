@@ -41,7 +41,7 @@ exports.startRPIAuth = (socket) => inquirer.prompt(questions).then(answers => {
     var user = {
         'email': email,
         'password': password,
-        'devicenaem':devicename
+        'devicename':devicename
     }
     socket.emit('sign in', user)
     socket.emit('update ipaddress',user)

@@ -108,7 +108,7 @@ io.on('connection', function (socket) {
     var deviceName = data.devicename
     var userEmail = data.email
     var ipaddress = socket.handshake.address
-    console.log(address)
+    console.log(ipaddress)
     deviceAuth.updateIpAddress(userEmail, deviceName, ipaddress, socket)
   })
 
