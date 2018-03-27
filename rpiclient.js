@@ -137,9 +137,15 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 })
                 stream.on('progress', function (progress) {
                     console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
-                    if (progress.percentage > 50) {
+                    if (progress.percentage === 100) {
                         console.log('uploaded!!!')
                         socket.emit('video uploaded')
+                        fs.unlink('motion.h264',function(error){
+                            if(error){
+                                console.log(error)
+                            }
+                        })
+                        shell.send('keep going')
 
                     }
 

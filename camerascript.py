@@ -23,6 +23,7 @@ if message == "start recording\n":
                 camera.wait_recording(10)
                 stream.copy_to('motion.h264')
                 print('video recorded')
+                sys.stdin.readline()=="keep going\n"
 
                 
     finally:

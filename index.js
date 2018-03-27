@@ -20,9 +20,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   console.log('post: '+req.query.devicename)
 
   req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/motion.mp4')));
-  req.on('data', function (chunk) {
-    console.log(chunk)
-  })
+
   req.on('end', next);
 });
 
