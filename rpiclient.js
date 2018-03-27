@@ -44,6 +44,14 @@ socket.on('connect', function () {
         console.log('logging in ' + data.username)
         user = data.username
         console.log('username registered! ', user)
+        request.get({
+            uri: stringUrl + '/updateIpAddress?user=' + user + ''
+
+        }, function (error, response, body) {
+            if (error)
+                console.log(error)
+            console.log(response)
+        })
         socket.emit('room', { username: user })
     })
 

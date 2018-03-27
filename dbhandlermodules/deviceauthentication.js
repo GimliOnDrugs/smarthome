@@ -26,7 +26,7 @@ exports.saveStatus = function (username, status, ipaddress, socketid, io) {
                 if (element.ipaddress === ipaddress) {
                     element.status = status
                 }
-               
+
 
             });
         }
@@ -115,5 +115,22 @@ exports.saveActionStatusVideo = function (devicename, username, actionstatus, so
 
         })
     })
-}
 
+}
+exports.updateIpAddress = (email, devicename, ipaddress, socket) => {
+    userAuth.getUser.findOne({ 'email': email }, function (error, result) {
+        if (error) console.log(error)
+        result.devices.forEach(element => {
+            if (element.name === devicename) {
+                element.ipaddress = ipaddress
+
+            }
+
+        })
+        result.save(function (error, result) {
+            if (error) console.log(error)
+            console.log('this is ipaddress of device ' + result.devices[devicename].ipaddress)
+        })
+
+    })
+}

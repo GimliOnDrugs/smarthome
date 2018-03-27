@@ -8,7 +8,7 @@ socket.on('signing up', function () {
 })
 socket.on('user saved', function (user) {
     $('.loader').remove()
-    sessionStorage.setItem('currentuser',JSON.stringify({
+    localStorage.setItem('currentuser',JSON.stringify({
         username: user.username,
         email: user.email
     }))

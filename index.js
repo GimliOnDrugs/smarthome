@@ -6,7 +6,6 @@ var io = require('socket.io')(server, { wsEngine: 'ws' });
 var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
-var growingFile = require('growing-file')
 var fs = require('fs')
 
 
@@ -17,26 +16,47 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/postvideo', function (req, res, next) {//post method from rpi
   console.log('streaming received')
   var user = req.header('username')
-  console.log('post: '+req.query.devicename)
-
-  req.pipe(fs.createWriteStream(path.join(__dirname, 'public/' + user + '/motion.mp4')));
+  console.log('post: ' + req.query.devicename)
+  var date = new Date()
+  var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes()
+  var fileName = 'motion_' + time + '.mp4'
+  req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + fileName)));
 
   req.on('end', next);
 });
+app.get('/videoscount', function (req, res, next) {
+  console.log('How many videos in ' + req.query.id + '?')
+  var user = req.query.id
+  var pathFile = path.join(__dirname, 'users/' + req.query.id + '/')
+  fs.readdir(pathFile, (error, files) => {
+    if (files) {
+      console.log('files length ' + files.length)
+      res.json({
+        files: files
 
+      })
+    }
+    else {
+      console.log('no file')
+      res.send('no file yet')
+    }
+
+  })
+})
 app.get('/videostream', function (req, res, next) {
 
-console.log('just need to query parameters '+req.query.id)
-  var pathFile = path.join(__dirname, 'public/' + req.query.id + '/motion.mp4')
+  var user = req.query.id
+  var fileName = req.query.video
+  console.log('this is filename ' + fileName)
+  var pathFile = path.join(__dirname, 'users/' + req.query.id + '/' + fileName)
   var stat = fs.statSync(pathFile);
 
   var fileSize = stat.size;
 
-  console.log('THIS IS FILE SIZE ' + fileSize)
+
   const range = req.headers.range
 
   if (range) {
-    console.log('hi')
     const parts = range.replace(/bytes=/, "").split("-")
     const start = parseInt(parts[0], 10)
     const end = parts[1]
@@ -52,6 +72,9 @@ console.log('just need to query parameters '+req.query.id)
     }
     res.writeHead(206, head);
     file.pipe(res);
+    res.on('finish', () => {
+      console.log('fully downloaded by client')
+    })
   } else {
     /*    console.log('hi im sending bietch')
        const head = {
@@ -80,7 +103,14 @@ io.on('connection', function (socket) {
   })
 
 
-
+  socket.on('update ipaddress', function (data) {
+    console.log('updating ip address of: ' + data.devicename)
+    var deviceName = data.devicename
+    var userEmail = data.email
+    var ipaddress = socket.handshake.address
+    console.log(address)
+    deviceAuth.updateIpAddress(userEmail, deviceName, ipaddress, socket)
+  })
 
 
   socket.on('room', (data) => {
