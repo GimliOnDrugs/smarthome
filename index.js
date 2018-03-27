@@ -107,7 +107,7 @@ io.on('connection', function (socket) {
     console.log('updating ip address of: ' + data.devicename)
     var deviceName = data.devicename
     var userEmail = data.email
-    var ipaddress = socket.handshake.address
+    var ipaddress = socket.handshake.address.split('::ffff:')[1]
     console.log(ipaddress)
     deviceAuth.updateIpAddress(userEmail, deviceName, ipaddress, socket)
   })
@@ -128,7 +128,7 @@ io.on('connection', function (socket) {
       if (error) throw error
       console.log(clients)
     })
-    io.to(socket.id).emit('room joined', { roomjoined: roomName, id: socket.id })
+    socket.emit('room joined', { roomjoined: roomName, id: socket.id })
 
   })
 

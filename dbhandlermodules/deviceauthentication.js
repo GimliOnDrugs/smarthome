@@ -120,16 +120,22 @@ exports.saveActionStatusVideo = function (devicename, username, actionstatus, so
 exports.updateIpAddress = (email, devicename, ipaddress, socket) => {
     userAuth.getUser.findOne({ 'email': email }, function (error, result) {
         if (error) console.log(error)
-        result.devices.forEach(element => {
-            if (element.name === devicename) {
-                element.ipaddress = ipaddress
+        if (result != null) {
+            result.devices.forEach(element => {
+                if (element.name === devicename) {
+                    element.ipaddress = ipaddress
 
-            }
+                }
 
-        })
+            })
+        }
+        else{
+            socket.emit('error login', 'error')
+        }
+
         result.save(function (error, result) {
             if (error) console.log(error)
-            console.log('this is ipaddress of device ' + result.devices[devicename].ipaddress)
+            console.log('device ip address updated')
         })
 
     })

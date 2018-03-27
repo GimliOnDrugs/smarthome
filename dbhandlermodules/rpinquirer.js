@@ -1,5 +1,6 @@
 var inquirer = require('inquirer')
-var userAuth = require('./userauthentication')
+var deviceauthentication = require('./deviceauthentication')
+var userAuth=require('./userauthentication')
 
 
 var questions = [
