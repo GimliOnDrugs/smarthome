@@ -21,7 +21,7 @@ var options = {
     pythonOptions: ['-u'],
     pythonPath: '/usr/bin/python3'
 }
-var shell = new PythonShell('camerascript.py', options)
+
 var user
 var deviceName
 var on = false
@@ -118,7 +118,7 @@ socket.on('turn on/off light', function (data) {
 
 
 socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
-    shell = new PythonShell('camerascript.py', options)
+    var shell = new PythonShell('camerascript.py', options)
 
 
     if (data.video && deviceName === data.devicename && on) { //check if device is on before working
