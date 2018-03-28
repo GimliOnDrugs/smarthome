@@ -10,6 +10,7 @@ def motion_detected():
     # Randomly return True (like a fake motion detection routine)
     return random.randint(0, 10) == 0
 
+
 if message == "start recording\n":
     camera = picamera.PiCamera()
     stream = picamera.PiCameraCircularIO(camera, seconds=20)
@@ -23,8 +24,9 @@ if message == "start recording\n":
                 camera.wait_recording(10)
                 stream.copy_to('motion.h264')
                 print('video recorded')
-                sys.stdin.readline()=="keep going\n"
+                camera.stop_recording()
+                if sys.stdin.readline() == "keep going\n":
+                    camera.start_recording(stream, format='h264')
 
-                
     finally:
         camera.stop_recording()
