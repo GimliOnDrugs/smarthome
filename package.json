@@ -19,6 +19,7 @@
         "progress-stream": "^2.0.0",
         "python-shell": "^0.5.0",
         "request": "^2.85.0",
+        "shelljs": "^0.8.1",
         "socket.io": "^2.0.4",
         "stream-transcoder": "0.0.5"
     },

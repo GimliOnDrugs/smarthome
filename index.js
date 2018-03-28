@@ -8,6 +8,7 @@ var port = process.env.PORT || 3000;
 var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
 var fs = require('fs')
+var shellFs = require('shelljs')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -117,14 +118,7 @@ io.on('connection', function (socket) {
   socket.on('room', (data) => {
     console.log(data.username)
     var pathUser = path.join(__dirname, 'users/' + data.username + '/')
-    fs.exists(pathUser, function (exists) {
-      if (!exists) {
-        fs.mkdir(pathUser,function(error){
-          if(error) console.log(error)
-        });
-  
-      }
-    })
+    shellFs.mkdir('-p', pathUser)
 
     console.log(socket.id + " is joining room " + data.username + ' from address ' + socket.handshake.address)
     var roomName = data.username
