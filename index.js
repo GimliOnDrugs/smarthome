@@ -115,6 +115,7 @@ io.on('connection', function (socket) {
 
 
   socket.on('room', (data) => {
+    console.log(data.username)
     var pathUser = path.join(__dirname, 'users/' + data.username + '/')
     fs.exists(pathUser, function (exists) {
       if (!exists) {
