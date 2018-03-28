@@ -1,3 +1,4 @@
+
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -117,7 +118,10 @@ io.on('connection', function (socket) {
     var pathUser = path.join(__dirname, 'users/' + data.username + '/')
     fs.exists(pathUser, function (exists) {
       if (!exists) {
-        fs.mkdir(pathUser)
+        fs.mkdir(pathUser,function(error){
+          if(error) console.log(error)
+        });
+  
       }
     })
 
