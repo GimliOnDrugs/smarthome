@@ -20,7 +20,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   var user = req.header('username')
   console.log('post: ' + req.query.devicename)
   var date = new Date()
-  var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes()
+  var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes()+'-'+date.getSeconds()
   var fileName = 'motion_' + time + '.mp4'
   req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + fileName)));
 
