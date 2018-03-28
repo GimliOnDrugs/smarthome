@@ -1,7 +1,7 @@
 var inquirer = require('inquirer')
 var deviceauthentication = require('./deviceauthentication')
 var userAuth=require('./userauthentication')
-
+var rpiClient=require('../rpiclient')
 
 var questions = [
 
@@ -45,5 +45,6 @@ exports.startRPIAuth = (socket) => inquirer.prompt(questions).then(answers => {
         'devicename':devicename
     }
     socket.emit('sign in', user)
-    socket.emit('update ipaddress',user)
+    rpiClient.setDeviceName(devicename)
+
 })

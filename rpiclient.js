@@ -85,9 +85,8 @@ socket.on('reconnect', function () {
 socket.on('rpi', function (data) {
     on = true
     console.log('my data: ' + data.ipaddress)
-    if (ipAddress === data.ipaddress) {
+    if (deviceName===data.devicename) {
         user = data.username
-        deviceName = data.devicename
         console.log('i was found!')
         socket.emit('room', data)
         socket.emit('save status on db', { ipaddress: ipAddress, status: true, username: data.username })
@@ -182,5 +181,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
     }
 })
-
+exports.setDeviceName=(devicename)=>{
+    deviceName=devicename
+}
 
