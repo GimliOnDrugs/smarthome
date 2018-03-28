@@ -11,8 +11,8 @@ var growingFile = require('growing-file')
 var request = require('request')
 var progress = require('progress-stream')
 var Transcoder = require('stream-transcoder')
-//var stringUrl = "http://192.168.1.242:3000"
-var stringUrl = "https://smartsecurityhome.herokuapp.com"
+var stringUrl = "http://192.168.1.242:3000"
+//var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
 
@@ -144,8 +144,11 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                             if(error){
                                 console.log(error)
                             }
+                            else{
+                                shell.send('keep going')
+                            }
                         })
-                        shell.send('keep going')
+                       
 
                     }
 

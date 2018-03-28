@@ -1,7 +1,7 @@
 {
     "name": "smarthome",
     "version": "0.0.1",
-    "description": "my first socket.io app",
+    "description": "smart home web app",
     "engines": {
         "node": "8.9.4"
     },
@@ -9,10 +9,12 @@
         "engine.io": "^3.1.5",
         "express": "^4.15.2",
         "ffmepg": "0.0.2-security",
+        "gridfs-stream": "^1.1.1",
         "growing-file": "^0.1.3",
         "inquirer": "^5.1.0",
         "ip": "^1.1.5",
         "mongoose": "^5.0.7",
+        "nodemailer": "^4.6.3",
         "npm": "^5.7.1",
         "onoff": "^2.0.0",
         "password-hash-and-salt": "^0.1.4",

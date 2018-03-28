@@ -26,7 +26,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
 
   req.on('end', next);
 });
-app.get('/videoscount', function (req, res, next) {
+app.get('/videoscount', function (req, res, next) { //get method from browser client to get the videos files
   console.log('How many videos in ' + req.query.id + '?')
   var user = req.query.id
   var pathFile = path.join(__dirname, 'users/' + req.query.id + '/')
@@ -78,13 +78,7 @@ app.get('/videostream', function (req, res, next) {
       console.log('fully downloaded by client')
     })
   } else {
-    /*    console.log('hi im sending bietch')
-       const head = {
-         'Content-Length': fileSize,
-         'Content-Type': 'video/mp4',
-       }
-       res.writeHead(200, head)
-       fs.createReadStream(pathFile).pipe(res) */
+
   }
 
 })
@@ -158,8 +152,7 @@ io.on('connection', function (socket) {
     var domid = data.id
     var devicename = data.name
     deviceAuth.saveDevice(data.username, { name: devicename, ipaddress: ipAddress, action: actionDevice, status: statusDevice, position: 'random', actionstatus: false }, domid, io, socket.id)
-/*     socket.broadcast.emit('rpi devicename', { ipaddress: ipAddress, devicename: data.name })
- */  })
+  })
 
 
 
