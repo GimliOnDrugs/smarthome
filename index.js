@@ -202,9 +202,9 @@ io.on('connection', function (socket) {
 
   })
 
-  socket.on('video uploaded', () => {
+  socket.on('video uploaded', (data) => {
     console.log('rpi uploaded video')
-    socket.emit('new video uploaded')
+    socket.to(data.roomname).emit('new video uploaded')
   })
 
 

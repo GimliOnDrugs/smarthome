@@ -89,32 +89,34 @@ socket.on('devices fetched', function (data) {
                 var action = JSON.parse(sessionStorage.getItem(deviceName)).action
                 console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
                 if (this.checked) {
-                   
+
                     $('#video_' + uniqueID).toggle()
+                    var urlVideoCount='https://smartsecurityhome.herokuapp.com/videoscount?id='+user.username+''
+                    //var urlVideoCount='http://localhost:3000/videoscount?id=' + user.username + ''
                     $.ajax({
 
-                        url:'http://localhost:3000/videoscount?id='+user.username+'',
-                        success:(data,status,xhr)=>{
-                            var files=data.files
-                            var numberOfFiles=files.length
-                            for(let i=0;i<numberOfFiles;i++){
-                                var stringUrl='http://localhost:3000/videostream?id='+user.username+'&video='+files[i]+'' //this is for debug
-                                 //var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id='+user.username+'&video='+files[i]+'' //this is for debug
+                        url: urlVideoCount,
+                        success: (data, status, xhr) => {
+                            var files = data.files
+                            var numberOfFiles = files.length
+                            for (let i = 0; i < numberOfFiles; i++) {
+                               // var stringUrl = 'http://localhost:3000/videostream?id=' + user.username + '&video=' + files[i] + '' //this is for debug
+                                var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id='+user.username+'&video='+files[i]+'' //this is for debug
                                 var video = '<video src="' + stringUrl + '" controls   ></video></div>'
-                                  $('#video_' + uniqueID).append(video)
-                               
+                                $('#video_' + uniqueID).append(video)
+
                             }
-                          
+
                         }
 
                     })
-                    
+
                 }
                 else {
                     $('#video_' + uniqueID).empty()
 
                     $('#video_' + uniqueID).toggle()
-                   
+
 
                 }
             })
@@ -156,7 +158,10 @@ function onOnOffDeviceClick(uniqueid) {
     }
     else {
         socket.emit('connect rpi', { devicename: deviceName, username: user.username, id: uniqueid })
-        socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
+        if (action === 'video') {
+            socket.emit('toggle video', { devicename: deviceName, video: true, username: user.username })
+
+        }
         $('#' + uniqueid + ' .on-off').attr('src', '/css/assets/deviceon.svg')
 
     }

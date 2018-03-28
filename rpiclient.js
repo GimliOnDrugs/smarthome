@@ -11,8 +11,8 @@ var growingFile = require('growing-file')
 var request = require('request')
 var progress = require('progress-stream')
 var Transcoder = require('stream-transcoder')
-var stringUrl = "http://192.168.1.242:3000"
-//var stringUrl = "https://smartsecurityhome.herokuapp.com"
+//var stringUrl = "http://192.168.1.242:3000"
+var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
 
@@ -107,7 +107,7 @@ socket.on('turn on/off light', function (data) {
         LED.writeSync(1); //set pin state to 1 (turn LED on)
         console.log('turning on light')
     }
-    else if (deviceName === data.devicename && on) {
+    else if (deviceName === data.devicename) {
 
         LED.writeSync(0)
         console.log('turning off light')
@@ -140,7 +140,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
                     if (progress.percentage === 100) {
                         console.log('uploaded!!!')
-                        socket.emit('video uploaded')
+                        socket.emit('video uploaded',{roomname:user})
                         fs.unlink('motion.h264',function(error){
                             if(error){
                                 console.log(error)
