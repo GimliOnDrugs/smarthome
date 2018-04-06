@@ -30,7 +30,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
 app.get('/videoscount', function (req, res, next) { //get method from browser client to get the videos files
   console.log('How many videos in ' + req.query.id + '?')
   var user = req.query.id
-  var pathFile = path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName)
+  var pathFile = path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/')
   fs.readdir(pathFile, (error, files) => {
     if (files) {
       console.log('files length ' + files.length)
