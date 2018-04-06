@@ -7,7 +7,7 @@ var listHead = $('.list-group')
 socket.on('connect', function () {
 
     console.log("I'm connecting " + socket.id + " to room " + user.username)
-    socket.emit('room', { username: user.username, devicename:"video kitchen"})
+    socket.emit('room', { username: user.username})
 })
 
 

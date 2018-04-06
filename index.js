@@ -112,6 +112,7 @@ io.on('connection', function (socket) {
 
   socket.on('room', (data) => {
     console.log(data.username)
+    console.log(data.devicename+' '+socket.handshake.address)
     if (data.devicename) {
       var pathUser = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/')
       shellFs.mkdir('-p', pathUser)
