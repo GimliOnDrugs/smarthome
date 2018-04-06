@@ -23,7 +23,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   var date = new Date()
   var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds()
   var fileName = 'motion_' + time + '.mp4'
-  req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + fileName)));
+  req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName)));
 
   req.on('end', next);
 });
@@ -112,8 +112,11 @@ io.on('connection', function (socket) {
 
   socket.on('room', (data) => {
     console.log(data.username)
-    var pathUser = path.join(__dirname, 'users/' + data.username + '/')
-    shellFs.mkdir('-p', pathUser)
+    if (data.devicename) {
+      var pathUser = path.join(__dirname, 'users/' + data.username + '/'+data.devicename+'/')
+      shellFs.mkdir('-p', pathUser)
+
+    }
 
     console.log(socket.id + " is joining room " + data.username + ' from address ' + socket.handshake.address)
     var roomName = data.username
