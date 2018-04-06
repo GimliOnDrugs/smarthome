@@ -154,7 +154,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
                 })
                 var optionPost = {
-                    uri: stringUrl + '/postvideo?devicename=\'' + deviceName + '\'',
+                    uri: stringUrl + '/postvideo?devicename=' + deviceName + '',
                     headers: { username: user }
 
                 }
