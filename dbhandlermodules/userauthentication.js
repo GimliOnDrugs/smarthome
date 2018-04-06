@@ -14,7 +14,8 @@ var UserSchema = new Schema({
         unique: true
     },
     password: String,
-    devices: [{ name: String, ipaddress: String, action: String, status: Boolean, position: String, actionstatus: Boolean }]
+    devices: [{ name: String, ipaddress: String, action: String, status: Boolean, position: String, actionstatus: Boolean }],
+    videos:[]
 })
 
 

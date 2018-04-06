@@ -9,6 +9,7 @@ var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
 var fs = require('fs')
 var shellFs = require('shelljs')
+var gridMongo = require('gridfs-stream')
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -20,7 +21,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   var user = req.header('username')
   console.log('post: ' + req.query.devicename)
   var date = new Date()
-  var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes()+'-'+date.getSeconds()
+  var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds()
   var fileName = 'motion_' + time + '.mp4'
   req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + fileName)));
 
@@ -74,7 +75,7 @@ app.get('/videostream', function (req, res, next) {
     }
     res.writeHead(206, head);
     file.pipe(res);
-    res.on('finish', () => {
+    res.on('end', () => {
       console.log('fully downloaded by client')
     })
   } else {
@@ -196,10 +197,17 @@ io.on('connection', function (socket) {
 
   socket.on('video uploaded', (data) => {
     console.log('rpi uploaded video')
-    socket.to(data.roomname).emit('new video uploaded')
+    socket.to(data.roomname).emit('new video uploaded', { devicename: data.devicename })
   })
 
+  socket.on('videos watched', (data) => {
+    var pathUser = path.join(__dirname, 'users/' + data.username + '/')
+    var pathUserDeleteFiles = path.join(__dirname, 'users/' + data.username + '/*')
 
+    //salvo i file
+    shellFs.rm('-r', pathUserDeleteFiles)
+
+  })
 
 });
 
