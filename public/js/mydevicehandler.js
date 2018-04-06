@@ -81,7 +81,7 @@ socket.on('devices fetched', function (data) {
                 if (this.checked) {
 
                     $('#video_' + uniqueID).toggle()
-                    var urlVideoCount = 'https://smartsecurityhome.herokuapp.com/videoscount?id=' + user.username + ''
+                    var urlVideoCount = 'https://smartsecurityhome.herokuapp.com/videoscount?id=' + user.username + '&devicename='+deviceName+''
                     //var urlVideoCount = 'http://localhost:3000/videoscount?id=' + user.username + ''
                     $.ajax({
 
@@ -91,7 +91,7 @@ socket.on('devices fetched', function (data) {
                             var numberOfFiles = files.length
                             for (let i = 0; i < numberOfFiles; i++) {
                                 // var stringUrl = 'http://localhost:3000/videostream?id=' + user.username + '&video=' + files[i] + '' //this is for debug
-                                var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id=' + user.username + '&video=' + files[i] + '' //this is for debug
+                                var stringUrl = 'https://smartsecurityhome.herokuapp.com/videostream?id=' + user.username + '&video=' + files[i] + '&devicename='+deviceName+'' //this is for debug
                                 var video = '<video src="' + stringUrl + '" controls   ></video></div>'
                                 $('#video_' + uniqueID).append(video)
 

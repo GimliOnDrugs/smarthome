@@ -30,7 +30,7 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
 app.get('/videoscount', function (req, res, next) { //get method from browser client to get the videos files
   console.log('How many videos in ' + req.query.id + '?')
   var user = req.query.id
-  var pathFile = path.join(__dirname, 'users/' + req.query.id + '/')
+  var pathFile = path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName)
   fs.readdir(pathFile, (error, files) => {
     if (files) {
       console.log('files length ' + files.length)
@@ -51,7 +51,7 @@ app.get('/videostream', function (req, res, next) {
   var user = req.query.id
   var fileName = req.query.video
   console.log('this is filename ' + fileName)
-  var pathFile = path.join(__dirname, 'users/' + req.query.id + '/' + fileName)
+  var pathFile = path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName)
   var stat = fs.statSync(pathFile);
 
   var fileSize = stat.size;
@@ -208,6 +208,8 @@ io.on('connection', function (socket) {
     var pathUserDeleteFiles = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/*')
 
     //salvo i file
+
+
     shellFs.rm('-r', pathUserDeleteFiles)
 
   })
