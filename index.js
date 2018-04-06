@@ -113,7 +113,7 @@ io.on('connection', function (socket) {
   socket.on('room', (data) => {
     console.log(data.username)
     if (data.devicename) {
-      var pathUser = path.join(__dirname, 'users/' + data.username + '/'+data.devicename+'/')
+      var pathUser = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/')
       shellFs.mkdir('-p', pathUser)
 
     }
@@ -204,8 +204,8 @@ io.on('connection', function (socket) {
   })
 
   socket.on('videos watched', (data) => {
-    var pathUser = path.join(__dirname, 'users/' + data.username + '/')
-    var pathUserDeleteFiles = path.join(__dirname, 'users/' + data.username + '/*')
+    var pathUser = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/')
+    var pathUserDeleteFiles = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/*')
 
     //salvo i file
     shellFs.rm('-r', pathUserDeleteFiles)
