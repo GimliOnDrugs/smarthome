@@ -26,6 +26,7 @@ if message == "start recording\n":
                 print('video recorded')
                 camera.stop_recording()
                 if sys.stdin.readline() == "keep going\n":
+                    stream=picamera.PiCameraCircularIO(camera,seconds=20)
                     camera.start_recording(stream, format='h264')
 
     finally:
