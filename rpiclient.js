@@ -145,6 +145,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                                 console.log(error)
                             }
                             else{
+//
                                 shell.send('keep going')
                             }
                         })
