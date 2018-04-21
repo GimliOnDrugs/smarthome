@@ -6,9 +6,10 @@ import cv2
 class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = None
     def analyze(self, a):
+        print('hi')
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
-        print('hi')
+        
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
@@ -42,5 +43,5 @@ with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
         camera.start_recording(
               'video.bgr', format='bgr')
-        camera.wait_recording(30)
+        camera.wait_recording(5)
         camera.stop_recording()
