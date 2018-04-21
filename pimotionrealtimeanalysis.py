@@ -8,6 +8,7 @@ class DetectMotion(picamera.array.PiRGBAnalysiss):
     def analyze(self, a):
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
+        print('hi')
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
@@ -16,8 +17,8 @@ class DetectMotion(picamera.array.PiRGBAnalysiss):
             firstFrame = gray
             nameff = 'firstframe'+str(countff)+'.jpg'
             countff += 1
-            # cv2.imwrite(nameff,firstFrame)
-            #continue
+            cv2.imwrite(nameff,firstFrame)
+            continue
 
             # compute the absolute difference between the current frame and
             # first frame
