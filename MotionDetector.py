@@ -13,8 +13,8 @@ class MotionDetector(camera):
 
     def detectMotion(self, stream):
         camera = self.picamera
-		camera.framerate = 32
-        rawCapture = PiRGBArray(camera)
+        camera.framerate = 32
+       	rawCapture = PiRGBArray(camera)
         # allow the camera to warmup
         firstFrame = None
         # capture frames from the camera
@@ -46,8 +46,8 @@ class MotionDetector(camera):
 
             if cv2.countNonZero(thresh) > 30000:
                 print('motion detected for frame '+name)
-				camera.wait_recording(10)
-				stream.copy_to('motion.h264')
-                #if sys.stdin.readline() == "keep going\n":
-				print('video recorded')
+                camera.wait_recording(10)
+                stream.copy_to('motion.h264')
+                # if sys.stdin.readline() == "keep going\n":
+                print('video recorded')
                 return True
