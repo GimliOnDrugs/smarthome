@@ -3,7 +3,7 @@ import picamera
 import picamera.array
 import cv2
 
-class DetectMotion(picamera.array.PiRGBAnalysiss):
+class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = None
     def analyze(self, a):
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
