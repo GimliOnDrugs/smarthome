@@ -32,7 +32,7 @@ class MotionDetector:
                 nameff = 'firstframe'+str(countff)+'.jpg'
                 countff += 1
                 # cv2.imwrite(nameff,firstFrame)
-                continue
+                #continue
 
             # compute the absolute difference between the current frame and
             # first frame
