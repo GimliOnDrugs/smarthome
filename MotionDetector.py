@@ -18,12 +18,13 @@ class MotionDetector:
         # allow the camera to warmup
         firstFrame = None
         # capture frames from the camera
+		camera.start_recording(stream, format='h264')
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=False):
             gray = cv2.cvtColor(frame.array, cv2.COLOR_BGR2GRAY)
             rawCapture.truncate(0)
             gray = cv2.GaussianBlur(gray, (21, 21), 0)
             threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
-            cv2.imwrite('greythreshold.jpg', threshold)
+            #cv2.imwrite('greythreshold.jpg', threshold)
             # if the first frame is None, initialize it
             if firstFrame is None:
                 firstFrame = gray

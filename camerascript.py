@@ -16,7 +16,7 @@ motionDetector = MotionDetector.MotionDetector(camera)
 
 if message == "start recording\n":
     stream = picamera.PiCameraCircularIO(camera, seconds=20)
-    camera.start_recording(stream, format='h264')
+    """ camera.start_recording(stream, format='h264') """
     try:
 
         while True:
