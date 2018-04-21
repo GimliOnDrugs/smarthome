@@ -13,7 +13,7 @@ class MotionDetector(camera):
 
     def detectMotion(self, stream):
         camera = self.picamera
-        camera.framerate = 32
+		camera.framerate = 32
         rawCapture = PiRGBArray(camera)
         # allow the camera to warmup
         firstFrame = None
