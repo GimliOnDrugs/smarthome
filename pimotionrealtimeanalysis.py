@@ -3,7 +3,7 @@ import picamera
 import picamera.array
 import cv2
 
-class DetectMotion(picamera.array.PiMotionAnalysis):
+class DetectMotion(picamera.array.PiRGBAnalysiss):
     firstFrame = None
     def analyze(self, a):
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
@@ -40,6 +40,6 @@ with picamera.PiCamera() as camera:
     with DetectMotion(camera) as output:
         camera.resolution = (640, 480)
         camera.start_recording(
-              'video.h264', format='h264', motion_output=output)
+              'video.bgr', format='bgr')
         camera.wait_recording(30)
         camera.stop_recording()
