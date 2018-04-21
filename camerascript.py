@@ -8,7 +8,7 @@ message = sys.stdin.readline()
 camera = picamera.PiCamera()
 
 
-motionDetector = MotionDetector(camera)
+motionDetector = MotionDetector()
 
 
 
