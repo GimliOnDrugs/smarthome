@@ -24,7 +24,7 @@ if message == "start recording\n":
             motionDetector.detectMotion(stream)
            # if motion_detected():
 
-                """ camera.wait_recording(10)
+            """ camera.wait_recording(10)
                 stream.copy_to('motion.h264')
                 print('video recorded')
                 camera.stop_recording()
