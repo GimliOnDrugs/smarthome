@@ -6,7 +6,7 @@ import numpy
 import io
 
 
-class MotionDetector(camera):
+class MotionDetector:
 
     def __init__(self, picamera):
         self.picamera = picamera
