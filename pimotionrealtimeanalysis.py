@@ -39,9 +39,9 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
       
 
 with picamera.PiCamera() as camera:
-    with DetectMotion(camera) as output:
+    with DetectMotion(camera) as stream:
         camera.resolution = (640, 480)
         camera.start_recording(
-              'video.bgr', format='bgr')
+              stream, format='bgr')
         camera.wait_recording(5)
         camera.stop_recording()
