@@ -9,7 +9,6 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     countff = 0
     count = 0
     def analyze(self, a):
-        cv2.imwrite('whatigot'+str(self.count)+'.jpg',a)
        
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
@@ -35,7 +34,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         #cv2.imwrite('frame.jpg',fgmask)
         frameDelta = cv2.absdiff(self.firstFrame, gray)
         name2 = 'debugdelta'+str(self.count)+'.jpg'
-        cv2.imwrite(name2,gray)
+        #cv2.imwrite(name2,gray)
         thresh = cv2.threshold(frameDelta, 80, 255, cv2.THRESH_BINARY)[1]
 
         thresh = cv2.dilate(thresh, None, iterations=2)
