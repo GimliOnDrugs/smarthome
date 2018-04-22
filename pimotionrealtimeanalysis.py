@@ -25,8 +25,6 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
             #continue
         if self.count > 6:
             self.firstFrame = gray
-            cv2.imwrite(nameff,self.firstFrame)
-
             # compute the absolute difference between the current frame and
             # first frame
         #cv2.imwrite('frame.jpg',fgmask)
