@@ -53,6 +53,6 @@ with picamera.PiCamera() as camera:
         camera.framerate = 16
         time.sleep(0.1)
         camera.start_recording(
-              stream, format='bgr')
+              stream, 'bgr')
         camera.wait_recording(5)
         camera.stop_recording()
