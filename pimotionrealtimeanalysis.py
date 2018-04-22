@@ -11,7 +11,7 @@ class DetectMotion(picamera.array.PiAnalysisOutput):
     count2 = 0
     def analyze(self, a):
         
-        #print('hi')
+        print('hi')
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
         
