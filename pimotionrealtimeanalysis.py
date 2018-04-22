@@ -27,12 +27,11 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
 
             # compute the absolute difference between the current frame and
             # first frame
-        fgmask = fgbg.apply(frame)
-        cv2.imwrite('frame.jpg',fgmask)
+        #cv2.imwrite('frame.jpg',fgmask)
         frameDelta = cv2.absdiff(self.firstFrame, gray)
         name2 = 'debugdelta'+str(self.count)+'.jpg'
         cv2.imwrite(name2,frameDelta)
-        thresh = cv2.threshold(frameDelta, 20, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(frameDelta, 80, 255, cv2.THRESH_BINARY)[1]
 
         thresh = cv2.dilate(thresh, None, iterations=2)
         name = 'diff'+str(self.count)+'.jpg'
