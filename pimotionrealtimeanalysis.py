@@ -5,9 +5,10 @@ import cv2
 import time
 
 class DetectMotion(picamera.array.PiRGBAnalysis):
-    firstFrame = None
+    firstFrame = cv2.imread('first_frame.jpg',0)
     countff = 0
     count = 0
+    count2 = 0
     def analyze(self, a):
         
         #print('hi')
@@ -15,15 +16,16 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         #rawCapture.truncate(0)
         
         gray = cv2.GaussianBlur(gray, (41, 41), 0)
+        self.firstFrame = cv2.GaussianBlur(self.firstFrame.copy(),(41,41),0)
         cv2.imwrite('gray.jpg',gray)
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
         # if the first frame is None, initialize it
-        if self.firstFrame is None:
+       """  if self.firstFrame is None:
             self.firstFrame = gray
             nameff = 'firstframe'+str(self.countff)+'.jpg'
             self.countff += 1
-            cv2.imwrite(nameff,self.firstFrame)
+            cv2.imwrite(nameff,self.firstFrame) """
             #continue
 
             # compute the absolute difference between the current frame and
