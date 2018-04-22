@@ -29,7 +29,7 @@ def detect_motion(camera):
         countff += 1
         # cv2.imwrite(nameff,firstFrame)
         # continue
-    if self.count == 6:
+    if count == 6:
         firstFrame = gray
 
     # compute the absolute difference between the current frame and
