@@ -7,6 +7,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = None
     countff = 0
     count = 0
+    fgbg = cv2.createBackgroundSubtractorGMG()
     def analyze(self, a):
         
         #print('hi')
@@ -26,6 +27,8 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
 
             # compute the absolute difference between the current frame and
             # first frame
+        fgmask = fgbg.apply(frame)
+        cv2.imwrite('frame.jpg',fgmask)
         frameDelta = cv2.absdiff(self.firstFrame, gray)
         name2 = 'debugdelta'+str(self.count)+'.jpg'
         cv2.imwrite(name2,frameDelta)
