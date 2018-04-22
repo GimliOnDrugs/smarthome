@@ -9,7 +9,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     countff = 0
     count = 0
     def analyze(self, a):
-        cv2.imwrite('whatigot.bgr',self.firstFrame)
+        cv2.imwrite('whatigot.jpg',self.firstFrame)
         #print('hi')
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
