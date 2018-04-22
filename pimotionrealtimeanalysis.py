@@ -60,5 +60,6 @@ with picamera.PiCamera() as camera:
         while True:
             camera.wait_recording(1)
             if stream.motion_detected is True:
+                print('\nAbout to record motion...')
                 camera.wait_recording(10)
                 camera.stop_recording()
