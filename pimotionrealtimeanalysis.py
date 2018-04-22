@@ -17,8 +17,7 @@ class DetectMotion(picamera.array.PiMotionAnalysis):
         
         gray = cv2.GaussianBlur(gray, (41, 41), 0)
         self.firstFrame = cv2.GaussianBlur(self.firstFrame.copy(),(41,41),0)
-        cv2.imwrite('blurredfirst.jpg',self.firstFrame)
-        cv2.imwrite('gray.jpg',gray)
+       
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
         # if the first frame is None, initialize it
@@ -34,12 +33,13 @@ class DetectMotion(picamera.array.PiMotionAnalysis):
         #cv2.imwrite('frame.jpg',fgmask)
         frameDelta = cv2.absdiff(self.firstFrame, gray)
         name2 = 'debugdelta'+str(self.count)+'.jpg'
-        cv2.imwrite(name2,gray)
+        #cv2.imwrite(name2,gray)
         thresh = cv2.threshold(frameDelta, 50, 255, cv2.THRESH_BINARY)[1]
 
         thresh = cv2.dilate(thresh, None, iterations=2)
         name = 'diff'+str(self.count)+'.jpg'
         cv2.imwrite(name,thresh)
+        cv2.imwrite(name2,a)
         self.count += 1
 
         if cv2.countNonZero(thresh) > 30000:
