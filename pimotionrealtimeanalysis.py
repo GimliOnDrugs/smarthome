@@ -57,5 +57,7 @@ with picamera.PiCamera() as camera:
         time.sleep(0.1)
         camera.start_recording(
               stream, format='bgr')
+        while True:
+            camera.wait_recording(1)
         #camera.wait_recording(10)
         #camera.stop_recording()
