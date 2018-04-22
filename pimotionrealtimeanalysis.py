@@ -10,8 +10,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     countff = 0
     count = 0
     motion_detected = False
-    def __init__(self,camera):
-        self.camera = camera
+    
     def analyze(self, a):
        
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
@@ -46,6 +45,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         if cv2.countNonZero(thresh) > 20000 and self.count > 6:
             print('motion detected for frame '+name)
             cv2.imwrite('motion_frame'+str(self.count)+'.jpg',a)
+            self.motion_detected = True
            
 
       
