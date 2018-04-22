@@ -16,7 +16,7 @@ def detect_motion(camera):
     global count
     global countff
     rawCapture = PiRGBArray(camera)
-    camera.capture(rawCapture, format="bgr", use_video_port=False)
+    camera.capture(rawCapture, format="bgr", use_video_port=True)
     gray = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
     rawCapture.truncate(0)
     gray = cv2.GaussianBlur(gray, (21, 21), 0)
@@ -29,6 +29,8 @@ def detect_motion(camera):
         countff += 1
         # cv2.imwrite(nameff,firstFrame)
         # continue
+    if self.count == 6:
+        firstFrame = gray
 
     # compute the absolute difference between the current frame and
     # first frame
