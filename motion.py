@@ -15,7 +15,7 @@ def detect_motion(camera):
         prior_image = Image.open(stream)
         return False
     else:
-        print(hi)
+        print('hi')
         current_image = Image.open(stream)
         gray = cv2.cvtColor(current_image, cv2.COLOR_BGR2GRAY)
         # Compare current_image to prior_image to detect motion. This is
