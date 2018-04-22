@@ -5,7 +5,7 @@ import cv2
 import time
 
 class DetectMotion(picamera.array.PiRGBAnalysis):
-    firstFrame = cv2.imread('first_frame.jpg',0)
+    firstFrame = cv2.imread('first_frame.bgr',0)
     countff = 0
     count = 0
     count2 = 0
