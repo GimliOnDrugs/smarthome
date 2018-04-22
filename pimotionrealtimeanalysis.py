@@ -21,7 +21,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
         # if the first frame is None, initialize it
-       """  if self.firstFrame is None:
+        """  if self.firstFrame is None:
             self.firstFrame = gray
             nameff = 'firstframe'+str(self.countff)+'.jpg'
             self.countff += 1
