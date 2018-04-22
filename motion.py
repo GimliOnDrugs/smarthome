@@ -46,7 +46,7 @@ def detect_motion(camera):
 
     if cv2.countNonZero(thresh) > 30000:
         print('motion detected for frame '+name)
-        cv.imwrite(name,thresh)
+        cv2.imwrite(name,thresh)
         return True
 
 with picamera.PiCamera() as camera:
