@@ -8,10 +8,8 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     countff = 0
     count = 0
     def analyze(self, a):
-        firstFrame = self.firstFrame
-        countff = self.countff
-        count = self.count
-        print('hi')
+        
+        #print('hi')
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
         
@@ -19,24 +17,24 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
         # if the first frame is None, initialize it
-        if firstFrame is None:
+        if self.firstFrame is None:
             firstFrame = gray
-            nameff = 'firstframe'+str(countff)+'.jpg'
-            countff += 1
-            cv2.imwrite(nameff,firstFrame)
+            nameff = 'firstframe'+str(self.countff)+'.jpg'
+            self.countff += 1
+            cv2.imwrite(nameff,self.firstFrame)
             #continue
 
             # compute the absolute difference between the current frame and
             # first frame
-        frameDelta = cv2.absdiff(firstFrame, gray)
-        name2 = 'debugdelta'+str(count)+'.jpg'
+        frameDelta = cv2.absdiff(self.firstFrame, gray)
+        name2 = 'debugdelta'+str(self.count)+'.jpg'
 
         thresh = cv2.threshold(frameDelta, 20, 255, cv2.THRESH_BINARY)[1]
 
         thresh = cv2.dilate(thresh, None, iterations=2)
-        name = 'diff'+str(count)+'.jpg'
+        name = 'diff'+str(self.count)+'.jpg'
         cv2.imwrite(name,thresh)
-        count += 1
+        self.count += 1
 
         if cv2.countNonZero(thresh) > 30000:
             print('motion detected for frame '+name)
