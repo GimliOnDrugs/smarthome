@@ -9,6 +9,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = None
     countff = 0
     count = 0
+    motion_detected = False
     def __init__(self,camera):
         self.camera = camera
     def analyze(self, a):
@@ -45,8 +46,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         if cv2.countNonZero(thresh) > 20000 and self.count > 6:
             print('motion detected for frame '+name)
             cv2.imwrite('motion_frame'+str(self.count)+'.jpg',a)
-            self.camera.wait_recording(10)
-            self.camera.stop_recording()
+           
 
       
 
@@ -59,5 +59,6 @@ with picamera.PiCamera() as camera:
               stream, format='bgr')
         while True:
             camera.wait_recording(1)
-        #camera.wait_recording(10)
-        #camera.stop_recording()
+            if stream.motion_detected is True:
+                camera.wait_recording(10)
+                camera.stop_recording()
