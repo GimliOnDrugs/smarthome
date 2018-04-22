@@ -63,3 +63,4 @@ with picamera.PiCamera() as camera:
                 print('\nAbout to record motion...')
                 camera.wait_recording(10)
                 camera.stop_recording()
+                break
