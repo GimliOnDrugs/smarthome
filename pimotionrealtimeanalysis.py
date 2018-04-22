@@ -2,6 +2,7 @@ import numpy as np
 import picamera
 import picamera.array
 import cv2
+import time
 
 class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = None
@@ -45,6 +46,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
 with picamera.PiCamera() as camera:
     with DetectMotion(camera) as stream:
         camera.resolution = (640, 480)
+        time.sleep(0.1)
         camera.start_recording(
               stream, format='bgr')
         camera.wait_recording(5)
