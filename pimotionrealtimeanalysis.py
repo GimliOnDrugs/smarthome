@@ -4,19 +4,20 @@ import picamera.array
 import cv2
 import time
 
-class DetectMotion(picamera.array.PiAnalysisOutput):
+class DetectMotion(picamera.array.PiMotionAnalysis):
     firstFrame = cv2.imread('first_frame.jpg',0)
     countff = 0
     count = 0
     count2 = 0
     def analyze(self, a):
         
-        print('hi')
+        #print('hi')
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
         
         gray = cv2.GaussianBlur(gray, (41, 41), 0)
         self.firstFrame = cv2.GaussianBlur(self.firstFrame.copy(),(41,41),0)
+        cv2.imwrite('blurredfirst.jpg',self.firstFrame)
         cv2.imwrite('gray.jpg',gray)
         #threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
         #cv2.imwrite('greythreshold.jpg', threshold)
