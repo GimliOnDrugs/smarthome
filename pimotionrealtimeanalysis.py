@@ -7,7 +7,6 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = None
     countff = 0
     count = 0
-    fgbg = cv2.createBackgroundSubtractorGMG()
     def analyze(self, a):
         
         #print('hi')
