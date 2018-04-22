@@ -5,9 +5,12 @@ import cv2
 import time
 
 class DetectMotion(picamera.array.PiRGBAnalysis):
+    
     firstFrame = None
     countff = 0
     count = 0
+    def __init__(self,camera):
+        self.camera = camera
     def analyze(self, a):
        
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
@@ -42,6 +45,8 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
         if cv2.countNonZero(thresh) > 20000:
             print('motion detected for frame '+name)
             cv2.imwrite('motion_frame'+str(self.count)+'.jpg',a)
+            self.camera.wait_recording(10)
+            camera.stop_recording()
 
       
 
@@ -52,5 +57,5 @@ with picamera.PiCamera() as camera:
         time.sleep(0.1)
         camera.start_recording(
               stream, format='bgr')
-        camera.wait_recording(10)
-        camera.stop_recording()
+        #camera.wait_recording(10)
+        #camera.stop_recording()
