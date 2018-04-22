@@ -16,18 +16,18 @@ def detect_motion(camera):
     global count
     global countff
     rawCapture = PiRGBArray(camera)
-    camera.capture(rawCapture, format="bgr", use_video_port=True)
+    camera.capture(rawCapture, format="bgr", use_video_port=True) #picamera method to get a frame in the current video as a numpy array for OpenCV
     gray = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
     rawCapture.truncate(0)
     gray = cv2.GaussianBlur(gray, (21, 21), 0)
     threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
-    # cv2.imwrite('greythreshold.jpg', threshold)
-    # if the first frame is None, initialize it
+    
+    # if the first frame is None, initialize it: first frame is the static backbround used for comparing other frames
     if firstFrame is None:
         firstFrame = gray
         nameff = 'firstframe'+str(countff)+'.jpg'
         countff += 1
-        # cv2.imwrite(nameff,firstFrame)
+        cv2.imwrite(nameff,firstFrame)
         # continue
     if count == 6:
         firstFrame = gray
