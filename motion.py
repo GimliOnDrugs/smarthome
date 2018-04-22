@@ -1,32 +1,51 @@
 import io
 import random
 import picamera
+from picamera.array import PiRGBArray
 from PIL import Image
 import cv2
 
-prior_image = None
+firstFrame = None
+count = 0
+countff = 0
+
 
 def detect_motion(camera):
-    global prior_image
-    stream = io.BytesIO()
-    camera.capture(stream, format='jpeg', use_video_port=True)
-    stream.seek(0) #position at start of stream
-    if prior_image is None:
-        prior_image = Image.open(stream)
-        return False
-    else:
-        print('hi')
-        current_image = Image.open(stream)
-        gray = cv2.cvtColor(current_image, cv2.COLOR_BGR2GRAY)
-        # Compare current_image to prior_image to detect motion. This is
-        # left as an exercise for the reader!
-        result = random.randint(0, 10) == 0
-        # Once motion detection is done, make the prior image the current
-        prior_image = current_image
-        return result
+    global firstFrame
+    global count
+    global countff
+    rawCapture = PiRGBArray(camera)
+    camera.capture(rawCapture, format="bgr", use_video_port=False)
+    gray = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
+    rawCapture.truncate(0)
+    gray = cv2.GaussianBlur(gray, (21, 21), 0)
+    threshold = cv2.threshold(gray, 20, 255, cv2.THRESH_TOZERO)[1]
+    # cv2.imwrite('greythreshold.jpg', threshold)
+    # if the first frame is None, initialize it
+    if firstFrame is None:
+        firstFrame = gray
+        nameff = 'firstframe'+str(countff)+'.jpg'
+        countff += 1
+        # cv2.imwrite(nameff,firstFrame)
+        # continue
+
+    # compute the absolute difference between the current frame and
+    # first frame
+    frameDelta = cv2.absdiff(firstFrame, gray)
+    name2 = 'debugdelta'+str(count)+'.jpg'
+
+    thresh = cv2.threshold(frameDelta, 20, 255, cv2.THRESH_BINARY)[1]
+
+    thresh = cv2.dilate(thresh, None, iterations=2)
+
+    name = 'diff'+str(count)+'.jpg'
+    count += 1
+
+    if cv2.countNonZero(thresh) > 30000:
+        print('motion detected for frame '+name)
+        return True
 
 with picamera.PiCamera() as camera:
-    camera.resolution = (1280, 720)
     stream = picamera.PiCameraCircularIO(camera, seconds=10)
     camera.start_recording(stream, format='h264')
     try:

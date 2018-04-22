@@ -49,8 +49,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
            
 
       
-""" with picamera.PiCamera() as camera:
-    stream = picamera.PiCameraCircularIO(camera, seconds=20)
+with picamera.PiCamera() as camera:
     with DetectMotion(camera) as stream:
         camera.resolution = (640, 480)
         camera.framerate = 32
@@ -63,5 +62,4 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
                 print('\nAbout to record motion...')
                 camera.wait_recording(5)
                 camera.stop_recording()
-                stream.copy_to('motion_recorded.h264')
-                break """
+                break
