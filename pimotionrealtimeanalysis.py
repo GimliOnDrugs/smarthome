@@ -5,12 +5,12 @@ import cv2
 import time
 
 class DetectMotion(picamera.array.PiRGBAnalysis):
-    firstFrame = cv2.imread('first_frame.jpg',0)
+    firstFrame = None
     countff = 0
     count = 0
     def analyze(self, a):
-        #cv2.imwrite('whatigot.jpg',self.firstFrame)
-        print('hi')
+        cv2.imwrite('whatigot'+str(self.count)+'.jpg',a)
+       
         gray = cv2.cvtColor(a, cv2.COLOR_BGR2GRAY)
         #rawCapture.truncate(0)
         
