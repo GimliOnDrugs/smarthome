@@ -8,6 +8,7 @@ import cv2
 firstFrame = None
 count = 0
 countff = 0
+count2 = 0
 
 
 def detect_motion(camera):
