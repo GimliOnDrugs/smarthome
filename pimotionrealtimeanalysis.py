@@ -46,7 +46,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
             print('motion detected for frame '+name)
             cv2.imwrite('motion_frame'+str(self.count)+'.jpg',a)
             self.camera.wait_recording(10)
-            self.cameracamera.stop_recording()
+            self.camera.stop_recording()
 
       
 
