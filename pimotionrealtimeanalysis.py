@@ -4,7 +4,7 @@ import picamera.array
 import cv2
 import time
 
-class DetectMotion(picamera.array.PiMotionAnalysis):
+class DetectMotion(picamera.array.PiRGBAnalysis):
     firstFrame = cv2.imread('first_frame.jpg',0)
     countff = 0
     count = 0
@@ -53,6 +53,6 @@ with picamera.PiCamera() as camera:
         camera.framerate = 16
         time.sleep(0.1)
         camera.start_recording(
-              stream, format='h264')
+              stream, format='bgr')
         camera.wait_recording(5)
         camera.stop_recording()
