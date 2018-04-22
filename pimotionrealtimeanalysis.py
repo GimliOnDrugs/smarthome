@@ -36,7 +36,7 @@ class DetectMotion(picamera.array.PiRGBAnalysis):
 
         thresh = cv2.dilate(thresh, None, iterations=2)
         name = 'diff'+str(self.count)+'.jpg'
-        #cv2.imwrite(name,thresh)
+        cv2.imwrite(name,thresh)
         self.count += 1
 
         if cv2.countNonZero(thresh) > 20000:
