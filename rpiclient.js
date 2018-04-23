@@ -44,8 +44,8 @@ socket.on('connect', function () {
         console.log('logging in ' + data.username)
         user = data.username
         console.log('username registered! ', user)
-      
-        socket.emit('room', { username: user, devicename:deviceName})
+
+        socket.emit('room', { username: user, devicename: deviceName })
     })
 
 
@@ -85,7 +85,7 @@ socket.on('reconnect', function () {
 socket.on('rpi', function (data) {
     on = true
     console.log('my data: ' + data.ipaddress)
-    if (deviceName===data.devicename) {
+    if (deviceName === data.devicename) {
         user = data.username
         console.log('i was found!')
         socket.emit('room', data)
@@ -126,9 +126,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
         shell.send('start recording')
         shell.on('message', function (message) {
-           console.log(message)
-            
-            if (message.trim().split('video recorded at')[1]!=null) {
+            console.log(message)
+
+            if (message.trim().split('video recorded at')[1] != null) {
                 filename = message.trim().split('video recorded at')[1].trim()
                 console.log(filename)
                 console.log('streaming starting')
@@ -141,9 +141,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     console.log('eta: ' + progress.eta + ' percentage: ' + progress.percentage)
                     if (progress.percentage === 100) {
                         console.log('uploaded!!!')
-                        socket.emit('video uploaded',{roomname:user,devicename:deviceName})
-                        fs.unlink(filenames,function(error){
-                            if(error){
+                        socket.emit('video uploaded', { roomname: user, devicename: deviceName })
+                        fs.unlink(filenames, function (error) {
+                            if (error) {
                                 console.log(error)
                             }
                             /* else{
@@ -151,7 +151,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                                 shell.send('keep going')
                             } */
                         })
-                       
+
 
                     }
 
@@ -163,9 +163,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = fs.createReadStream(filename)
-                console.log(fs.exists(filename,(exists)=>{
-                    console.log(filename +' exists? '+exists)
-                }))
+                fs.exists(filename, (exists) => {
+                    console.log(filename + ' exists? ' + exists)
+                })
                 new Transcoder(file)
                     .videoCodec('h264')
                     .fps(25)
@@ -190,7 +190,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
     }
 })
-exports.setDeviceName=(devicename)=>{
-    deviceName=devicename
+exports.setDeviceName = (devicename) => {
+    deviceName = devicename
 }
 
