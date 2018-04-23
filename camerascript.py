@@ -7,34 +7,34 @@ import time
 import datetime
 import sys
 
-firstFrame = None
+firstFrame = None  # this is the first frame picked and will be the reference model
 count = 0
 countff = 0
+# pointer to the time first frame was picked in order to change it at regular intervals for light changes
 timeFirstFrame = None
-
-
 
 
 def detect_motion(camera):
     global firstFrame
     global count
     global countff
-    global timeFirstFrame 
+    global timeFirstFrame
     timeFirstFrame = datetime.datetime.now().minute()
     print(timeFirstFrame)
     rawCapture = PiRGBArray(camera)
-    camera.capture(rawCapture, format="bgr", use_video_port=True) #picamera method to get a frame in the current video as a numpy array for OpenCV
-    current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY) 
+    # picamera method to get a frame in the current video as a numpy array for OpenCV
+    camera.capture(rawCapture, format="bgr", use_video_port=True)
+    current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
     rawCapture.truncate(0)
-    current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)    
+    current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     # if the first frame is None, initialize it: first frame is the static backbround used for comparing other frames
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
         firstFrame = current_frame
         nameff = 'firstframe'+str(countff)+'.jpg'
         countff += 1
-        cv2.imwrite(nameff,firstFrame)
+        cv2.imwrite(nameff, firstFrame)
         # continue
-    if count == 6: #first few frames are way darker the average
+    if count == 6:  # first few frames are way darker the average
         firstFrame = current_frame
 
     # compute the absolute difference between the current frame and
@@ -51,11 +51,15 @@ def detect_motion(camera):
 
     if cv2.countNonZero(thresh) > 30000:
         print('motion detected for frame '+name)
-        cv2.imwrite(name,thresh)
+        cv2.imwrite(name, thresh)
+        cv2.imwrite(name2,rawCapture.array)
         return True
 
+
 def updateBackgroundModel(timeFirstFrame):
-    return datetime.datetime.now()-timeFirstFrame == 10 #update background model every 10 minutes 
+    # update background model every 10 minutes
+    return datetime.datetime.now()-timeFirstFrame == 10
+
 
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=10)
@@ -64,12 +68,17 @@ with picamera.PiCamera() as camera:
         try:
             while True:
                 camera.wait_recording(1)
-                if detect_motion(camera):
-                    print('Motion detected!')
                 while detect_motion(camera):
                     camera.wait_recording(1)
                 print('Motion stopped!')
-                stream.copy_to('motion.h264')
-                print('video recorded')
+                now_day = datetime.datetime.now().day()
+                now_month = datetime.datetime.now().month()
+                now_year = datetime.datetime.now().year()
+                now_hour = datetime.datetime.now().hour()
+                now_minute = datetime.datetime.now().minute()
+                now_second = datetime.datetime.now().second()
+                filename = 'motion'+'-'+now_day+'_'+now_month+'_'+now_year+'-'+now_hour+'_'+now_minute+'_'+now_second+'.h264'
+                stream.copy_to(filename)
+                print('video recorded at '+filename)
         finally:
             camera.stop_recording()
