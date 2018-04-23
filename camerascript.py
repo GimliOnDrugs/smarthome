@@ -70,7 +70,7 @@ with picamera.PiCamera() as camera:
                 if detect_motion(camera):
 
                     while detect_motion(camera):
-                        camera.wait_recording(10)
+                        camera.wait_recording(5)
                     print('Motion stopped!')
                     now_day = datetime.datetime.now().day
                     now_month = datetime.datetime.now().month
