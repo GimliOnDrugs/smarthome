@@ -35,7 +35,7 @@ def detect_motion(camera):
         countff += 1
         cv2.imwrite(nameff, firstFrame)
         # continue
-"""     if count == 6:  # first few frames are way darker the average
+        """     if count == 6:  # first few frames are way darker the average
         firstFrame = current_frame """
 
     # compute the absolute difference between the current frame and
