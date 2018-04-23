@@ -26,7 +26,7 @@ def detect_motion(camera):
     global frame_count
     rawCapture = PiRGBArray(camera)
     # picamera method to get a frame in the current video as a numpy array for OpenCV
-    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    for i,frame in enumerate(camera.capture_continuous(rawCapture, format="bgr", use_video_port=True)):
         current_frame = cv2.cvtColor(frame.array, cv2.COLOR_BGR2GRAY)
         frame_count += 1
         rawCapture.truncate(0)
