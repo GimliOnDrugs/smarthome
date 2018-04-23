@@ -61,6 +61,7 @@ def updateBackgroundModel(timeFirstFrame):
 
 
 with picamera.PiCamera() as camera:
+    camera.framerate = 32
     stream = picamera.PiCameraCircularIO(camera, seconds=10)
     if(sys.stdin.readline() == "start recording\n"):
         camera.start_recording(stream, format='h264')
