@@ -62,7 +62,7 @@ def updateBackgroundModel(timeFirstFrame):
 
 with picamera.PiCamera() as camera:
     camera.framerate = 32
-    
+
     stream = picamera.PiCameraCircularIO(camera, seconds=10)
     if(sys.stdin.readline() == "start recording\n"):
         camera.start_recording(stream, format='h264')
@@ -72,7 +72,7 @@ with picamera.PiCamera() as camera:
                 if detect_motion(camera):
 
                     while detect_motion(camera):
-                        camera.wait_recording(5)
+                        camera.wait_recording(1)
                     print('Motion stopped!')
                     now_day = datetime.datetime.now().day
                     now_month = datetime.datetime.now().month
