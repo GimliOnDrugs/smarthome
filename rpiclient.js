@@ -126,10 +126,10 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
         shell.send('start recording')
         shell.on('message', function (message) {
-            console.log(message)
+            console.log(message.trim().split('videorecordedat')[1]!=null)
             
-            if (message.trim().split('videorecorded')[1]!=null) {
-                filename = message.trim().split('videorecorded')[1]
+            if (message.trim().split('videorecordedat')[1]!=null) {
+                filename = message.trim().split('videorecordedat')[1]
                 console.log(filename)
                 console.log('streaming starting')
                 var stat = fs.statSync(filename)
