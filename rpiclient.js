@@ -165,10 +165,10 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 var postFileRequest = request.post(optionPost)
                 console.log('about to open '+filename)
                 var file = fs.createReadStream(filename)
-                console.log(' about to check if exists')
-                fs.exists(filename, (exists) => {
+                console.log('about to check if exists')
+                /* fs.exists(filename, (exists) => {
                     console.log(filename + ' exists? ' + exists)
-                })
+                }) */
                 console.log('after check')
                 new Transcoder(file)
                     .videoCodec('h264')
