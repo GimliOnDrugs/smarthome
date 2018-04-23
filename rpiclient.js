@@ -133,6 +133,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 console.log(filename)
                 console.log('streaming starting')
                 var stat = fs.statSync(filename)
+                console.log('read file stat')
                 var stream = progress({
                     length: stat.size,
                     time: 10
@@ -168,7 +169,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 fs.exists(filename, (exists) => {
                     console.log(filename + ' exists? ' + exists)
                 })
-                
+                console.log('after check')
                 new Transcoder(file)
                     .videoCodec('h264')
                     .fps(25)
