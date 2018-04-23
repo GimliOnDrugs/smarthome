@@ -20,7 +20,7 @@ def detect_motion(camera):
     global countff
     global timeFirstFrame
     timeFirstFrame = datetime.datetime.now().minute
-    print('this is time '+timeFirstFrame)
+    print('this is time '+str(timeFirstFrame))
     rawCapture = PiRGBArray(camera)
     # picamera method to get a frame in the current video as a numpy array for OpenCV
     camera.capture(rawCapture, format="bgr", use_video_port=True)
