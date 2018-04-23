@@ -126,7 +126,8 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
         shell.send('start recording')
         shell.on('message', function (message) {
-            console.log(message.trim().split('videorecordedat')[1]!=null)
+            console.log(message.trim())
+            console.log(message.trim().split('videorecordedat'))
             
             if (message.trim().split('videorecordedat')[1]!=null) {
                 filename = message.trim().split('videorecordedat')[1]
