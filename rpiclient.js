@@ -127,10 +127,11 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
         shell.send('start recording')
         shell.on('message', function (message) {
             console.log(message)
-            if (message === 'video recorded') {
-
+            
+            if (message.trim().split('videorecorded')[1]!=null) {
+                filename = message.trim().split('videorecorded')[1]
                 console.log('streaming starting')
-                var stat = fs.statSync('motion.h264')
+                var stat = fs.statSync(filename)
                 var stream = progress({
                     length: stat.size,
                     time: 10
@@ -140,14 +141,14 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     if (progress.percentage === 100) {
                         console.log('uploaded!!!')
                         socket.emit('video uploaded',{roomname:user,devicename:deviceName})
-                        fs.unlink('motion.h264',function(error){
+                        fs.unlink(filenames,function(error){
                             if(error){
                                 console.log(error)
                             }
-                            else{
+                            /* else{
 //
                                 shell.send('keep going')
-                            }
+                            } */
                         })
                        
 
@@ -160,7 +161,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
                 }
                 var postFileRequest = request.post(optionPost)
-                var file = fs.createReadStream('motion.h264')
+                var file = fs.createReadStream(filename)
                 new Transcoder(file)
                     .videoCodec('h264')
                     .fps(25)
