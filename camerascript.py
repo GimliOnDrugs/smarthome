@@ -85,5 +85,7 @@ with picamera.PiCamera() as camera:
                     filename = 'motion'+'-'+str(now_day)+'_'+str(now_month)+'_'+str(now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
                     stream.copy_to(filename,seconds = 10)
                     print('video recorded at '+filename)
+                    if(sys.stdin.readline() == "keep going\n"):
+                        continue
         finally:
             camera.stop_recording()

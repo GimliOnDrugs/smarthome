@@ -177,6 +177,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     .stream()
                     .pipe(stream)
                     .pipe(postFileRequest)
+                    shell.send('keep going')
 
 
             }
