@@ -61,8 +61,10 @@ def detect_motion(camera):
             detect_motion = True
             break
             #return True
+    
     if detect_motion:
         detect_motion = False
+        print('returning true')
         return True
     else:
         return False
