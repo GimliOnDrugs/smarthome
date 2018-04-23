@@ -77,7 +77,7 @@ with picamera.PiCamera() as camera:
                 now_hour = datetime.datetime.now().hour
                 now_minute = datetime.datetime.now().minute
                 now_second = datetime.datetime.now().second
-                filename = 'motion'+'-'+now_day+'_'+now_month+'_'+now_year+'-'+now_hour+'_'+now_minute+'_'+now_second+'.h264'
+                filename = 'motion'+'-'+str(now_day)+'_'+str(now_month)+'_'+str(now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
                 stream.copy_to(filename)
                 print('video recorded at '+filename)
         finally:
