@@ -30,6 +30,7 @@ def detect_motion(camera):
     current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     # if the first frame is None, initialize it: first frame is the static backbround used for comparing other frames
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
+        print('updating background model')
         firstFrame = current_frame
         nameff = 'firstframe'+str(countff)+'.jpg'
         countff += 1
@@ -61,9 +62,7 @@ def detect_motion(camera):
 def updateBackgroundModel(timeFirstFrame):
     # update background model every 10 minutes
     global detected
-    return datetime.datetime.now().minute-timeFirstFrame == 10 and not detected
-
-
+    return datetime.datetime.now().minute-timeFirstFrame == 10 
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
     if(sys.stdin.readline() == "start recording\n"):
