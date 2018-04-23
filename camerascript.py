@@ -11,7 +11,7 @@ firstFrame = None  # this is the first frame picked and will be the reference mo
 count = 0
 countff = 0
 # pointer to the time first frame was picked in order to change it at regular intervals for light changes
-timeFirstFrame = None
+timeFirstFrame = datetime.datetime.now().minute
 detected = False
 
 
