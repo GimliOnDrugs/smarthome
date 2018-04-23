@@ -143,7 +143,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     if (progress.percentage === 100) {
                         console.log('uploaded!!!')
                         socket.emit('video uploaded', { roomname: user, devicename: deviceName })
-                        fs.unlink(filenames, function (error) {
+                        fs.unlink(filename, function (error) {
                             if (error) {
                                 console.log(error)
                             }
