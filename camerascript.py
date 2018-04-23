@@ -60,6 +60,7 @@ def detect_motion(camera):
             # cv2.imwrite(name2,frameDelta)
             detected = True
             return True
+            print('prova prova sa sa')
 
 
 def updateBackgroundModel(timeFirstFrame):
