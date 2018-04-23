@@ -143,14 +143,15 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     if (progress.percentage === 100) {
                         console.log('uploaded!!!')
                         socket.emit('video uploaded', { roomname: user, devicename: deviceName })
+                      
                         fs.unlink(filename, function (error) {
                             if (error) {
                                 console.log(error)
                             }
-                            /* else{
-//
+                             else{
+
                                 shell.send('keep going')
-                            } */
+                            } 
                         })
 
 
@@ -163,13 +164,9 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
 
                 }
                 var postFileRequest = request.post(optionPost)
-                console.log('about to open '+filename)
+
                 var file = fs.createReadStream(filename)
-                console.log('about to check if exists')
-                /* fs.exists(filename, (exists) => {
-                    console.log(filename + ' exists? ' + exists)
-                }) */
-                console.log('after check')
+               
                 new Transcoder(file)
                     .videoCodec('h264')
                     .fps(25)
@@ -177,8 +174,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     .stream()
                     .pipe(stream)
                     .pipe(postFileRequest)
-                    shell.send('keep going')
-
+                    
 
             }
 
