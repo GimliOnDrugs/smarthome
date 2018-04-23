@@ -19,7 +19,7 @@ def detect_motion(camera):
     global count
     global countff
     global timeFirstFrame
-    timeFirstFrame = datetime.datetime.now().minute()
+    timeFirstFrame = datetime.datetime.now().minute
     print(timeFirstFrame)
     rawCapture = PiRGBArray(camera)
     # picamera method to get a frame in the current video as a numpy array for OpenCV
@@ -71,12 +71,12 @@ with picamera.PiCamera() as camera:
                 while detect_motion(camera):
                     camera.wait_recording(1)
                 print('Motion stopped!')
-                now_day = datetime.datetime.now().day()
-                now_month = datetime.datetime.now().month()
-                now_year = datetime.datetime.now().year()
-                now_hour = datetime.datetime.now().hour()
-                now_minute = datetime.datetime.now().minute()
-                now_second = datetime.datetime.now().second()
+                now_day = datetime.datetime.now().day
+                now_month = datetime.datetime.now().month
+                now_year = datetime.datetime.now().year
+                now_hour = datetime.datetime.now().hour
+                now_minute = datetime.datetime.now().minute
+                now_second = datetime.datetime.now().second
                 filename = 'motion'+'-'+now_day+'_'+now_month+'_'+now_year+'-'+now_hour+'_'+now_minute+'_'+now_second+'.h264'
                 stream.copy_to(filename)
                 print('video recorded at '+filename)
