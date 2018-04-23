@@ -55,8 +55,8 @@ def detect_motion(camera):
 
     if cv2.countNonZero(thresh) > 30000:
         print('motion detected for frame '+name)
-        cv2.imwrite(name, thresh)
-        cv2.imwrite(name2,frameDelta)
+        #cv2.imwrite(name, thresh)
+        #cv2.imwrite(name2,frameDelta)
         detected = True
         return True
 
