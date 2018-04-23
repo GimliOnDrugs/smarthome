@@ -163,6 +163,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 }
                 var postFileRequest = request.post(optionPost)
                 var file = fs.createReadStream(filename)
+                console.log(fs.exists(filename))
                 new Transcoder(file)
                     .videoCodec('h264')
                     .fps(25)
