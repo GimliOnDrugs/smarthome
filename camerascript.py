@@ -60,14 +60,7 @@ def detect_motion(camera):
             cv2.imwrite(name2,frameDelta)
             detected = True
             break
-            #return True
-    
-    if detected:
-        detected = False
-        print('returning true')
-        return True
-    else:
-        return False
+    print('exit form loop :D')
             
 
 
