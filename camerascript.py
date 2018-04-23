@@ -58,8 +58,14 @@ def detect_motion(camera):
             print('motion detected for frame '+name)
             #cv2.imwrite(name, thresh)
             cv2.imwrite(name2,frameDelta)
-            return True
-            
+            detect_motion = True
+            break
+            #return True
+    if detect_motion:
+        detect_motion = False
+        return True
+    else:
+        return False
             
 
 
