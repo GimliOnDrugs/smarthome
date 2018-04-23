@@ -11,7 +11,7 @@ firstFrame = None  # this is the first frame picked and will be the reference mo
 count = 0
 countff = 0
 # pointer to the time first frame was picked in order to change it at regular intervals for light changes
-timeFirstFrame = None
+timeFirstFrame = datetime.datetime.now().minute
 detected = False
 
 
@@ -21,7 +21,7 @@ def detect_motion(camera):
     global countff
     global timeFirstFrame
     global detected
-    timeFirstFrame = datetime.datetime.now().minute
+     
     rawCapture = PiRGBArray(camera)
     # picamera method to get a frame in the current video as a numpy array for OpenCV
     camera.capture(rawCapture, format="bgr", use_video_port=True)
