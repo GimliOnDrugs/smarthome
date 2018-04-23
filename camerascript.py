@@ -11,7 +11,7 @@ firstFrame = None  # this is the first frame picked and will be the reference mo
 count = 0
 countff = 0
 # pointer to the time first frame was picked in order to change it at regular intervals for light changes
-timeFirstFrame = datetime.datetime.now().minute
+timeFirstFrame = None
 detected = False
 
 
@@ -33,6 +33,7 @@ def detect_motion(camera):
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
         print('updating background model')
         firstFrame = current_frame
+        timeFirstFrame = datetime.datetime.now().minute
         nameff = 'firstframe'+str(countff)+'.jpg'
         countff += 1
         cv2.imwrite(nameff, firstFrame)
