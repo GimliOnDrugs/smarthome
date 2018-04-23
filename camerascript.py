@@ -90,6 +90,7 @@ with picamera.PiCamera() as camera:
             while True:
                 camera.wait_recording(1)
                 if detect_motion(camera):
+                    print('Motion detected!')
 
                     while detect_motion(camera):
                         camera.wait_recording(1)
