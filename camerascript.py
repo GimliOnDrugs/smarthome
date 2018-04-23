@@ -64,8 +64,10 @@ def detect_motion(camera):
     print('exit form loop :D')
     if detected:
         detected = False
+        prinnt('motion is detected')
         return True
     else:
+        print('motion is not detected')
         return False
             
 
