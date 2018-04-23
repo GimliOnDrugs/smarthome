@@ -129,7 +129,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
            console.log(message)
             
             if (message.trim().split('video recorded at')[1]!=null) {
-                filename = message.trim().split('video recorded at')[1]
+                filename = message.trim().split('video recorded at')[1].trim()
                 console.log(filename)
                 console.log('streaming starting')
                 var stat = fs.statSync(filename)
