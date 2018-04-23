@@ -65,7 +65,12 @@ def detect_motion(camera):
 def updateBackgroundModel(timeFirstFrame):
     # update background model every 10 minutes
     global frame_count
-    return datetime.datetime.now().minute-timeFirstFrame == 2 or frame_count == 10
+    if frame_count == 10:
+        frame_count = 0
+        return True
+    else:
+        return False
+
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
     if(sys.stdin.readline() == "start recording\n"):
