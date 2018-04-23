@@ -10,8 +10,10 @@ import sys
 firstFrame = None  # this is the first frame picked and will be the reference model
 count = 0
 countff = 0
-# pointer to the time first frame was picked in order to change it at regular intervals for light changes
+# pointer to the time first frame was picked in order
+#  to change it at regular intervals for light changes
 timeFirstFrame = datetime.datetime.now().minute
+frame_count = 0
 detected = False
 
 
@@ -21,11 +23,12 @@ def detect_motion(camera):
     global countff
     global timeFirstFrame
     global detected
-     
+    global frame_count 
     rawCapture = PiRGBArray(camera)
     # picamera method to get a frame in the current video as a numpy array for OpenCV
     camera.capture(rawCapture, format="bgr", use_video_port=True)
     current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
+    frame_count += 1
     rawCapture.truncate(0)
     current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     # if the first frame is None, initialize it: first frame is the static backbround used for comparing other frames
@@ -38,8 +41,6 @@ def detect_motion(camera):
         countff += 1
         cv2.imwrite(nameff, firstFrame)
         # continue
-        """     if count == 6:  # first few frames are way darker the average
-        firstFrame = current_frame """
 
     # compute the absolute difference between the current frame and
     # first frame
@@ -63,7 +64,8 @@ def detect_motion(camera):
 
 def updateBackgroundModel(timeFirstFrame):
     # update background model every 10 minutes
-    return datetime.datetime.now().minute-timeFirstFrame == 2
+    global frame_count
+    return datetime.datetime.now().minute-timeFirstFrame == 2 or frame_count = 10
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
     if(sys.stdin.readline() == "start recording\n"):
@@ -83,7 +85,7 @@ with picamera.PiCamera() as camera:
                     now_minute = datetime.datetime.now().minute
                     now_second = datetime.datetime.now().second
                     filename = 'motion'+'-'+str(now_day)+'_'+str(now_month)+'_'+str(now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
-                    stream.copy_to(filename,seconds = 5)
+                    stream.copy_to(filename,seconds = 10)
                     print('video recorded at '+filename)
                     if(sys.stdin.readline() == "keep going\n"):
                         continue
