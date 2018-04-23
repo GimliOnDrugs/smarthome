@@ -58,12 +58,12 @@ def detect_motion(camera):
             print('motion detected for frame '+name)
             #cv2.imwrite(name, thresh)
             cv2.imwrite(name2,frameDelta)
-            detect_motion = True
+            detected = True
             break
             #return True
     
-    if detect_motion:
-        detect_motion = False
+    if detected:
+        detected = False
         print('returning true')
         return True
     else:
@@ -84,12 +84,13 @@ def updateBackgroundModel(timeFirstFrame):
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
     camera.framerate = 32
+    global detect_motion
     if(sys.stdin.readline() == "start recording\n"):
         camera.start_recording(stream, format='h264')
         try:
             while True:
                 camera.wait_recording(1)
-                if detect_motion(camera):
+                if :
 
                     while detect_motion(camera):
                         camera.wait_recording(1)
