@@ -83,7 +83,7 @@ with picamera.PiCamera() as camera:
         try:
             while True:
                 camera.wait_recording(1)
-                if :
+                if detect_motion(camera):
 
                     while detect_motion(camera):
                         camera.wait_recording(1)
