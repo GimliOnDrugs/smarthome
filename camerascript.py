@@ -12,6 +12,7 @@ count = 0
 countff = 0
 # pointer to the time first frame was picked in order to change it at regular intervals for light changes
 timeFirstFrame = None
+detected = False
 
 
 def detect_motion(camera):
@@ -19,6 +20,7 @@ def detect_motion(camera):
     global count
     global countff
     global timeFirstFrame
+    global detected
     timeFirstFrame = datetime.datetime.now().minute
     rawCapture = PiRGBArray(camera)
     # picamera method to get a frame in the current video as a numpy array for OpenCV
@@ -52,12 +54,14 @@ def detect_motion(camera):
         print('motion detected for frame '+name)
         cv2.imwrite(name, thresh)
         cv2.imwrite(name2,rawCapture.array)
+        detected = True
         return True
 
 
 def updateBackgroundModel(timeFirstFrame):
     # update background model every 10 minutes
-    return datetime.datetime.now().minute-timeFirstFrame == 10
+    global detected
+    return datetime.datetime.now().minute-timeFirstFrame == 10 and not detected
 
 
 with picamera.PiCamera() as camera:
