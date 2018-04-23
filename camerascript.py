@@ -29,9 +29,7 @@ def detect_motion(camera):
     rawCapture.truncate(0)
     current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     # if the first frame is None, initialize it: first frame is the static backbround used for comparing other frames
-    print('if condition: '+str(firstFrame is None or updateBackgroundModel(timeFirstFrame)))
-    print('first term: '+str(firstFrame is None))
-    print('second term: '+str(updateBackgroundModel(timeFirstFrame)))
+    
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
         print('updating background model')
         firstFrame = current_frame
