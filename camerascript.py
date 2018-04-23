@@ -59,17 +59,17 @@ def updateBackgroundModel(timeFirstFrame):
 
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=10)
-    if(sys.stdin.readline() == "start recording\n")
-    camera.start_recording(stream, format='h264')
-    try:
-        while True:
-            camera.wait_recording(1)
-            if detect_motion(camera):
-                print('Motion detected!')
+    if(sys.stdin.readline() == "start recording\n"):
+        camera.start_recording(stream, format='h264')
+        try:
+            while True:
+                camera.wait_recording(1)
+                if detect_motion(camera):
+                    print('Motion detected!')
                 while detect_motion(camera):
                     camera.wait_recording(1)
                 print('Motion stopped!')
                 stream.copy_to('motion.h264')
                 print('video recorded')
-    finally:
-        camera.stop_recording()
+        finally:
+            camera.stop_recording()
