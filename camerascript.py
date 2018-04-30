@@ -11,10 +11,11 @@ firstFrame = None  # this is the first frame picked and will be the reference mo
 count = 0
 countff = 0
 # pointer to the time first frame was picked in order
-#  to change it at regular intervals for light changes
+# to change it at regular intervals for light changes
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
+face_cascade = cv2.CascadeClassifier('./haarcascade_frontalface_alt.xml')
 
 
 def detect_motion(camera):
@@ -30,8 +31,12 @@ def detect_motion(camera):
     current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
     frame_count += 1
     rawCapture.truncate(0)
-    current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
-    # if the first frame is None, initialize it: first frame is the static backbround used for comparing other frames
+    #current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
+    face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
+    for (x, y, w, h) in face_rects:
+        cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
+        cv2.imwrite('facedetected.jpg',current_frame)
+    # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
 
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
         print('updating background model')
@@ -79,10 +84,12 @@ with picamera.PiCamera() as camera:
             while True:
                 camera.wait_recording(1)
                 if detect_motion(camera):
+
+                    print('Motion detected')
                    
                     while detect_motion(camera):
                         camera.wait_recording(1)
-                    print('Motion stopped!')
+                    print('Motion stopped')
                     now_day = datetime.datetime.now().day
                     now_month = datetime.datetime.now().month
                     now_year = datetime.datetime.now().year

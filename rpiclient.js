@@ -5,7 +5,6 @@ var ip = require('ip')
 var io = require('socket.io-client')
 var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var PythonShell = require('python-shell')
-var rpiInquirer = require('./dbhandlermodules/rpinquirer')
 var fs = require('fs')
 var growingFile = require('growing-file')
 var request = require('request')
@@ -176,6 +175,13 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     .pipe(postFileRequest)
                     
 
+            }
+            if(message === 'Motion detected'){
+                LED.writeSync(1)
+            }
+            if(message === 'Motion stopped'){
+                setTimeout(()=>LED.writeSync(0),2000) //switch off light two seconds after motion stopped
+                
             }
 
         })
