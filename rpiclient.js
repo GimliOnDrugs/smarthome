@@ -18,7 +18,7 @@ var ipAddress = ip.address()
 var options = {
     mode: 'text',
     pythonOptions: ['-u'],
-    pythonPath: '/usr/bin/python3'
+    pythonPath: '/usr/bin/python'
 }
 
 var user

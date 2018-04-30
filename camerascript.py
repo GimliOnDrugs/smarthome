@@ -15,7 +15,7 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-face_cascade = cv2.CascadeClassifier('./haarcascade_frontalface_alt.xml')
+face_cascade = cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
 
 
 def detect_motion(camera):
