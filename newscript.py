@@ -16,8 +16,8 @@ timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
 face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/smarthome/haarcascade_frontalface_default.xml')
-face_recognizer = cv2.face.LBPHFaceRecognizer_create()
-face_recognizer.read('/home/pi/Documents/smarthome/smarthome/trainingdata.xml')
+face_recognizer = cv2.createLBPHFaceRecognizer()
+face_recognizer.load('/home/pi/Documents/smarthome/smarthome/trainingdata.xml')
 subjects = ["empty","Giacomo","Lucia","Obama"]
 
 def detect_motion(camera):
@@ -43,7 +43,7 @@ def detect_motion(camera):
         cv2.putText(current_frame, str(conf),(x,y+h),cv2.FONT_HERSHEY_PLAIN,1,(255,255,0),3)
         cv2.imwrite('facedetected.jpg',current_frame)
 
-        
+
 with picamera.PiCamera() as camera:
         stream = picamera.PiCameraCircularIO(camera, seconds=5)
         camera.start_recording(stream, format='h264')
