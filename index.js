@@ -9,7 +9,8 @@ var userauth = require('./dbhandlermodules/userauthentication')
 var deviceAuth = require('./dbhandlermodules/deviceauthentication')
 var fs = require('fs')
 var shellFs = require('shelljs')
-var gridMongo = require('gridfs-stream')
+var db = require('./dbhandlermodules/databaseconnection').onConnectionOpen
+var userAuth = require('./dbhandlermodules/userauthentication').getUser
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,7 +25,20 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   var time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds()
   var fileName = 'motion_' + time + '.mp4'
   req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName)));
+  req.on('end', function () {
+    userAuth.getUser.findOne({ 'username': user }, function (error, result) {
+      if (error) console.log(error)
+      fs.readFile(path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName),(err,data)=>{
+        if (err) throw err;
+        result.videos.push(data)
+      })
+      result.save(function (error, result) {
+        if (error) console.log(error)
+        io.in(userName).to(socketid).emit('device saved', { device: device, domid: domid })
+      })
+    })
 
+  })
   req.on('end', next);
 });
 app.get('/videoscount', function (req, res, next) { //get method from browser client to get the videos files
@@ -112,7 +126,7 @@ io.on('connection', function (socket) {
 
   socket.on('room', (data) => {
     console.log(data.username)
-    console.log(data.devicename+' '+socket.handshake.address)
+    console.log(data.devicename + ' ' + socket.handshake.address)
     if (data.devicename) {
       var pathUser = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/')
       shellFs.mkdir('-p', pathUser)

@@ -16,7 +16,8 @@ timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
 face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/smarthome/haarcascade_frontalface_default.xml')
-face_recognizer = cv2.createLBPHFaceRecognizer()
+face_recognizer = cv2.face.createLBPHFaceRecognizer()
+
 face_recognizer.load('/home/pi/Documents/smarthome/smarthome/trainingdata.xml')
 subjects = ["empty","Giacomo","Lucia","Obama"]
 
