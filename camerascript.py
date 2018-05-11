@@ -35,18 +35,7 @@ def detect_motion(camera):
     face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
     face_rects_2 = face_cascade_profile.detectMultiScale(current_frame, 1.3, 5)
     print(face_rects, face_rects_2)
-    if len(face_rects)!=0:
-
-        for (x, y, w, h) in face_rects:
-            cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
-            cv2.imwrite('facedetected.jpg', current_frame)
-        return True
-    if len(face_rects_2)!=0:
-
-        for (x, y, w, h) in face_rects_2:
-            cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
-            cv2.imwrite('facedetected.jpg', current_frame)
-        return True
+   
     # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
 
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
@@ -70,11 +59,15 @@ def detect_motion(camera):
     name = 'diff'+str(count)+'.jpg'
     count += 1
 
-    """ if cv2.countNonZero(thresh) > 30000:
+    if cv2.countNonZero(thresh) > 30000:
         print('motion detected for frame '+name)
-        # cv2.imwrite(name, thresh)
-        # cv2.imwrite(name2,frameDelta)
-        return True """
+        if len(face_rects)!=0:
+
+            for (x, y, w, h) in face_rects:
+                cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
+                cv2.imwrite('facedetected.jpg', current_frame)
+        return True
+    
 
 
 def updateBackgroundModel(timeFirstFrame):
