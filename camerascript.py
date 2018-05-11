@@ -15,8 +15,8 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_fullbody.xml')
-
+face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_frontalface_default.xml')
+face_cascade_profile = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_profileface.xml')
 
 def detect_motion(camera):
     global firstFrame
@@ -33,10 +33,17 @@ def detect_motion(camera):
     rawCapture.truncate(0)
     #current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
-    print(face_rects)
+    face_rects_2 = face_cascade_profile.detectMultiScale(current_frame, 1.3, 5)
+    print(face_rects, face_rects_2)
     if len(face_rects)!=0:
 
         for (x, y, w, h) in face_rects:
+            cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
+            cv2.imwrite('facedetected.jpg', current_frame)
+        return True
+    if len(face_rects_2)!=0:
+
+        for (x, y, w, h) in face_rects_2:
             cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
             cv2.imwrite('facedetected.jpg', current_frame)
         return True
