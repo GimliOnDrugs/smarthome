@@ -32,11 +32,12 @@ def detect_motion(camera):
     # picamera method to get a frame in the current video as a numpy array for OpenCV
     camera.capture(rawCapture, format="bgr", use_video_port=True)
     current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite('detected_dude.jpg', current_frame)
     frame_count += 1
     rawCapture.truncate(0)
     #current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
-    cv2.imwrite('detected_dude.jpg', current_frame)
+    
     if len(face_rects)!=0:
         print('detected')
         for (x, y, w, h) in face_rects:
