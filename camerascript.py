@@ -15,8 +15,11 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_frontalface_default.xml')
-face_cascade_profile = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_profileface.xml')
+face_cascade = cv2.CascadeClassifier(
+    '/home/pi/Documents/smarthome/haarcascade_frontalface_default.xml')
+face_cascade_profile = cv2.CascadeClassifier(
+    '/home/pi/Documents/smarthome/haarcascade_profileface.xml')
+
 
 def detect_motion(camera):
     global firstFrame
@@ -32,10 +35,7 @@ def detect_motion(camera):
     frame_count += 1
     rawCapture.truncate(0)
     #current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
-    face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
-    face_rects_2 = face_cascade_profile.detectMultiScale(current_frame, 1.3, 5)
-    print(face_rects, face_rects_2)
-   
+
     # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
 
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
@@ -60,14 +60,18 @@ def detect_motion(camera):
     count += 1
 
     if cv2.countNonZero(thresh) > 30000:
+        face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
+        face_rects_2 = face_cascade_profile.detectMultiScale(current_frame, 1.3, 5)
+        print(face_rects, face_rects_2)
         print('motion detected for frame '+name)
-        if len(face_rects)!=0:
+        cv2.imwrite(name, thresh)
+        if len(face_rects) != 0:
 
             for (x, y, w, h) in face_rects:
-                cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
+                cv2.rectangle(current_frame, (x, y),
+                              (x+w, y+h), (0, 255, 0), 3)
                 cv2.imwrite('facedetected.jpg', current_frame)
         return True
-    
 
 
 def updateBackgroundModel(timeFirstFrame):
@@ -100,8 +104,9 @@ with picamera.PiCamera() as camera:
                     now_hour = datetime.datetime.now().hour
                     now_minute = datetime.datetime.now().minute
                     now_second = datetime.datetime.now().second
-                    filename = 'motion'+'-'+str(now_day)+'_'+str(now_month)+'_'+str(now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
-                    stream.copy_to(filename, seconds = 10)
+                    filename = 'motion'+'-'+str(now_day)+'_'+str(now_month)+'_'+str(
+                        now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
+                    stream.copy_to(filename, seconds=10)
                     print('video recorded at '+filename)
                     if(sys.stdin.readline() == "keep going\n"):
                         continue
