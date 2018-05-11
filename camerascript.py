@@ -15,7 +15,7 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_upperbody.xml')
 
 
 def detect_motion(camera):
