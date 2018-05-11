@@ -37,11 +37,11 @@ def detect_motion(camera):
     #current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
     face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
     if len(face_rects)!=0:
-       
+       print('detected')
         for (x, y, w, h) in face_rects:
             cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
             cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
-            
+
         cv2.imwrite('detected_dude.jpg', current_frame)
        
 
