@@ -36,6 +36,7 @@ def detect_motion(camera):
     for (x, y, w, h) in face_rects:
          cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
          cv2.imwrite('facedetected.jpg', current_frame)
+         return True
     # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
 
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
