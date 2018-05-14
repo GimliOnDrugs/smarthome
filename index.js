@@ -12,7 +12,6 @@ var shellFs = require('shelljs')
 var db = require('./dbhandlermodules/databaseconnection').onConnectionOpen
 var userAuth = require('./dbhandlermodules/userauthentication').getUser
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 //streaming section
@@ -26,16 +25,20 @@ app.post('/postvideo', function (req, res, next) {//post method from rpi
   var fileName = 'motion_' + time + '.mp4'
   req.pipe(fs.createWriteStream(path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName)));
   req.on('end', function () {
-    userAuth.getUser.findOne({ 'username': user }, function (error, result) {
+    userAuth.findOne({ 'username': user }, function (error, result) {
       if (error) console.log(error)
-      fs.readFile(path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName),(err,data)=>{
+      fs.readFile(path.join(__dirname, 'users/' + user + '/' + req.query.devicename + '/' + fileName), (err, data) => {
         if (err) throw err;
-        result.videos.push(data)
+        video = {
+          date: time,
+          file: data
+        }
+        result.videos.push(video)
+        result.save((err, data) => {
+          console.log('data saved ')
+        })
       })
-      result.save(function (error, result) {
-        if (error) console.log(error)
-        io.in(userName).to(socketid).emit('device saved', { device: device, domid: domid })
-      })
+
     })
 
   })
@@ -97,6 +100,8 @@ app.get('/videostream', function (req, res, next) {
   }
 
 })
+
+
 
 
 
@@ -225,7 +230,7 @@ io.on('connection', function (socket) {
     //salvo i file
 
 
-    shellFs.rm('-r', pathUserDeleteFiles)
+    shellFs.rm('-f', pathUserDeleteFiles)
 
   })
 

@@ -65,12 +65,7 @@ def detect_motion(camera):
         print(face_rects, face_rects_2)
         print('motion detected for frame '+name)
         cv2.imwrite(name, thresh)
-        if len(face_rects) != 0:
-
-            for (x, y, w, h) in face_rects:
-                cv2.rectangle(current_frame, (x, y),
-                              (x+w, y+h), (0, 255, 0), 3)
-                cv2.imwrite('facedetected.jpg', current_frame)
+       
         return True
 
 

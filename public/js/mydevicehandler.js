@@ -44,7 +44,7 @@ socket.on('devices fetched', function (data) {
         var actiontype = action === "Light" ? 'light' : 'video'
         var uniqueID = getUniqueID()
 
-        var domToAdd = '<li class="list-group-item " id="' + uniqueID + '"><div><div class="row justify-content-between"><div></div><span class="badge badge-pill badge-primary">1</span></div><div class=" row justify-content-center" style=" max-width: 1100px; margin-top: 20px;"><div class="col-auto col-center  "><img class="fab on-off" src="' + deviceOnOffImageUrl + '" onclick="onOnOffDeviceClick(\'' + uniqueID + '\')"><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="ipaddress" type="text">' + deviceName + '</p></div></div><div class="col-auto col-center  "><img class="fab" src="' + actionImageUrl + '" id="' + actiontype + '"></div><div class="col-auto col-center"><span class="checkbox"><input type="checkbox"  data-toggle="collapse" href="video_' + uniqueID + '" aria-expanded="true" aria-controls="video_' + uniqueID + '"><label data-on="ON" data-off="OFF"></label></span></div><div class="col-auto col-center  "><img class="fab" src="/css/assets/house.svg"></div><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="position" type="text">' + position + '</p></div></div></li>'
+        var domToAdd = '<li class="list-group-item " id="' + uniqueID + '"><div><div class="row justify-content-between"><div></div><span class="badge badge-pill badge-primary">1</span></div><div class=" row justify-content-center" style=" max-width: 1100px; margin-top: 20px;"><div class="col-auto col-center  "><img class="fab on-off" src="' + deviceOnOffImageUrl + '" onclick="onOnOffDeviceClick(\'' + uniqueID + '\')"><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="ipaddress" type="text">' + deviceName + '</p></div></div><div class="col-auto col-center  "><img class="fab" src="' + actionImageUrl + '" id="' + actiontype + '" onclick="goVideo()"></div><div class="col-auto col-center"><span class="checkbox"><input type="checkbox"  data-toggle="collapse" href="video_' + uniqueID + '" aria-expanded="true" aria-controls="video_' + uniqueID + '"><label data-on="ON" data-off="OFF"></label></span></div><div class="col-auto col-center  "><img class="fab" src="/css/assets/house.svg"></div><div class="col-auto col-center"><p class=" text-center d-block mx-auto my-auto  display-4" id="position" type="text">' + position + '</p></div></div></li>'
         var collapseToAdd = '<div class="collapse" id="video_' + uniqueID + '">'
 
         listHead.append(domToAdd)
@@ -164,4 +164,7 @@ function onOnOffDeviceClick(uniqueid) {
 function getUniqueID() {
     return Math.random().toString(36).substr(2, 16);
 };
+function goVideo(){
+    location.replace('/videos.html')
+}
 
