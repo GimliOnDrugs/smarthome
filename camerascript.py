@@ -44,7 +44,7 @@ def detect_motion(camera):
         timeFirstFrame = datetime.datetime.now().minute
         nameff = 'firstframe'+str(countff)+'.jpg'
         countff += 1
-        cv2.imwrite(nameff, firstFrame)
+        # cv2.imwrite(nameff, firstFrame)
         # continue
 
     # compute the absolute difference between the current frame and
@@ -64,7 +64,7 @@ def detect_motion(camera):
         face_rects_2 = face_cascade_profile.detectMultiScale(current_frame, 1.3, 5)
         print(face_rects, face_rects_2)
         print('motion detected for frame '+name)
-        cv2.imwrite(name, thresh)
+        # cv2.imwrite(name, thresh)
        
         return True
 
