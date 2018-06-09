@@ -1,6 +1,11 @@
 var socket = io({transports: ['websocket']});
 var user = JSON.parse(localStorage.getItem('currentuser'))
 
+socket.on('connect', function () {
+
+    console.log("I'm connecting " + socket.id)
+})
+
 
 
 socket.on('device saved',function(data){
@@ -37,12 +42,16 @@ function onCancelClick(uniqueID){
     $('#'+uniqueID).remove()
 }
 function onOkClick(uniqueID){
-    var ipAddressToSend=$('#'+uniqueID+' #ip_address').val()
+   
     var deviceNameToSend=$('#'+uniqueID+' #device_name').val()
-    console.log('about to set ipaddress '+ipAddressToSend)
     var actionToSend=$('#drop_'+uniqueID).text()
+    if(deviceNameToSend === '' || actionToSend === 'Action'){
+        alert('Device input not correct')
+    }
+    else{
+        socket.emit('save device on database',{ name:deviceNameToSend,ipaddress: '', username: user.username,action:actionToSend,id:uniqueID})
+    }
     
-    socket.emit('save device on database',{ name:deviceNameToSend,ipaddress: ipAddressToSend, username: user.username,action:actionToSend,id:uniqueID})
     //
 
 }

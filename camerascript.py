@@ -15,10 +15,7 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-face_cascade = cv2.CascadeClassifier(
-    '/home/pi/Documents/smarthome/haarcascade_frontalface_default.xml')
-face_cascade_profile = cv2.CascadeClassifier(
-    '/home/pi/Documents/smarthome/haarcascade_profileface.xml')
+
 
 
 def detect_motion(camera):
@@ -34,7 +31,7 @@ def detect_motion(camera):
     current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
     frame_count += 1
     rawCapture.truncate(0)
-    #current_frame = cv2.GaussianBlur(current_frame, (21, 21), 0)
+    
 
     # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
 
@@ -51,7 +48,7 @@ def detect_motion(camera):
     # first frame
     frameDelta = cv2.absdiff(firstFrame, current_frame)
     name2 = 'debugdelta'+str(count)+'.jpg'
-
+    cv2.imwrite(name2,frameDelta)
     thresh = cv2.threshold(frameDelta, 20, 255, cv2.THRESH_BINARY)[1]
 
     thresh = cv2.dilate(thresh, None, iterations=2)
@@ -60,9 +57,7 @@ def detect_motion(camera):
     count += 1
 
     if cv2.countNonZero(thresh) > 30000:
-        face_rects = face_cascade.detectMultiScale(current_frame, 1.3, 5)
-        face_rects_2 = face_cascade_profile.detectMultiScale(current_frame, 1.3, 5)
-        print(face_rects, face_rects_2)
+        
         print('motion detected for frame '+name)
         # cv2.imwrite(name, thresh)
        
@@ -70,7 +65,7 @@ def detect_motion(camera):
 
 
 def updateBackgroundModel(timeFirstFrame):
-    # update background model every 10 minutes
+    # update background model every 10 seconds
     global frame_count
     if frame_count == 10:
         frame_count = 0

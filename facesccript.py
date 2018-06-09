@@ -16,9 +16,9 @@ timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
 face_cascade = cv2.CascadeClassifier('/home/pi/Documents/smarthome/haarcascade_frontalface_default.xml')
-# face_recognizer = cv2.face.createLBPHFaceRecognizer()
+face_recognizer = cv2.face.createLBPHFaceRecognizer()
 
-# face_recognizer.load('/home/pi/Documents/smarthome/trainingdata.xml')
+face_recognizer.load('/home/pi/Documents/smarthome/trainingdata.xml')
 
 
 def detect_motion(camera):
@@ -43,7 +43,7 @@ def detect_motion(camera):
         for (x, y, w, h) in face_rects:
             cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
             cv2.rectangle(current_frame, (x, y), (x+w, y+h), (0, 255, 0), 3)
-
+            face_recognizer.predict(face_rects[0])
         cv2.imwrite('detected_dude.jpg', current_frame)
        
 
