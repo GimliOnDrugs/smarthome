@@ -19,7 +19,7 @@ detected = False
 true_negatives_count = 0
 fileLog = None
 thread = None
-countdown = 10
+countdown = 60
 
 
 def detect_motion(camera):
@@ -37,6 +37,7 @@ def detect_motion(camera):
     rawCapture.truncate(0)
 
     # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
+
 
     if firstFrame is None or updateBackgroundModel(timeFirstFrame):
         print('updating background model')
@@ -130,19 +131,19 @@ with picamera.PiCamera() as camera:
                     if(sys.stdin.readline() == "keep going\n"):
                         detected = False
                         if countdown == 0:
-                            countdown = 10
+                            countdown = 60
                             thread = Thread(target=timeout)
                             thread.start()
                         continue
                     
                 elif thread is None:
                     
-                    countdown = 10
+                    countdown = 60
                     thread = Thread(target=timeout)
                     thread.start()
                 elif countdown == 0:
                     thread.join()
-                    countdown = 10
+                    countdown = 60
                     thread = Thread(target=timeout)
                     thread.start()
 
