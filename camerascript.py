@@ -92,10 +92,10 @@ def timeout():
         
         print(countdown)
         time.sleep(1)
-        
-    true_negatives_count = true_negatives_count + 1
-    f = open('log.txt', 'w+')
-    f.write('true negative count '+str(true_negatives_count))
+    if detcted is False:   
+        true_negatives_count = true_negatives_count + 1
+        f = open('log.txt', 'w+')
+        f.write('true negative count '+str(true_negatives_count))
 
 
 with picamera.PiCamera() as camera:
