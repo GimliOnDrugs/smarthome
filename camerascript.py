@@ -22,7 +22,6 @@ thread = None
 countdown = 60
 
 
-
 def detect_motion(camera):
     global firstFrame
     global count
@@ -36,7 +35,6 @@ def detect_motion(camera):
     current_frame = cv2.cvtColor(rawCapture.array, cv2.COLOR_BGR2GRAY)
     frame_count += 1
     rawCapture.truncate(0)
-    
 
     # if the first frame is None, initialize it: first frame is the static background used for comparing other frames
 
@@ -53,7 +51,7 @@ def detect_motion(camera):
     # first frame
     frameDelta = cv2.absdiff(firstFrame, current_frame)
     name2 = 'debugdelta'+str(count)+'.jpg'
-    #cv2.imwrite(name2,frameDelta)
+    # cv2.imwrite(name2,frameDelta)
     thresh = cv2.threshold(frameDelta, 20, 255, cv2.THRESH_BINARY)[1]
 
     thresh = cv2.dilate(thresh, None, iterations=2)
@@ -61,12 +59,12 @@ def detect_motion(camera):
     name = 'diff'+str(count)+'.jpg'
     count += 1
 
-    if cv2.countNonZero(thresh) > 30000 and  cv2.countNonZero(thresh)<50000:
-        
+    if cv2.countNonZero(thresh) > 30000 and cv2.countNonZero(thresh) < 50000:
+
         print('motion detected for frame '+name)
         cv2.imwrite(name, thresh)
         first_frame = current_frame
-       
+
         return True
 
 
@@ -79,6 +77,7 @@ def updateBackgroundModel(timeFirstFrame):
     else:
         return False
 
+
 def timeout():
     global countdown
     global detected
@@ -88,9 +87,10 @@ def timeout():
         print(countdown)
         time.sleep(1)
         if detected:
-            countdown = 0 
-    f=open('log.txt', 'w+')
+            countdown = 0
+    f = open('log.txt', 'w+')
     f.write('true negative count '+str(true_negatives_count))
+
 
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
@@ -101,14 +101,8 @@ with picamera.PiCamera() as camera:
                 camera.wait_recording(1)
                 if detect_motion(camera):
                     detected = True
-                    true_negatives_count = true_negatives_count + 1
-                    if countdown == 0 or thread is None:
-                        countdown = 60
-                        thread = Thread(target=timeout)
-                        thread.start()
-                    
-                    print('Motion detected')
 
+                    print('Motion detected')
 
                     while detect_motion(camera):
                         camera.wait_recording(1)
@@ -124,8 +118,13 @@ with picamera.PiCamera() as camera:
                     stream.copy_to(filename, seconds=10)
                     print('video recorded at '+filename)
                     detected = False
-                    
+
                     if(sys.stdin.readline() == "keep going\n"):
+                        true_negatives_count = true_negatives_count + 1
+                        if countdown == 0 or thread is None:
+                            countdown = 60
+                            thread = Thread(target=timeout)
+                            thread.start()
                         continue
         finally:
             camera.stop_recording()
