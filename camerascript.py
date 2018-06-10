@@ -126,5 +126,11 @@ with picamera.PiCamera() as camera:
                             thread = Thread(target=timeout)
                             thread.start()
                         continue
+                    
+                elif countdown == 0 or thread is None:
+                    countdown = 60
+                    thread = Thread(target=timeout)
+                    thread.start()
+
         finally:
             camera.stop_recording()
