@@ -60,6 +60,7 @@ def detect_motion(camera):
         
         print('motion detected for frame '+name)
         cv2.imwrite(name, thresh)
+        first_frame = current_frame
        
         return True
 
