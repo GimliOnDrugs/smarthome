@@ -129,13 +129,13 @@ with picamera.PiCamera() as camera:
 
                     if(sys.stdin.readline() == "keep going\n"):
                         detected = False
-                        if countdown == 0 or thread is None:
+                        if countdown == 0:
                             countdown = 10
                             thread = Thread(target=timeout)
                             thread.start()
                         continue
                     
-                elif thread is None:
+                elif thread is None or countdown == 0:
                     
                     countdown = 10
                     thread = Thread(target=timeout)
