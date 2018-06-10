@@ -148,6 +148,9 @@ io.on('connection', function (socket) {
     socket.emit('room joined', { roomjoined: roomName, id: socket.id })
 
   })
+  io.on('disconnect', function(){
+    console.log('ID: '+socket.id)
+  })
 
 
 
