@@ -10,8 +10,8 @@ var growingFile = require('growing-file')
 var request = require('request')
 var progress = require('progress-stream')
 var Transcoder = require('stream-transcoder')
-var stringUrl = "http://192.168.1.241:3000"
-//var stringUrl = "https://smartsecurityhome.herokuapp.com"
+//var stringUrl = "http://192.168.1.241:3000"
+var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
 
@@ -66,11 +66,8 @@ socket.on('connect', function () {
 
 
 socket.on('disconnect', function () {
-    console.log('\ndisconnected ')
-    if (typeof user !== 'undefined')
-
-        socket.emit('leave room', { devicename: deviceName, username: user })
-    //socket.emit('save status on db',{ipaddress:ipAddress,status:false,username:user})
+    console.log('disconnected from server ')
+    
 
 
 })
