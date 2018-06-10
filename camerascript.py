@@ -6,6 +6,7 @@ import cv2
 import time
 import datetime
 import sys
+from threading import Thread
 
 firstFrame = None  # this is the first frame picked and will be the reference model
 count = 0
@@ -15,8 +16,10 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-true_negatives_count = -1 #starting from -1 so true negatives are recorded between each tp or fp
+true_negatives_count = -1
 fileLog = None
+thread = None
+countdown = 60
 
 
 
@@ -76,6 +79,14 @@ def updateBackgroundModel(timeFirstFrame):
     else:
         return False
 
+def timeout():
+    global countdown
+    global detected
+    while countdown > 0:
+        countdown = countdown - 1
+        time.sleep(1)
+        if detected:
+            countdown = 0 
 
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
@@ -85,10 +96,13 @@ with picamera.PiCamera() as camera:
             while True:
                 camera.wait_recording(1)
                 if detect_motion(camera):
+                    detected = True
                     true_negatives_count = true_negatives_count + 1
-                    if true_negatives_count > 0:
-                       f= open("true_negatives_log.txt","w+")
-                       f.write('final count: '+str(true_negatives_count))
+                    if countdown == 0 or thread is None:
+                        countdown = 60
+                        thread = Thread(target=timeout)
+                        thread.start()
+                    
                     print('Motion detected')
 
 
@@ -105,6 +119,7 @@ with picamera.PiCamera() as camera:
                         now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
                     stream.copy_to(filename, seconds=10)
                     print('video recorded at '+filename)
+                    detected = False
                     
                     if(sys.stdin.readline() == "keep going\n"):
                         continue
