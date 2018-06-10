@@ -83,6 +83,7 @@ def timeout():
     global detected
     global true_negatives_count
     while countdown > 0:
+        print(detected)
         if detected:
             countdown = 0
         countdown = countdown - 1
@@ -119,10 +120,10 @@ with picamera.PiCamera() as camera:
                         now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
                     stream.copy_to(filename, seconds=10)
                     print('video recorded at '+filename)
-                    detected = False
+                    
 
                     if(sys.stdin.readline() == "keep going\n"):
-                        
+                        detected = False
                         if countdown == 0 or thread is None:
                             countdown = 10
                             thread = Thread(target=timeout)
