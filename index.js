@@ -220,8 +220,9 @@ io.on('connection', function (socket) {
     deviceAuth.findDeviceWhenLeave(data.devicename, data.username, socket)
   })
 
-
+//if a client disconnects for some reason, web client is update with an off status
   socket.on('disconnect', function (reason) {
+    console.log('socket disconnected '+socket.id)
     var socketID = socket.id
     var socketRoom = currentRoomId
     disconnectedSocket = sockets.forEach(value =>{
