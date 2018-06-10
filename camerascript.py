@@ -15,6 +15,8 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
+true_negatives_count = -1 #starting from -1 so true negatives are recorded between each tp or fp
+fileLog = None
 
 
 
@@ -83,8 +85,12 @@ with picamera.PiCamera() as camera:
             while True:
                 camera.wait_recording(1)
                 if detect_motion(camera):
-
+                    true_negatives_count = true_negatives_count + 1
+                    if true_negatives_count > 0:
+                       f= open("true_negatives_log.txt","w+")
+                       f.write('final count: '+str(true_negatives_count))
                     print('Motion detected')
+
 
                     while detect_motion(camera):
                         camera.wait_recording(1)
@@ -99,6 +105,7 @@ with picamera.PiCamera() as camera:
                         now_year)+'-'+str(now_hour)+'_'+str(now_minute)+'_'+str(now_second)+'.h264'
                     stream.copy_to(filename, seconds=10)
                     print('video recorded at '+filename)
+                    
                     if(sys.stdin.readline() == "keep going\n"):
                         continue
         finally:
