@@ -143,6 +143,7 @@ with picamera.PiCamera() as camera:
                 elif countdown == 0:
                     thread.join()
                     countdown = 10
+                    thread = Thread(target=timeout)
                     thread.start()
 
                 
