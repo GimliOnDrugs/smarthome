@@ -16,10 +16,10 @@ countff = 0
 timeFirstFrame = datetime.datetime.now().minute
 frame_count = 0
 detected = False
-true_negatives_count = -1
+true_negatives_count = 0
 fileLog = None
 thread = None
-countdown = 60
+countdown = 10
 
 
 def detect_motion(camera):
@@ -123,21 +123,21 @@ with picamera.PiCamera() as camera:
                     if(sys.stdin.readline() == "keep going\n"):
                         
                         if countdown == 0 or thread is None:
-                            countdown = 60
+                            countdown = 10
                             thread = Thread(target=timeout)
                             thread.start()
                         continue
                     
                 elif thread is None:
                     
-                    countdown = 60
+                    countdown = 10
                     thread = Thread(target=timeout)
                     thread.start()
 
                 elif countdown == 0:
 
                     thread.join()
-                    countdown = 60
+                    countdown = 10
                     thread = Thread(target=timeout)
                     thread.start()
         finally:
