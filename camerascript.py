@@ -85,6 +85,7 @@ def timeout():
     global true_negatives_count
     while countdown > 0:
         countdown = countdown - 1
+        print(countdown)
         time.sleep(1)
         if detected:
             countdown = 0 
