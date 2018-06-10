@@ -88,6 +88,7 @@ def timeout():
         time.sleep(1)
         if detected:
             countdown = 0
+    true_negatives_count = true_negatives_count + 1
     f = open('log.txt', 'w+')
     f.write('true negative count '+str(true_negatives_count))
 
@@ -120,14 +121,15 @@ with picamera.PiCamera() as camera:
                     detected = False
 
                     if(sys.stdin.readline() == "keep going\n"):
-                        true_negatives_count = true_negatives_count + 1
+                        
                         if countdown == 0 or thread is None:
                             countdown = 60
                             thread = Thread(target=timeout)
                             thread.start()
                         continue
                     
-                elif countdown == 0 or thread is None:
+                elif countdown == 0:
+                    thread.join()
                     countdown = 60
                     thread = Thread(target=timeout)
                     thread.start()
