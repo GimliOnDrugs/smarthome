@@ -83,11 +83,12 @@ def timeout():
     global detected
     global true_negatives_count
     while countdown > 0:
+        if detected:
+            countdown = 0
         countdown = countdown - 1
         print(countdown)
         time.sleep(1)
-        if detected:
-            countdown = 0
+        
     true_negatives_count = true_negatives_count + 1
     f = open('log.txt', 'w+')
     f.write('true negative count '+str(true_negatives_count))
