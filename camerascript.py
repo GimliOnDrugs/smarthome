@@ -82,11 +82,14 @@ def updateBackgroundModel(timeFirstFrame):
 def timeout():
     global countdown
     global detected
+    global true_negatives_count
     while countdown > 0:
         countdown = countdown - 1
         time.sleep(1)
         if detected:
             countdown = 0 
+    f=open('log.txt', 'w+')
+    f.write('true negative count '+str(true_negatives_count))
 
 with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
