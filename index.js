@@ -107,7 +107,10 @@ app.get('/videostream', function (req, res, next) {
 
 io.set('transports', ['websocket']);
 
+var sockets = []
+
 io.on('connection', function (socket) {
+  var currentRoomId;
   console.log('user connected ' + socket.id)
   socket.on('sign up', function (data) {
     userauth.userSignUp(data.username, data.email, data.password, socket)
@@ -131,6 +134,10 @@ io.on('connection', function (socket) {
 
   socket.on('room', (data) => {
     console.log(data.username)
+    sockets.push({
+      devicename: data.devicename,
+      id:socket.id
+    })
     console.log(data.devicename + ' ' + socket.handshake.address)
     if (data.devicename) {
       var pathUser = path.join(__dirname, 'users/' + data.username + '/' + data.devicename + '/')
@@ -146,20 +153,18 @@ io.on('connection', function (socket) {
       console.log(clients)
     })
     socket.emit('room joined', { roomjoined: roomName, id: socket.id })
+    currentRoomId = roomName
+  })
 
-  })
-  io.on('disconnect', function(){
-    console.log('ID: '+socket.id)
-  })
 
 
 
 
 
   socket.on('save status on db', function (data) {
-    var ipAddress = data.ipaddress
     var username = data.username
     var statusDevice = data.status
+    var name = data.name
     io.in(username).clients(function (error, clients) {
       if (error) throw error
       console.log('remaining clients ' + clients)
@@ -167,7 +172,7 @@ io.on('connection', function (socket) {
 
 
     console.log('save on db ', socket.handshake.address)
-    deviceAuth.saveStatus(username, statusDevice, ipAddress, socket.id)
+    deviceAuth.saveStatus(username, statusDevice, name, socket.id)
   })
   socket.on('save device on database', function (data) {
 
@@ -216,8 +221,15 @@ io.on('connection', function (socket) {
   })
 
 
-  socket.on('disconnect', function () {
-    console.log('user disconnected ' + socket.id)
+  socket.on('disconnect', function (reason) {
+    var socketID = socket.id
+    var socketRoom = currentRoomId
+    disconnectedSocket = sockets.forEach(value =>{
+      if(value.id === socketID){
+        deviceAuth.saveStatus(socketRoom,false,value.devicename,socketID,io)
+      }
+    })
+
 
   })
 

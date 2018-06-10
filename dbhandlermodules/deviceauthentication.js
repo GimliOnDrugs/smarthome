@@ -18,12 +18,12 @@ exports.fetchDevices = function (userName, socketid, io) {
     })
 }
 
-exports.saveStatus = function (username, status, ipaddress, socketid, io) {
+exports.saveStatus = function (username, status, name, socketid, io) {
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
         else {
             result.devices.forEach(element => {
-                if (element.ipaddress === ipaddress) {
+                if (element.name === name) {
                     element.status = status
                 }
 
@@ -32,6 +32,7 @@ exports.saveStatus = function (username, status, ipaddress, socketid, io) {
         }
         result.save(function (error, result) {
         })
+        if(!status) io.to(socketRoom).emit('rpi disconnect', {devicename:value.devicename})
 
     })
 }

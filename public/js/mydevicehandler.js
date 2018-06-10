@@ -127,7 +127,11 @@ socket.on('new video uploaded', (data) => {
     domElement.text(currentNumber + 1)
 })
 
-
+socket.on('rpi disconnect',function(data){
+    var domElement = $('li:has(p:contains(' + data.devicename + '))').find('.fab')
+    console.log(domElement)
+    domElement.attr('src','/css/assets/deviceoff.svg')
+})
 $(document).ready(function () {
 
     socket.emit('fetch user devices', { user: user.username })
@@ -160,6 +164,7 @@ function onOnOffDeviceClick(uniqueid) {
 
     }
 }
+
 
 function getUniqueID() {
     return Math.random().toString(36).substr(2, 16);
