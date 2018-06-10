@@ -128,7 +128,7 @@ socket.on('new video uploaded', (data) => {
 })
 
 socket.on('rpi disconnect',function(data){
-    var domElement = $('li:has(p:contains(' + data.devicename + '))').find('.fab')
+    var domElement = $('li:has(p:contains(' + data.devicename + '))').find('.fab').first()
     console.log(domElement)
     domElement.attr('src','/css/assets/deviceoff.svg')
 })

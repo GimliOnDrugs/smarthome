@@ -116,6 +116,9 @@ socket.on('turn on/off light', function (data) {
 
 
 socket.on('turn on/off video', function (data) {//properties video:bool, devicename:string
+    console.log(data.video)
+    console.log(on)
+    console.log(data.devicename)
     var shell = new PythonShell('camerascript.py', options)
 
 

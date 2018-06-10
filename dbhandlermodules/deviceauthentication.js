@@ -32,7 +32,7 @@ exports.saveStatus = function (username, status, name, socketid, io) {
         }
         result.save(function (error, result) {
         })
-        if(!status) io.to(username).emit('rpi disconnect', {devicename:value.devicename})
+        if(!status) io.in(username).emit('rpi disconnect', {devicename:name})
 
     })
 }
