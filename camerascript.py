@@ -87,6 +87,7 @@ def timeout():
         if detected:
             countdown = 0
         countdown = countdown - 1
+        
         print(countdown)
         time.sleep(1)
         
@@ -99,11 +100,15 @@ with picamera.PiCamera() as camera:
     stream = picamera.PiCameraCircularIO(camera, seconds=5)
     if(sys.stdin.readline() == "start recording\n"):
         camera.start_recording(stream, format='h264')
+        thread = Thread(target=timeout)
+        thread.start()
         try:
             while True:
                 camera.wait_recording(1)
+                
                 if detect_motion(camera):
                     detected = True
+                    thread.join()
 
                     print('Motion detected')
 
@@ -130,7 +135,7 @@ with picamera.PiCamera() as camera:
                             thread.start()
                         continue
                     
-                elif thread is None:
+                """ elif thread is None:
                     
                     countdown = 10
                     thread = Thread(target=timeout)
@@ -141,6 +146,6 @@ with picamera.PiCamera() as camera:
                     thread.join()
                     countdown = 10
                     thread = Thread(target=timeout)
-                    thread.start()
+                    thread.start() """
         finally:
             camera.stop_recording()
