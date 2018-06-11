@@ -15,7 +15,7 @@ var stringUrl = "https://smartsecurityhome.herokuapp.com"
 var socket = io(stringUrl, { transports: ['websocket'] })
 var ipAddress = ip.address()
 var time = require('node-datetime')
-
+var fs = require('fs')
 var options = {
     mode: 'text',
     pythonOptions: ['-u'],
@@ -104,10 +104,15 @@ socket.on('turn on/off light', function (data) {
     var getMilliseconds = date.getMilliseconds()
     console.log(Number(data.time))
     console.log(getMilliseconds)
-    if(getMilliseconds < data.time){
-        getMilliseconds = getMilliseconds+1000
+    if (getMilliseconds < data.time) {
+        getMilliseconds = getMilliseconds + 1000
     }
-    console.log( getMilliseconds - data.time)
+    fs.writeFile("time_logs.txt", getMilliseconds-data.time, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+
+    });
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)
         LED.writeSync(1); //set pin state to 1 (turn LED on)
