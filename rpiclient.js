@@ -47,6 +47,11 @@ socket.on('connect', function () {
         socket.emit('room', { username: user, devicename: deviceName })
     })
 
+    socket.on('reconnect',function(){
+        
+        socket.emit('room', { username: user, devicename: deviceName })
+    })
+
 
     //fired when off is pressed in client browser
     socket.on('leave room', function (data) {
