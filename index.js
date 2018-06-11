@@ -197,7 +197,7 @@ io.on('connection', function (socket) {
   socket.on('toggle light', function (data) {
     console.log('light toggled ' + socket.id)
     console.log(data.time)
-    deviceAuth.saveActionStatusLight(data.devicename, data.username, data.light, socket, data.time)
+    deviceAuth.saveActionStatusLight(data.devicename, data.username, data.light, socket)
   })
   socket.on('toggle video', function (data) {//properties: devicename,video,username
     console.log(socket.id)

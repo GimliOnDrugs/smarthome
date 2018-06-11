@@ -77,7 +77,7 @@ exports.findDeviceWhenLeave = function (devicename, username, socket) {
         })
     })
 }
-exports.saveActionStatusLight = function (devicename, username, actionstatus, socket,time) {
+exports.saveActionStatusLight = function (devicename, username, actionstatus, socket) {
     console.log('device name ' + devicename)
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
@@ -89,7 +89,7 @@ exports.saveActionStatusLight = function (devicename, username, actionstatus, so
         })
         result.save(function (error, result) {
             if (error) console.log(error)
-            socket.to(username).emit('turn on/off light', { light: actionstatus, devicename: devicename, time: time })
+            socket.to(username).emit('turn on/off light', { light: actionstatus, devicename: devicename })
 
 
 

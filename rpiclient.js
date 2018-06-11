@@ -47,8 +47,8 @@ socket.on('connect', function () {
         socket.emit('room', { username: user, devicename: deviceName })
     })
 
-    socket.on('reconnect',function(){
-        
+    socket.on('reconnect', function () {
+
         socket.emit('room', { username: user, devicename: deviceName })
     })
 
@@ -72,7 +72,7 @@ socket.on('connect', function () {
 
 socket.on('disconnect', function () {
     console.log('disconnected from server ')
-    
+
 
 
 })
@@ -97,7 +97,8 @@ socket.on('rpi', function (data) {
 
 
 socket.on('turn on/off light', function (data) {
-console.log('comunication time: '+data.time - new Date().getMilliseconds())
+    console.log('testing...')
+    console.log('comunication time: ' + data.time - new Date().getMilliseconds())
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)
         LED.writeSync(1); //set pin state to 1 (turn LED on)
@@ -143,15 +144,15 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     if (progress.percentage === 100) {
                         console.log('uploaded!!!')
                         socket.emit('video uploaded', { roomname: user, devicename: deviceName })
-                      
+
                         fs.unlink(filename, function (error) {
                             if (error) {
                                 console.log(error)
                             }
-                             else{
+                            else {
 
                                 shell.send('keep going')
-                            } 
+                            }
                         })
 
 
@@ -166,7 +167,7 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                 var postFileRequest = request.post(optionPost)
 
                 var file = fs.createReadStream(filename)
-               
+
                 new Transcoder(file)
                     .videoCodec('h264')
                     .fps(25)
@@ -174,15 +175,15 @@ socket.on('turn on/off video', function (data) {//properties video:bool, devicen
                     .stream()
                     .pipe(stream)
                     .pipe(postFileRequest)
-                    
+
 
             }
-            if(message === 'Motion detected'){
+            if (message === 'Motion detected') {
                 LED.writeSync(1)
             }
-            if(message === 'Motion stopped'){
-                setTimeout(()=>LED.writeSync(0),2000) //switch off light two seconds after motion stopped
-                
+            if (message === 'Motion stopped') {
+                setTimeout(() => LED.writeSync(0), 2000) //switch off light two seconds after motion stopped
+
             }
 
         })
