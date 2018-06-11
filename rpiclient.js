@@ -97,7 +97,8 @@ socket.on('rpi', function (data) {
 
 
 socket.on('turn on/off light', function (data) {
-    console.log('testing...')
+    console.log('testing...'+data.time)
+    console.log(new Date().getMilliseconds())
     console.log('comunication time: ' + data.time - new Date().getMilliseconds())
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)

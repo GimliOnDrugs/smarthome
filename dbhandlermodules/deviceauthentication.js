@@ -82,7 +82,7 @@ exports.saveActionStatusLight = function (devicename, username, actionstatus, so
     userAuth.getUser.findOne({ 'username': username }, function (error, result) {
         if (error) console.log(error)
         result.devices.forEach(element => {
-            if (element.name === devicename && element.status) {
+            if (element.name === devicename) {
                 element.actionstatus = actionstatus
 
             }
