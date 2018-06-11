@@ -26,8 +26,6 @@ var user
 var deviceName
 var on = false
 
-var date = new Date()
-console.log(date.getMilliseconds())
 
 //fired upon connection
 socket.on('connect', function () {
