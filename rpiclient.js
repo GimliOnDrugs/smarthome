@@ -107,7 +107,7 @@ socket.on('turn on/off light', function (data) {
     if (getMilliseconds < data.time) {
         getMilliseconds = getMilliseconds + 1000
     }
-    fs.writeFile("time_logs.txt", getMilliseconds-data.time, function (err) {
+    fs.appendFile("time_logs.txt", getMilliseconds-data.time, function (err) {
         if (err) {
             return console.log(err);
         }
