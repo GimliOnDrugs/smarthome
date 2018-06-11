@@ -26,6 +26,9 @@ var user
 var deviceName
 var on = false
 
+var date = new Date()
+console.log(date.getMilliseconds())
+
 //fired upon connection
 socket.on('connect', function () {
     console.log('connected')
@@ -100,7 +103,8 @@ socket.on('rpi', function (data) {
 socket.on('turn on/off light', function (data) {
     console.log('testing...' + data.time)
     var date = new Date()
-    console.log('comunication time: ' +date.getMilliseconds() - Number(data.time))
+    console.log(date.getMilliseconds())
+    console.log('comunication time: ' + date.getMilliseconds() - Number(data.time))
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)
         LED.writeSync(1); //set pin state to 1 (turn LED on)
