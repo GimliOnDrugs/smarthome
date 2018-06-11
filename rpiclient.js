@@ -113,7 +113,7 @@ socket.on('turn on/off light', function (data) {
         LED.writeSync(1); //set pin state to 1 (turn LED on)
         console.log('turning on light')
     }
-    else if (deviceName === data.devicename) {
+    else if (deviceName === data.devicename && !on) {
 
         LED.writeSync(0)
         console.log('turning off light')
