@@ -106,7 +106,7 @@ socket.on('turn on/off light', function (data) {
     if (getMilliseconds < data.time) {
         getMilliseconds = getMilliseconds + 1000
     }
-    fs.appendFile("time_logs.txt", String(getMilliseconds - data.time),(error)=>{
+    fs.appendFile("time_logs.txt", '\n'+String(getMilliseconds - data.time),(error)=>{
         console.log('data written '+ String(getMilliseconds - data.time))
     })
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
