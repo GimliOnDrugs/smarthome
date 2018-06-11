@@ -25,7 +25,7 @@ var user
 var deviceName
 var on = false
 
-
+//fired upon connection
 socket.on('connect', function () {
     console.log('connected')
     console.log(socket.id)
@@ -38,7 +38,7 @@ socket.on('connect', function () {
         rpiInquirer.startRPIAuth(socket)
 
     })
-
+    //used to log rpi in owner's room
     socket.on('user loggedin', function (data) {
         console.log('logging in ' + data.username)
         user = data.username
@@ -48,7 +48,7 @@ socket.on('connect', function () {
     })
 
 
-
+    //fired when off is pressed in client browser
     socket.on('leave room', function (data) {
 
 
@@ -72,12 +72,8 @@ socket.on('disconnect', function () {
 
 })
 
-socket.on('reconnect', function () {
-    console.log('reconnected')
-    if (typeof user !== 'undefined')
-        socket.emit('room', { username: user })
-})
 
+// event to turn on rpi 
 socket.on('rpi', function (data) {
     on = true
     console.log('my data: ' + data.ipaddress)
@@ -96,7 +92,7 @@ socket.on('rpi', function (data) {
 
 
 socket.on('turn on/off light', function (data) {
-
+console.log('comunication time: '+data.time - new Date().getMilliseconds())
     if (LED.readSync() === 0 && data.light && deviceName === data.devicename && on) { //check the pin state, if the state is 0 (or off)
         console.log('data arrived: ' + data.light)
         LED.writeSync(1); //set pin state to 1 (turn LED on)

@@ -64,7 +64,7 @@ socket.on('devices fetched', function (data) {
                 console.log(deviceName + ' picked at uniqueid ' + uniqueID + ' with action ' + action)
                 if (this.checked) {
 
-                    socket.emit('toggle light', { devicename: deviceName, light: true, username: user.username })
+                    socket.emit('toggle light', { devicename: deviceName, light: true, username: user.username, time: new Date().getMilliseconds() })
                 }
                 else {
                     socket.emit('toggle light', { devicename: deviceName, light: false, username: user.username })

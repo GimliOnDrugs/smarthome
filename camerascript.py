@@ -78,13 +78,12 @@ def updateBackgroundModel(timeFirstFrame):
     else:
         return False
 
-
+#timer function to count true negatives
 def timeout():
     global countdown
     global detected
     global true_negatives_count
     while countdown > 0:
-        print(detected)
         if detected:
             countdown = 0
             break
