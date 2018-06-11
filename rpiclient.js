@@ -25,7 +25,6 @@ var options = {
 var user
 var deviceName
 var on = false
-var streamLogs = fs.createWriteStream("time_logs.txt",{flags:'a'})
 
 //fired upon connection
 socket.on('connect', function () {
@@ -113,7 +112,9 @@ socket.on('turn on/off light', function (data) {
         LED.writeSync(1); //set pin state to 1 (turn LED on)
         console.log('turning on light')
         
-        streamLogs.write(String(getMilliseconds-data.time)+'\n')
+        fs.appendFile("time_logs.txt", String(getMilliseconds - data.time),(error)=>{
+            console.log('data written '+ String(getMilliseconds - data.time))
+        })
     }
     else if (deviceName === data.devicename && !on) {
 
